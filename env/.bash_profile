@@ -7,11 +7,16 @@ fi
 
 # User specific environment and startup programs
 EYOU="/usr/local/eyou/mail"
-EYOU_APP="$EYOU/app"
-EYOU_SBIN="$EYOU_APP/sbin"
-EYOU_BIN="$EYOU_APP/bin"
 
-PATH=$EYOU_SBIN:$EYOU_BIN:$PATH:$HOME/bin
+APP="$EYOU/app"
+APP_SBIN="$APP/sbin"
+APP_BIN="$APP/bin"
+
+OPT="$EYOU/opt"
+OPT_BIN="$OPT/bin"
+OPT_SBIN="$OPT/sbin"
+
+PATH=$APP_SBIN:$APP_BIN:$OPT_BIN:$OPT_SBIN:$HOME/bin:$PATH
 
 export PATH
 unset USERNAME
