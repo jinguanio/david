@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cd $HOME
+
+rm .bash_profile
+ln -s git/sunshine/env/.bash_profile .bash_profile
+
+rm .bashrc
+ln -s git/sunshine/env/.bashrc .bashrc
+
+rm .git-completion.bash
+ln -s git/sunshine/env/.git-completion.bash .git-completion.bash
+
+rm .gitconfig
+ln -s git/sunshine/env/.gitconfig .gitconfig
+
+rm .vimrc
+ln -s git/sunshine/env/.vimrc .vimrc
+
+rm yum-list
+ln -s git/sunshine/env/yum-list yum-list
