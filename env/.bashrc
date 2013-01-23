@@ -16,3 +16,5 @@ alias c='clear'
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
+
+. $HOME/.git-completion.bash

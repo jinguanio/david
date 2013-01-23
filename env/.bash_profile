@@ -15,3 +15,7 @@ PATH=$EYOU_SBIN:$EYOU_BIN:$PATH:$HOME/bin
 
 export PATH
 unset USERNAME
+
+
+# translate into chinese
+export LANG=zh_CN.utf8
