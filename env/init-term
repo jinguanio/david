@@ -1,21 +1,23 @@
 #!/bin/bash
 
+ENV="/root/git/sunshine/env"
+
 cd $HOME
 
 rm .bash_profile
-ln -s git/sunshine/env/.bash_profile .bash_profile
+ln -s $ENV/.bash_profile .bash_profile
 
 rm .bashrc
-ln -s git/sunshine/env/.bashrc .bashrc
+ln -s $ENV/.bashrc .bashrc
 
 rm .git-completion.bash
-ln -s git/sunshine/env/.git-completion.bash .git-completion.bash
+ln -s $ENV/.git-completion.bash .git-completion.bash
 
 rm .gitconfig
-ln -s git/sunshine/env/.gitconfig .gitconfig
+ln -s $ENV/.gitconfig .gitconfig
 
 rm .vimrc
-ln -s git/sunshine/env/.vimrc .vimrc
+ln -s $ENV/.vimrc .vimrc
 
 rm yum-list
-ln -s git/sunshine/env/yum-list yum-list
+ln -s $ENV/yum-list yum-list

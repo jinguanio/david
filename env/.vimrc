@@ -1,38 +1,56 @@
-colorscheme elflord          " 着色模式：黄色和粉红色为主
-set guifont=Monaco:h11       " 字体 && 字号
-set autoindent               " 自动对齐
-set ai!                      " 设置自动缩进
-set smartindent              " 智能自动缩进
-set shiftwidth=4             " 换行时行间交错使用2空格
-set cindent shiftwidth=4     " 自动缩进2空格
-set mouse=a                  " 启用鼠标
-set ruler                    " 右下角显示光标位置的状态行
-set incsearch                " 开启实时搜索功能
-set hlsearch                 " 开启高亮显示结果
-set nowrapscan               " 搜索到文件两端时不重新搜索
-set nocompatible             " 关闭兼容模式
-set vb t_vb=                 " 关闭提示音
-set hidden                   " 允许在有未保存的修改时切换缓冲区
-set autochdir                " 设定文件浏览器目录为当前目录
-set foldmethod=syntax        " 选择代码折叠类型
-set foldlevel=100            " 禁止自动折叠
-set laststatus=2             " 开启状态栏信息
-"set cmdheight=2              " 命令行的高度，默认为1，这里设为2
-"set showmatch               " 显示括号配对情况
-"set cursorline              " 突出显示当前行
-"set nowrap                  " 设置不自动换行
-set writebackup              " 设置无备份文件
-set nobackup
-set list                     " 显示Tab符，使用一高亮竖线代替
-set listchars=tab:\|\ ,
-set tabstop=4                " 设置Tab键的宽度        [等同的空格个数]
-set expandtab                " 将Tab自动转化成空格    [需要输入真正的Tab键时，使用 Ctrl+V + Tab]
+"显示当前行号
+set ru
 
-syntax enable                " 打开语法高亮
-syntax on                    " 开启文件类型侦测
-filetype indent on           " 针对不同的文件类型采用不同的缩进格式
-filetype plugin on           " 针对不同的文件类型加载对应的插件
-filetype plugin indent on    " 启用自动补全
+"自动切换到当前目录
+set autochdir
+
+"用4个空格代替tab
+set sts=4
+
+"智能缩进
+set cinoptions=:0,p0,t0
+set cinw=if,else,while,do,for,switch,case
+set formatoptions=tqo
+set cin
+
+"高亮
+syn on
+
+"搜索高亮
+set hls
+set incsearch
+
+"在插入 tab 的时候用一定数量的空格数代替 tab
+set et
+
+"制表符的显示的空格个数
+set ts=4
+
+"控制 > 和 < 的移动空格数为4个
+set sw=4
+
+"在调用 :n 或 :N 命令时自动保存已经修改的文件。
+set aw
+
+"设置代码折叠
+set foldmethod=marker
+
+"命令显示
+set showcmd
+
+"设置gf命令搜索路径
+"set path+=/usr/local/eyou/mail/app/lib/php,/usr/local/eyou/mail/web/php/user
+
+"设置状态栏显示信息
+"set statusline=%F%m%r%h%w\[FORMAT=%{&ff}]\[TYPE=%Y]\[ASCII=\%03.3b]\[HEX=\%02.2B]\[POS=%04l,%04v][%p%%]\[LEN=%L]
+set statusline=%F%m%r%h%w\[LINE=%04l]\[COL=%04v]\[LEN=%L]
+set laststatus=2
+"
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" Sets how many lines of history VIM har to remember
+set history=400
 
 " 设置编码
 set fenc=utf-8
