@@ -1,0 +1,15 @@
+[alias]
+    ci = commit
+    st = status
+    br = branch
+    df = diff
+    co = checkout
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+
+[user]
+    name = bzwboy
+    email = mousecat4444@126.com
