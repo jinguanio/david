@@ -22,4 +22,4 @@ export PATH
 unset USERNAME
 
 # translate into chinese
-export LANG=zh_CN.utf8
+#export LANG=zh_CN.utf8

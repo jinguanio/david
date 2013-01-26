@@ -26,23 +26,23 @@ filetype plugin on
 filetype plugin indent on
 
 " ======= 引号 && 括号自动匹配 ======= "
-:inoremap ( ()<ESC>i
-:inoremap ) <c-r>=ClosePair(')')<CR>
-:inoremap { {}<ESC>i
-:inoremap } <c-r>=ClosePair('}')<CR>
-:inoremap [ []<ESC>i
-:inoremap ] <c-r>=ClosePair(']')<CR>
-:inoremap " ""<ESC>i
-:inoremap ' ''<ESC>i
-:inoremap ` ``<ESC>i
-
-function ClosePair(char)
-  if getline('.')[col('.') - 1] == a:char
-     return "\<Right>"
-  else
-     return a:char
-  endif
-endf
+":inoremap ( ()<ESC>i
+":inoremap ) <c-r>=ClosePair(')')<CR>
+":inoremap { {}<ESC>i
+":inoremap } <c-r>=ClosePair('}')<CR>
+":inoremap [ []<ESC>i
+":inoremap ] <c-r>=ClosePair(']')<CR>
+":inoremap " ""<ESC>i
+":inoremap ' ''<ESC>i
+":inoremap ` ``<ESC>i
+"
+"function ClosePair(char)
+"  if getline('.')[col('.') - 1] == a:char
+"     return "\<Right>"
+"  else
+"     return a:char
+"  endif
+"endf
 
 " ============ link ============
 :nmap fw :w<CR>
