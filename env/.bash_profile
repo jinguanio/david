@@ -23,3 +23,5 @@ unset USERNAME
 
 # translate into chinese
 #export LANG=zh_CN.utf8
+
+ntpdate 210.72.145.44
