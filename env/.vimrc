@@ -46,7 +46,8 @@ filetype plugin indent on
 
 " ============ link ============
 :nmap fw :w<CR>
-:nmap zz :wqa<CR>
+:nmap zw :wqa<CR>
+:nmap zq :qa!<CR>
 :nmap ,s :source ~/.vimrc<CR>
 :nmap ,e :!
 
