@@ -1,41 +1,38 @@
 <?php
-$path = '/tmp/libo/gangliaxml_?filter=summary';
+$path = '/root/git/sunshine/tmp/gangliaxml_?filter=summary';
+$len = strlen(file_get_contents($path));
+$c = 20;
+$ret = array();
 
-// method1
+echo round($len/1024/1024*$c, 1), " MB", PHP_EOL;
+
 $t1 = microtime(true);
-function xml_start($parser, $name, $attr) {
-    echo "$name: ", var_export($attr, true);
-}
+for ($i = 0; $i < $c; $i++) {
+    $xml = new SimpleXMLElement($path, null, true);
 
-function xml_end($parser, $name) {
-}
+    foreach ($xml->GRID->CLUSTER as $k => $v) {
+        $ret = (string) $v->attributes()['NAME'];
+    }
 
-$parser = xml_parser_create();
-xml_set_element_handler($parser, 'xml_start', 'xml_end');
-$fp = fopen($path, 'r');
-while (!feof($fp)) {
-    $data = fread($fp, 16*1024);
-    xml_parse($parser, $data, feof($fp));
+    unset($xml);
 }
-fclose($fp);
-echo "1: ", microtime(true)-$t1, "\n";
+$t2 = microtime(true);
+//print_r($ret);
+echo $t2-$t1, " Sec.\n";
 
-// method2
-$t1 = microtime(true);
-function parse($path) {
-    return parseHelper(new SimpleXmlIterator($path, null, true));
+echo "delay...\n";
+sleep(1);
+
+$ret = array();
+$t3 = microtime(true);
+for ($i = 0; $i < $c; $i++) {
+    $xml = new SimpleXMLIterator($path, null, true);
+    foreach ($xml->GRID->CLUSTER as $k => $v) {
+        $ret = (string) $v->attributes()['NAME'];
+    }
+
+    unset($xml);
 }
-function parseHelper($iter) {
-    foreach($iter as $key => $val)
-        if ($iter->hasChildren()) {
-            $arr[$key][] = call_user_func (__FUNCTION__, $val);
-        } else {
-            $arr[$key][] = (array) $val->attributes();
-        }
-    return $arr;
-}
-
-$data = parse($path);
-//var_export($data);
-echo "2: ", microtime(true)-$t1, "\n";
-
+$t4 = microtime(true);
+//print_r($ret);
+echo $t4-$t3, " Sec.\n";
