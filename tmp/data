@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<HOSTS UP="2" DOWN="0" SOURCE="gmetad"/>
+<METRICS NAME="process_vsize_avg__em_local" SUM="282.87" NUM="2" TYPE="double" UNITS="MB" SLOPE="both" SOURCE="gmond">
+<EXTRA_DATA>
+<EXTRA_ELEMENT NAME="etitle" VAL="进程 - VSIZE 占用平均值 - em_local"/>
+<EXTRA_ELEMENT NAME="GROUP" VAL="process__extra"/>
+<EXTRA_ELEMENT NAME="DESC" VAL="进程 - VSIZE 占用平均值 - em_local"/>
+<EXTRA_ELEMENT NAME="TITLE" VAL="process_vsize_avg__em_local"/>
+</EXTRA_DATA>
+</METRICS>
+<METRICS NAME="process_rss_sum__em_mproxy_index" SUM="2.43" NUM="2" TYPE="double" UNITS="MB" SLOPE="both" SOURCE="gmond">
+<EXTRA_DATA>
+<EXTRA_ELEMENT NAME="etitle" VAL="进程 - RSS 占用总和 - em_mproxy_index"/>
+<EXTRA_ELEMENT NAME="GROUP" VAL="primary"/>
+<EXTRA_ELEMENT NAME="GROUP" VAL="process"/>
+<EXTRA_ELEMENT NAME="DESC" VAL="进程 - RSS 占用总和 - em_mproxy_index"/>
+<EXTRA_ELEMENT NAME="TITLE" VAL="process_rss_sum__em_mproxy_index"/>
+</EXTRA_DATA>
+<EXTRA_ELEMENT NAME="TITLE" VAL="disk_blk_wrtn__sda2"/>
+</EXTRA_DATA>
+</METRICS>
+</CLUSTER>
+</GRID>
+</GANGLIA_XML>
