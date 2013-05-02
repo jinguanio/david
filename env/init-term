@@ -19,8 +19,5 @@ ln -s $ENV/.gitconfig .gitconfig
 rm .vimrc
 ln -s $ENV/.vimrc .vimrc
 
-rm yum-list
-ln -s $ENV/yum-list yum-list
-
 rm /usr/local/bin/php
 ln -s /usr/local/eyou/mail/opt/bin/php /usr/local/bin/php 
