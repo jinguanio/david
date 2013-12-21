@@ -1,0 +1,20 @@
+#!/bin/bash
+
+env=`pwd`
+
+cd $HOME
+
+rm .bash_profile
+ln -s $env/bash_profile .bash_profile
+
+rm .bashrc
+ln -s $env/bashrc .bashrc
+
+rm .git-completion.bash
+ln -s $env/git-completion.bash .git-completion.bash
+
+rm .gitconfig
+ln -s $env/gitconfig .gitconfig
+
+rm .vimrc
+ln -s $env/vimrc .vimrc
