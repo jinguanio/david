@@ -1,0 +1,32 @@
+#!/usr/local/eyou/devmail/opt/bin/php
+<?php
+$flag = $argv[1];
+$content = $argv[2];
+
+function usage() 
+{
+    $stderr = fopen('php://stderr', 'w');
+    $programe = basename($GLOBALS['argv'][0]);
+    $help = <<<EOT
+Usage: $programe [options] <value>
+options:
+    -d, --decode    base64 decode
+    -e, --encode    base64 encode
+    -h, --help      display help\n
+EOT;
+    fwrite($stderr, $help);
+    fclose($stderr);
+} 
+
+switch ($flag) {
+    case '--decode': case '-d':
+        var_export(base64_decode($content));        
+        break;
+    case '--encode': case '-e':
+        var_export(base64_encode($content));
+        break;
+    default:
+        usage();
+        exit;
+}
+

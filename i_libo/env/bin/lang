@@ -1,0 +1,39 @@
+#!/bin/bash
+#===============================================================================
+#
+#          FILE:  lang.sh
+# 
+#         USAGE:  ./lang.sh 
+# 
+#   DESCRIPTION:  发布语言
+# 
+#        AUTHOR:  jacob, libo@eyou.net
+#       CREATED:  2013年10月15日 16时39分36秒 CST
+#===============================================================================
+
+
+PATH_LANG_CMD="/home/libo/my/git/elephant_dev/standard/src/shell"
+CMD="em_build_lang"
+FLAG="_js"
+
+cmd_help ()
+{
+    echo "$0 [ gettext domain ]"
+}
+
+if [ ! -d $PATH_LANG_CMD ]; then
+    echo "$PATH_LANG_CMD is not directory.";
+    exit 1
+fi
+
+if [ -z $1 ]; then
+    cmd_help
+    exit 1
+fi
+
+if [[ "$1" == *"$FLAG" ]]; then
+    $PATH_LANG_CMD/$CMD -d $1 
+else
+    $PATH_LANG_CMD/$CMD -d $1 -r 1 
+fi
+

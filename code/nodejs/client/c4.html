@@ -1,0 +1,18 @@
+<script src="http://172.16.100.114:3000/socket.io/socket.io.js" type="text/javascript"></script>
+<script>
+var io = io.connect('http://172.16.100.114:3000'); 
+
+io.on('connecting', function() {
+    console.info(io.socket);
+});
+io.on('connect', function () {
+    console.info(io.socket);
+    io.emit('news', 'hi!');
+    io.on('ready', function(data) {
+        console.info(data);
+    });
+});
+io.on('reconnect', function () {
+    console.info('reconnect');
+});
+</script>

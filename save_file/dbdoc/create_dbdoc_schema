@@ -1,0 +1,56 @@
+#!/usr/local/eyou/devmail/opt/bin/php
+<?php
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+/**
+ * create_dbdoc 生成数据库文档脚本
+ *
+ * @copyright  2006 Beijing eYou Information Technology Co., Ltd.
+ * @date       2008-10-28 14:58:03
+ */
+
+/* requires */
+require_once 'conf_path_devmail.php';
+require_once EMP_PATH_LIB . 'em_explain_db_schema.class.php';
+
+
+$array_opt = getopt('f:o:p:k:');
+if (!isset($array_opt['f']) || !isset($array_opt['o'])) {
+    echo "Usage: {$_SERVER['argv'][0]} -f SCHEMA_XML -o OUTPUT_DIR -p PEOJECT_NAME\n\n";
+    exit(1);
+}
+
+$path_schema = $array_opt['f'];
+$path_output = $array_opt['o'];
+$project_name = isset($array_opt['p']) ? $array_opt['p'] : null;
+$project_key = isset($array_opt['k']) ? $array_opt['k'] : null;
+
+if (!is_file($path_schema)) {
+    echo "No such file (SCHEMA_XML: $path_schema)\n";
+    exit(1);
+}
+if (!is_dir($path_output)) {
+    echo "No such directory (OUTPUT_DIR: $path_output)\n";
+    exit(1);
+}
+
+$em_db = new em_explain_db_schema($path_schema);
+$em_db->set_out_path(array('doc' => $path_output));
+$em_db->set_is_out_html(true);
+
+if (isset($project_name)) {
+    $em_db->set_project_name($project_name);
+}
+
+if (isset($project_key)) {
+    $em_db->set_project_key($project_key);
+}
+
+$res = $em_db->auto_create_html_file();
+if (!$res) {
+    $error_info = $em_db->get_error_info();
+    echo $error_info['msg'] . "\n";
+    exit(1);
+}
+
+exit(0);

@@ -1,0 +1,483 @@
+#!/usr/local/eyou/devmail/opt/bin/php
+<?php
+define('PATH_BASE', dirname(realpath(__FILE__)));
+define('PATH_RPM', '/usr/src/redhat');
+
+define('GIT_REPO', 'elephant_admin'); // 基类需要使用
+define('RPM_PRE', 'eyoumail-admin'); // rpm 文件名前缀
+
+require_once PATH_BASE . '/build_base.class.php';
+
+class build_admin_rpm extends build_base
+{
+    // {{{ members
+
+    private $__version = 'dev_8.1.0';       // 版本
+    private $__strip_version = '';          // 去掉前缀的版本号
+    private $__rpm_type = 'release';        // rpm 类型 
+    private $__allow_rpm_type =             // 允许的 rpm 包类型
+        array( 'release' => true, 'nightly' => true );
+    private $__rpm_suff = '';               // rpm 文件名后缀
+    private $__rpm_tarname = '';            // rpm 文件名
+
+    private $__path_real_backup = '';       // rpm 备份实际路径
+    private $__path_log = '';               // 日志路径
+    private $__path_spec = '';              // rpm spec 配置文件路径
+
+    private $__pre_release = 'v';           // release 类型前缀
+    private $__pre_nightly = 'dev_';        // nightly 类型前缀
+
+    // }}}
+    // {{{ functions
+    // {{{ public function __construct()
+
+    /**
+     * __construct 
+     * 
+     * @param array $params 
+     * @return void
+     * @throws em_exception
+     */
+    public function __construct($params)
+    {
+        $this->_set_params($params);
+
+        $this->__rpm_suff       = ('release' === $this->__rpm_type) 
+            ? "{$this->__strip_version}" 
+            : "{$this->__strip_version}b" . date('Ymd');
+        $this->__rpm_tarname    = RPM_PRE . "-{$this->__rpm_suff}";
+
+        $this->__path_real_backup   = PATH_HOME . "/" . PATH_BACKUP . "/{$this->__rpm_type}";
+        $this->__path_log           = PATH_HOME . "/" . PATH_BACKUP . "/{$this->__rpm_type}/log";
+        $this->__path_spec          = PATH_HOME . "/" . PATH_BACKUP . "/{$this->__rpm_type}/spec";
+
+        $this->_log("start to build rpm...", __LINE__);
+        $this->_echo("Start to build rpm...\n", false, false);
+    }
+
+    // }}}
+    // {{{ public function run()
+
+    /**
+     * run 
+     * 
+     * @return void
+     * @throws em_exception
+     */
+    public function run()
+    {
+        $this->_init_eyou();
+
+        $this->_clear_rpm();
+
+        $this->_make_code();
+        
+        $this->_create_code_tar();
+
+        $this->_create_rpm();
+
+        $this->_backup_rpm();
+
+        $this->_clear_rpm();
+
+        if ($this->__is_upload) {
+            $this->_upload_rpm();
+        }
+    }
+
+    // }}}
+    // {{{ protected function _log()
+
+    /**
+     * 日志 
+     * 
+     * @param string $msg 
+     * @param int $line 
+     * @return void
+     */
+    protected function _log($msg, $line)
+    {
+        if (!is_dir($this->__path_log) && !mkdir($this->__path_log, 0755, true)) {
+            $this->_log("Fail: dir `{$this->__path_log}` not exist", __LINE__);
+            $this->_echo("dir `{$this->__path_log}` not exist", true, false);
+        }
+        $file = "$this->__path_log/build_rpm-{$this->__version}.log";
+
+        parent::_log($msg, $line, $file);
+    }
+
+    // }}}
+    // {{{ protected function _help()
+
+    /**
+     * 帮助 
+     * 
+     * @param string $msg
+     * @return void
+     */
+    protected function _help($msg = null)
+    {
+        if ($msg) {
+            echo "$msg\n";
+        }
+
+        $file = './'.basename(__FILE__);
+        echo <<<HELP
+{$file}
+    -t release 发布类型 [ release | nightly ]，默认值：release
+    -v dev_8.1.0 版本，默认值：空，如：dev_8.1.0/v8.1.0.4
+    -h 帮助
+    -u 上传到 ftp 服务器
+    
+    -x release 前缀，默认值：v
+    -y nightly 前缀，默认值：dev_
+
+HELP;
+        exit(1);
+    }
+
+    // }}}
+    // {{{ protected function _set_params()
+
+    /**
+     * 设置命令行参数 
+     * 
+     * @param array $params 
+     * @return void
+     */
+    protected function _set_params($params)
+    {
+        if (empty($params)) {
+            $this->_help('Required parameter missing');
+        }
+
+        if (isset($params['h'])) {
+            $this->_help();
+        }
+
+        if (isset($params['u'])) {
+            $this->__is_upload = true;
+        }
+
+        if (isset($params['x'])) {
+            $this->__pre_release = $params['x'];
+        }
+
+        if (isset($params['y'])) {
+            $this->__pre_nightly = $params['y'];
+        }
+
+        if (isset($params['t'])) {
+            if (!isset($this->__allow_rpm_type[$params['t']])) {
+                $this->_help("Rpm-type `{$params['t']}` not support");
+            }
+            $this->__rpm_type = $params['t'];
+        }
+
+        if (!isset($params['v'])) {
+            $this->_help('Lack -v argument');
+        }
+        if ('release' === $this->__rpm_type) {
+            if (0 !== strpos($params['v'], $this->__pre_release)) {
+                $this->_help('params -v invalid');
+            }
+        } else {
+            if (0 !== strpos($params['v'], $this->__pre_nightly)) {
+                $this->_help('params -v invalid');
+            }
+        }
+        $this->__version = $params['v'];
+        $this->__strip_version = $this->_strip_version($this->__version);
+    }
+
+    // }}}
+    // {{{ protected function _strip_version()
+
+    /**
+     * 去掉版本前缀 
+     * 
+     * @return string
+     */
+    protected function _strip_version()
+    {
+        return ('release' === $this->__rpm_type)
+            ? str_replace($this->__pre_release, '', $this->__version)
+            : str_replace($this->__pre_nightly, '', $this->__version);
+    }
+
+    // }}}
+    // {{{ protected function _clear_rpm()
+
+    /**
+     * 清理 rpm 遗留文件 
+     * 
+     * @return void
+     */
+    protected function _clear_rpm()
+    {
+        $msg = "clear rpm file";
+        $cmd = "find " . PATH_RPM . " -name '" . RPM_PRE . "*' | xargs sudo rm -rf";
+        $ret = $this->_cmd($cmd);
+        if (false === $ret) {
+            $this->_log('clear rpm file fail', __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_log('Msg: clear rpm file succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _make_code()
+
+    /**
+     * make 源代码 
+     * 
+     * @return void
+     */
+    protected function _make_code()
+    {
+        // current dir: /home/libo/build/elephant_admin
+        $msg = "build git repository";
+        $ret = $this->_create_repo(GIT_REPO);
+        if ($ret) {
+            $this->_echo($msg, false, 'succ');
+        } else {
+            $this->_echo($msg, true, 'fail');
+        }
+        chdir(PATH_HOME . "/" . PATH_BACKUP . "/" . GIT_REPO);
+
+        // 转换 git 分支
+        $msg = "checkout git branch";
+        $ret = $this->_checkout_git();
+        if ($ret) {
+            $this->_echo($msg, false, 'succ');
+        } else {
+            $this->_echo($msg, true, 'fail');
+        }
+        if (!chdir("src")) {
+            $this->_log('Fail: `src` dir not exist', __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $msg = 'create Makefile file';
+        if (false === $ret = $this->_cmd("./configure create")) {
+            $this->_log('Fail: create Makefile file fail', __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+        $this->_echo($msg, false, 'succ');
+
+        $msg = 'make source code';
+        if (false === $ret = $this->_cmd("sudo make install")) {
+            $this->_log('Fail: make source code fail', __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+        $this->_log('Msg: make source code succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _checkout_git()
+
+    /**
+     * checkout git 
+     * 
+     * @return void
+     */
+    protected function _checkout_git()
+    {
+        switch ($this->__rpm_type) {
+        case 'release':
+            if (false === $this->_cmd("git checkout -b {$this->__version} {$this->__version}")) {
+                $this->_log("Fail: checkout {$this->__version} fail", __LINE__);
+                return false;
+            }
+            break;
+
+        case 'nightly':
+            if (false === $this->_cmd("git checkout -b {$this->__version} origin/{$this->__version}")) {
+                $this->_log("Fail: checkout {$this->__version} fail", __LINE__);
+                return false;
+            }
+            break;
+
+        default:
+            $this->_log("Fail: not support rpm type `{$this->__rpm_type}`", __LINE__);
+            return false;
+        }
+
+        return true;
+    }
+
+    // }}}
+    // {{{ protected function _create_code_tar()
+
+    /**
+     * 建立源代码 tar 包
+     * 
+     * @return void
+     */
+    protected function _create_code_tar()
+    {
+        $msg = 'create tar.gz pkg';
+        if (!chdir(PATH_EYOU)) {
+            $this->_log("Fail: dir `" . PATH_EYOU . "` not exist", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (is_dir($this->__rpm_tarname)) {
+            if (false === $this->_cmd("sudo rm -rf {$this->__rpm_tarname}")) {
+                $this->_log("Fail: del {$this->__rpm_tarname} fail", __LINE__);
+                $this->_echo($msg, true, 'fail');
+            }
+        }
+
+        if (false === $this->_cmd("sudo mv mail {$this->__rpm_tarname}")) {
+            $this->_log("Fail: move mail to {$this->__rpm_tarname} fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (false === $this->_cmd("sudo tar zcf {$this->__rpm_tarname}.tar.gz {$this->__rpm_tarname}")) {
+            $this->_log("Fail: create tar `{$this->__rpm_tarname}`.tar.gz fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (false === $this->_cmd("sudo mv {$this->__rpm_tarname}.tar.gz " . PATH_RPM . "/SOURCES")) {
+            $this->_log("Fail: take tar pkg to rpm fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (false === $this->_cmd("sudo rm -rf {$this->__rpm_tarname}")) {
+            $this->_log("Fail: del {$this->__rpm_tarname} fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_log('Msg: create rpm tar pkg succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _create_rpm()
+
+    /**
+     * 生成 rpm 文件 
+     * 
+     * @return void
+     */
+    protected function _create_rpm()
+    {
+        $msg = 'create rpm file';
+
+        if ("release" === $this->__rpm_type) {
+            $arr = explode('.' , $this->__strip_version);
+            $version = "{$arr[0]}.{$arr[1]}.{$arr[2]}";
+        } else {
+            $version = $this->__strip_version;
+        }
+
+        $profile_path = PATH_HOME . "/" . PATH_BACKUP . "/" . GIT_REPO . "/build/rpm/{$version}/spec";
+        $profile = "{$profile_path}/" . RPM_PRE . ".spec";
+        if (!file_exists($profile)) {
+            $this->_log("Fail: rpm profile not exist", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (!is_dir($this->__path_spec) && !mkdir($this->__path_spec, 0755, true)) {
+            $this->_log("Fail: dir `{$this->__path_spec}` not exist", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $spec_file = "{$this->__path_spec}/" . RPM_PRE . "-{$this->__rpm_type}-{$this->__version}.spec";
+        if (!copy($profile, $spec_file)) {
+            $this->_log("Fail: copy to `{$this->__path_spec}/{$profile}` fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $cont = file_get_contents($spec_file);
+        if (!$cont = preg_replace("/Version: X/", "Version: {$this->__rpm_suff}", $cont)) {
+            $this->_log("Fail: mod `" . RPM_PRE . ".spec` fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+        file_put_contents($spec_file, $cont);
+
+        if (false === $this->_cmd("sudo rpmbuild -bb {$spec_file}")) {
+            $this->_log("Fail: create rpm file fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_log('Msg: create rpm file succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _backup_rpm()
+
+    /**
+     * 备份 rpm 文件 
+     * 
+     * @return void
+     */
+    protected function _backup_rpm()
+    {
+        $msg = 'backup rpm file';
+        $rpm_file = PATH_RPM . "/RPMS/noarch/{$this->__rpm_tarname}-rhel.noarch.rpm";
+        if (!file_exists($rpm_file)) {
+            $this->_log("Fail: rpm `{$this->__rpm_tarname}-rhel.noarch.rpm` file not exist", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (false === $this->_cmd("sudo mv {$rpm_file} {$this->__path_real_backup}")) {
+            $this->_log("Fail: backup rpm fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        // 清除打包用的 git 仓库
+        if (false === $this->_clear_repo(GIT_REPO)) {
+            $this->_log("Fail: delete " . GIT_REPO . " repository fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_log('Msg: backup rpm file succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _upload_rpm()
+
+    /**
+     * 上传 rpm 文件到 ftp 服务器 
+     * 
+     * @return void
+     */
+    protected function _upload_rpm()
+    {
+        $msg = 'upload rpm';
+        $rpm_name = "{$this->__rpm_tarname}-rhel.noarch.rpm";
+
+        $rpm = @fopen("{$this->__path_real_backup}/{$rpm_name}", 'r');
+        if (!$rpm) {
+            $this->_log("Fail: rpm pkg not exist", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+        $ftp_url = "ftp://" . FTP_SERVER . "/{$this->__rpm_type}/{$rpm_name}";
+
+        $ret = $this->_upload_ftp($rpm, $ftp_url);
+        fclose($rpm);
+
+        if (0 !== $ret['err_no']) {   
+            $this->_log("Fail: upload rpm fail, {$ret['err_msg']}", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_log("Msg: upload rpm succ", __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // }}}
+}
+
+$params = getopt("v:t:hu");
+$admin_rpm = new build_admin_rpm($params);
+$admin_rpm->run();
+

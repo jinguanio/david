@@ -1,0 +1,25 @@
+#!/bin/bash
+# 建立文件并设定访问权限
+
+#
+# 错误处理
+#
+
+myexp() {
+    if [ "$?" != "0" ]; then
+        if [ "$1" ]; then
+            echo "$1"
+        fi
+        echo "fatal, program has stopped."
+        exit $?
+    fi
+}
+
+#
+# 逻辑
+#
+#sudo make "$1".
+jjcm >/dev/null
+for arg in $*; do
+    sudo make "$arg."
+done

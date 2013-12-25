@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <b>This is 1.html</b>
+        <br /><br />
+        <a href="1.html">1.html</a><br />
+        <a href="2.html">2.html</a><br />
+        <a href="3.html">3.html</a><br />
+        <br />
+        <script type="text/javascript">
+            function html(msg) {
+                document.open('');
+                document.write(msg + '<br />');
+                document.close();
+            }
+
+            if(window.localStorage){
+                 html('This browser supports localStorage');
+            } else {
+                 html('This browser does NOT support localStorage');
+            }
+
+            var storage = window.localStorage;
+            var divCount = document.getElementById('count');
+            if (confirm('Reset localStorge with 1 ?')) {
+                storage.setItem('a', 1);
+                html('Setting localStorage value is: ' + storage.getItem('a'));
+            } else {
+                html('LocalStorage value is: ' + storage.getItem('a'));
+            }
+        </script>
+    </body>
+</html>

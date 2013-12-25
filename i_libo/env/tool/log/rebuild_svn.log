@@ -1,0 +1,1292 @@
+
+[2009-05-12 17:00:00]
+Clean Makefile complete.
+U    sql/mysql/db_creation.sql
+U    lib/member/em_member_exception.class.php
+U    lib/member/property/test/test_em_member_property_user_folder_custom.class.php
+U    lib/member/operator/condition/test/test_em_condition_adapter_member_operator_user_mail_index_get_mail_index.class.php
+U    lib/member/operator/em_member_property_operator_user_mail.class.php
+U    lib/member/operator/em_member_property_operator_user_contacts.class.php
+U    lib/member/operator/em_member_property_operator_user_contacts_extend.class.php
+U    lib/member/operator/test/test_em_member_property_operator_user_contacts.class.php
+U    inc/locale/zh_CN/LC_MESSAGES/mail.po
+U    inc/locale/zh_CN/LC_MESSAGES/mail.mo
+U    inc/conf/conf_global.php
+Updated to revision 4871.
+OK, Create ./Makefile complete.
+OK, Create ./shell/Makefile complete.
+OK, Create ./shell/cron/Makefile complete.
+OK, Create ./shell/exec/Makefile complete.
+OK, Create ./shell/utils/Makefile complete.
+OK, Create ./lib/member/auth/condition/Makefile complete.
+OK, Create ./lib/member/auth/condition/test/Makefile complete.
+OK, Create ./lib/member/auth/Makefile complete.
+OK, Create ./lib/member/auth/test/Makefile complete.
+OK, Create ./lib/member/Makefile complete.
+OK, Create ./lib/member/operator/condition/Makefile complete.
+OK, Create ./lib/member/operator/condition/test/Makefile complete.
+OK, Create ./lib/member/operator/Makefile complete.
+OK, Create ./lib/member/operator/test/Makefile complete.
+OK, Create ./lib/member/test/Makefile complete.
+OK, Create ./lib/member/property/Makefile complete.
+OK, Create ./lib/member/property/format/Makefile complete.
+OK, Create ./lib/member/property/format/test/Makefile complete.
+OK, Create ./lib/member/property/test/Makefile complete.
+OK, Create ./lib/member/property/map/Makefile complete.
+OK, Create ./lib/member/property/map/test/Makefile complete.
+OK, Create ./lib/password/Makefile complete.
+OK, Create ./lib/password/test/Makefile complete.
+OK, Create ./lib/condition/Makefile complete.
+OK, Create ./lib/condition/test/Makefile complete.
+OK, Create ./lib/pager/Makefile complete.
+OK, Create ./lib/pager/test/Makefile complete.
+OK, Create ./lib/serialize/Makefile complete.
+OK, Create ./lib/serialize/test/Makefile complete.
+OK, Create ./lib/db/Makefile complete.
+OK, Create ./lib/Makefile complete.
+OK, Create ./lib/sequence/Makefile complete.
+OK, Create ./lib/sequence/test/Makefile complete.
+OK, Create ./lib/config/Makefile complete.
+OK, Create ./lib/config/test/Makefile complete.
+OK, Create ./lib/hash/Makefile complete.
+OK, Create ./lib/hash/test/Makefile complete.
+OK, Create ./lib/log/Makefile complete.
+OK, Create ./lib/log/test/Makefile complete.
+OK, Create ./lib/captcha/Makefile complete.
+OK, Create ./lib/captcha/test/Makefile complete.
+OK, Create ./lib/fastconfig/Makefile complete.
+OK, Create ./lib/fastconfig/test/Makefile complete.
+OK, Create ./lib/tempfile/Makefile complete.
+OK, Create ./lib/tempfile/test/Makefile complete.
+OK, Create ./lib/language/Makefile complete.
+OK, Create ./lib/language/test/Makefile complete.
+OK, Create ./lib/session/Makefile complete.
+OK, Create ./lib/session/test/Makefile complete.
+OK, Create ./lib/innerapi/Makefile complete.
+OK, Create ./lib/innerapi/test/Makefile complete.
+OK, Create ./lib/filed/Makefile complete.
+OK, Create ./lib/filed/test/Makefile complete.
+OK, Create ./lib/test/Makefile complete.
+OK, Create ./lib/memcache/Makefile complete.
+OK, Create ./lib/memcache/test/Makefile complete.
+OK, Create ./lib/crypt/Makefile complete.
+OK, Create ./lib/crypt/test/Makefile complete.
+OK, Create ./lib/dataprocess/Makefile complete.
+OK, Create ./lib/dataprocess/dbres/Makefile complete.
+OK, Create ./lib/dataprocess/dbres/test/Makefile complete.
+OK, Create ./lib/dataprocess/test/Makefile complete.
+OK, Create ./lib/eyoucontrol/Makefile complete.
+OK, Create ./lib/eyoucontrol/test/Makefile complete.
+OK, Create ./lib/controller/dispatcher/Makefile complete.
+OK, Create ./lib/controller/plugin/Makefile complete.
+OK, Create ./lib/controller/response/Makefile complete.
+OK, Create ./lib/controller/Makefile complete.
+OK, Create ./lib/controller/action/helper/Makefile complete.
+OK, Create ./lib/controller/action/Makefile complete.
+OK, Create ./lib/controller/request/Makefile complete.
+OK, Create ./lib/controller/router/Makefile complete.
+OK, Create ./lib/controller/router/route/Makefile complete.
+OK, Create ./lib/searchmail/Makefile complete.
+OK, Create ./innerapi/Makefile complete.
+OK, Create ./etc/Makefile complete.
+OK, Create ./inc/locale/Makefile complete.
+OK, Create ./inc/locale/zh_CN/Makefile complete.
+OK, Create ./inc/locale/zh_CN/LC_MESSAGES/Makefile complete.
+OK, Create ./inc/locale/en_US/Makefile complete.
+OK, Create ./inc/locale/en_US/LC_MESSAGES/Makefile complete.
+OK, Create ./inc/locale/zh_TW/Makefile complete.
+OK, Create ./inc/locale/zh_TW/LC_MESSAGES/Makefile complete.
+OK, Create ./inc/Makefile complete.
+OK, Create ./inc/global/Makefile complete.
+OK, Create ./inc/conf/Makefile complete.
+OK, Create ./web/tpl/Makefile complete.
+OK, Create ./web/tpl/user/tpl1/js/Makefile complete.
+OK, Create ./web/tpl/user/tpl1/Makefile complete.
+OK, Create ./web/tpl/user/tpl1/images/Makefile complete.
+OK, Create ./web/tpl/user/tpl1/images/red/Makefile complete.
+OK, Create ./web/tpl/user/tpl1/images/blue/Makefile complete.
+OK, Create ./web/tpl/user/tpl1/css/skins/Makefile complete.
+OK, Create ./web/tpl/user/tpl1/css/Makefile complete.
+OK, Create ./web/tpl/user/tpl1/css/layout/Makefile complete.
+OK, Create ./web/tpl/user/Makefile complete.
+OK, Create ./web/tpl/public/js/Makefile complete.
+OK, Create ./web/tpl/public/jquery/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/editor/skins/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/editor/skins/eyou/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/editor/skins/eyou/images/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/editor/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/editor/dialog/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/editor/plugins/fck/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/editor/plugins/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/editor/plugins/toggle/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/editor/plugins/sign/Makefile complete.
+OK, Create ./web/tpl/public/fckeditor/Makefile complete.
+OK, Create ./web/tpl/public/Makefile complete.
+OK, Create ./web/tpl/public/css/Makefile complete.
+OK, Create ./web/Makefile complete.
+OK, Create ./web/php/Makefile complete.
+OK, Create ./web/php/user/Makefile complete.
+OK, Create ./web/php/inc/Makefile complete.
+
+Create Makefile complete.
+Install Dirs: etc inc innerapi lib shell web
+make[1]: Entering directory `/home/libo/crane/trunk/src/etc'
+/usr/bin/install -c -m 664 -o root -g root config.ini /usr/local/eyou/mail/etc/
+make[1]: Leaving directory `/home/libo/crane/trunk/src/etc'
+make[1]: Entering directory `/home/libo/crane/trunk/src/inc'
+Make Dir: /usr/local/eyou/mail/app/inc/
+Install Dirs: conf global locale
+make[2]: Entering directory `/home/libo/crane/trunk/src/inc/conf'
+Make Dir: /usr/local/eyou/mail/app/inc/conf/
+/usr/bin/install -c -m 664 -o root -g root conf_global.php /usr/local/eyou/mail/app/inc/conf/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/inc/conf'
+make[2]: Entering directory `/home/libo/crane/trunk/src/inc/global'
+Make Dir: /usr/local/eyou/mail/app/inc/global/
+/usr/bin/install -c -m 664 -o root -g root function_global.php /usr/local/eyou/mail/app/inc/global/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/inc/global'
+make[2]: Entering directory `/home/libo/crane/trunk/src/inc/locale'
+Make Dir: /usr/local/eyou/mail/app/inc/locale/
+Install Dirs: en_US zh_CN zh_TW
+make[3]: Entering directory `/home/libo/crane/trunk/src/inc/locale/en_US'
+Make Dir: /usr/local/eyou/mail/app/inc/locale/en_US/
+Install Dirs: LC_MESSAGES
+make[4]: Entering directory `/home/libo/crane/trunk/src/inc/locale/en_US/LC_MESSAGES'
+Make Dir: /usr/local/eyou/mail/app/inc/locale/en_US/LC_MESSAGES/
+/usr/bin/install -c -m 664 -o root -g root mail.po /usr/local/eyou/mail/app/inc/locale/en_US/LC_MESSAGES/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/inc/locale/en_US/LC_MESSAGES'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/inc/locale/en_US'
+make[3]: Entering directory `/home/libo/crane/trunk/src/inc/locale/zh_CN'
+Make Dir: /usr/local/eyou/mail/app/inc/locale/zh_CN/
+Install Dirs: LC_MESSAGES
+make[4]: Entering directory `/home/libo/crane/trunk/src/inc/locale/zh_CN/LC_MESSAGES'
+Make Dir: /usr/local/eyou/mail/app/inc/locale/zh_CN/LC_MESSAGES/
+/usr/bin/install -c -m 664 -o root -g root mail.mo /usr/local/eyou/mail/app/inc/locale/zh_CN/LC_MESSAGES/
+/usr/bin/install -c -m 664 -o root -g root mail.po /usr/local/eyou/mail/app/inc/locale/zh_CN/LC_MESSAGES/
+/usr/bin/install -c -m 664 -o root -g root mail_js.po /usr/local/eyou/mail/app/inc/locale/zh_CN/LC_MESSAGES/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/inc/locale/zh_CN/LC_MESSAGES'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/inc/locale/zh_CN'
+make[3]: Entering directory `/home/libo/crane/trunk/src/inc/locale/zh_TW'
+Make Dir: /usr/local/eyou/mail/app/inc/locale/zh_TW/
+Install Dirs: LC_MESSAGES
+make[4]: Entering directory `/home/libo/crane/trunk/src/inc/locale/zh_TW/LC_MESSAGES'
+Make Dir: /usr/local/eyou/mail/app/inc/locale/zh_TW/LC_MESSAGES/
+/usr/bin/install -c -m 664 -o root -g root mail.po /usr/local/eyou/mail/app/inc/locale/zh_TW/LC_MESSAGES/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/inc/locale/zh_TW/LC_MESSAGES'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/inc/locale/zh_TW'
+make[2]: Leaving directory `/home/libo/crane/trunk/src/inc/locale'
+make[1]: Leaving directory `/home/libo/crane/trunk/src/inc'
+make[1]: Entering directory `/home/libo/crane/trunk/src/innerapi'
+/usr/bin/install -c -m 664 -o root -g root api.php /usr/local/eyou/mail/innerapi/
+/usr/bin/install -c -m 664 -o root -g root index.php /usr/local/eyou/mail/innerapi/
+make[1]: Leaving directory `/home/libo/crane/trunk/src/innerapi'
+make[1]: Entering directory `/home/libo/crane/trunk/src/lib'
+Make Dir: /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_captcha.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_condition.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_config.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_controller.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_crypt.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_db.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_debug_trace.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_error.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_exception.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_filed.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_hash.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_hash_dir.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_language.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_log.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_member.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_memcache.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_pager.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_password.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_restrict.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_sequence.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_serialize.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_session.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_smarty.class.php /usr/local/eyou/mail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile.class.php /usr/local/eyou/mail/app/lib/php/
+Install Dirs: captcha condition config controller crypt dataprocess db eyoucontrol fastconfig filed hash innerapi language log member memcache pager password searchmail sequence serialize session tempfile
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/captcha'
+Make Dir: /usr/local/eyou/mail/app/lib/php/captcha/
+/usr/bin/install -c -m 664 -o root -g root em_captcha_abstract.class.php /usr/local/eyou/mail/app/lib/php/captcha/
+/usr/bin/install -c -m 664 -o root -g root em_captcha_exception.class.php /usr/local/eyou/mail/app/lib/php/captcha/
+/usr/bin/install -c -m 664 -o root -g root em_captcha_gif.class.php /usr/local/eyou/mail/app/lib/php/captcha/
+/usr/bin/install -c -m 664 -o root -g root em_captcha_gif_exception.class.php /usr/local/eyou/mail/app/lib/php/captcha/
+/usr/bin/install -c -m 664 -o root -g root em_captcha_shortcut.class.php /usr/local/eyou/mail/app/lib/php/captcha/
+/usr/bin/install -c -m 664 -o root -g root em_captcha_swf.class.php /usr/local/eyou/mail/app/lib/php/captcha/
+/usr/bin/install -c -m 664 -o root -g root em_captcha_swf_exception.class.php /usr/local/eyou/mail/app/lib/php/captcha/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/captcha'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/condition'
+Make Dir: /usr/local/eyou/mail/app/lib/php/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_exception.class.php /usr/local/eyou/mail/app/lib/php/condition/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/condition'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/config'
+Make Dir: /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_adapter_global_auto.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_adapter_global_db.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_adapter_global_memcache.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_adapter_local_ini.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_adapter_merge.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_exception.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_format.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_format_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_format_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_format_adapter_simple.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_format_exception.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_map.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_map_exception.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_parser.class.php /usr/local/eyou/mail/app/lib/php/config/
+/usr/bin/install -c -m 664 -o root -g root em_config_parser_exception.class.php /usr/local/eyou/mail/app/lib/php/config/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/config'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/controller'
+Make Dir: /usr/local/eyou/mail/app/lib/php/controller/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action.class.php /usr/local/eyou/mail/app/lib/php/controller/
+/usr/bin/install -c -m 664 -o root -g root em_controller_exception.class.php /usr/local/eyou/mail/app/lib/php/controller/
+Install Dirs: action dispatcher plugin request response router
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/controller/action'
+Make Dir: /usr/local/eyou/mail/app/lib/php/controller/action/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_exception.class.php /usr/local/eyou/mail/app/lib/php/controller/action/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_helper_broker.class.php /usr/local/eyou/mail/app/lib/php/controller/action/
+Install Dirs: helper
+make[4]: Entering directory `/home/libo/crane/trunk/src/lib/controller/action/helper'
+Make Dir: /usr/local/eyou/mail/app/lib/php/controller/action/helper/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_helper_abstract.class.php /usr/local/eyou/mail/app/lib/php/controller/action/helper/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_helper_common.class.php /usr/local/eyou/mail/app/lib/php/controller/action/helper/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/lib/controller/action/helper'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/controller/action'
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/controller/dispatcher'
+Make Dir: /usr/local/eyou/mail/app/lib/php/controller/dispatcher/
+/usr/bin/install -c -m 664 -o root -g root em_controller_dispatcher.class.php /usr/local/eyou/mail/app/lib/php/controller/dispatcher/
+/usr/bin/install -c -m 664 -o root -g root em_controller_dispatcher_abstract.class.php /usr/local/eyou/mail/app/lib/php/controller/dispatcher/
+/usr/bin/install -c -m 664 -o root -g root em_controller_dispatcher_exception.class.php /usr/local/eyou/mail/app/lib/php/controller/dispatcher/
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/controller/dispatcher'
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/controller/plugin'
+Make Dir: /usr/local/eyou/mail/app/lib/php/controller/plugin/
+/usr/bin/install -c -m 664 -o root -g root em_controller_plugin_abstract.class.php /usr/local/eyou/mail/app/lib/php/controller/plugin/
+/usr/bin/install -c -m 664 -o root -g root em_controller_plugin_broker.class.php /usr/local/eyou/mail/app/lib/php/controller/plugin/
+/usr/bin/install -c -m 664 -o root -g root em_controller_plugin_test.class.php /usr/local/eyou/mail/app/lib/php/controller/plugin/
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/controller/plugin'
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/controller/request'
+Make Dir: /usr/local/eyou/mail/app/lib/php/controller/request/
+/usr/bin/install -c -m 664 -o root -g root em_controller_request_abstract.class.php /usr/local/eyou/mail/app/lib/php/controller/request/
+/usr/bin/install -c -m 664 -o root -g root em_controller_request_exception.class.php /usr/local/eyou/mail/app/lib/php/controller/request/
+/usr/bin/install -c -m 664 -o root -g root em_controller_request_http.class.php /usr/local/eyou/mail/app/lib/php/controller/request/
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/controller/request'
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/controller/response'
+Make Dir: /usr/local/eyou/mail/app/lib/php/controller/response/
+/usr/bin/install -c -m 664 -o root -g root em_controller_response_abstract.class.php /usr/local/eyou/mail/app/lib/php/controller/response/
+/usr/bin/install -c -m 664 -o root -g root em_controller_response_exception.class.php /usr/local/eyou/mail/app/lib/php/controller/response/
+/usr/bin/install -c -m 664 -o root -g root em_controller_response_http.class.php /usr/local/eyou/mail/app/lib/php/controller/response/
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/controller/response'
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/controller/router'
+Make Dir: /usr/local/eyou/mail/app/lib/php/controller/router/
+/usr/bin/install -c -m 664 -o root -g root em_controller_router.class.php /usr/local/eyou/mail/app/lib/php/controller/router/
+/usr/bin/install -c -m 664 -o root -g root em_controller_router_abstract.class.php /usr/local/eyou/mail/app/lib/php/controller/router/
+/usr/bin/install -c -m 664 -o root -g root em_controller_router_exception.class.php /usr/local/eyou/mail/app/lib/php/controller/router/
+Install Dirs: route
+make[4]: Entering directory `/home/libo/crane/trunk/src/lib/controller/router/route'
+Make Dir: /usr/local/eyou/mail/app/lib/php/controller/router/route/
+/usr/bin/install -c -m 664 -o root -g root em_controller_router_route.class.php /usr/local/eyou/mail/app/lib/php/controller/router/route/
+/usr/bin/install -c -m 664 -o root -g root em_controller_router_route_abstract.class.php /usr/local/eyou/mail/app/lib/php/controller/router/route/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/lib/controller/router/route'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/controller/router'
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/controller'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/crypt'
+Make Dir: /usr/local/eyou/mail/app/lib/php/crypt/
+/usr/bin/install -c -m 664 -o root -g root em_crypt_abstract.class.php /usr/local/eyou/mail/app/lib/php/crypt/
+/usr/bin/install -c -m 664 -o root -g root em_crypt_crypt.class.php /usr/local/eyou/mail/app/lib/php/crypt/
+/usr/bin/install -c -m 664 -o root -g root em_crypt_exception.class.php /usr/local/eyou/mail/app/lib/php/crypt/
+/usr/bin/install -c -m 664 -o root -g root em_crypt_generic.class.php /usr/local/eyou/mail/app/lib/php/crypt/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/crypt'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/dataprocess'
+Make Dir: /usr/local/eyou/mail/app/lib/php/dataprocess/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess_exception.class.php /usr/local/eyou/mail/app/lib/php/dataprocess/
+Install Dirs: dbres
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/dataprocess/dbres'
+Make Dir: /usr/local/eyou/mail/app/lib/php/dataprocess/dbres/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess_dbres.class.php /usr/local/eyou/mail/app/lib/php/dataprocess/dbres/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess_dbres_exception.class.php /usr/local/eyou/mail/app/lib/php/dataprocess/dbres/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess_dbres_filter.class.php /usr/local/eyou/mail/app/lib/php/dataprocess/dbres/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess_dbres_filter_column.class.php /usr/local/eyou/mail/app/lib/php/dataprocess/dbres/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess_dbres_filter_column_exception.class.php /usr/local/eyou/mail/app/lib/php/dataprocess/dbres/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess_dbres_filter_exception.class.php /usr/local/eyou/mail/app/lib/php/dataprocess/dbres/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess_dbres_filter_expr.class.php /usr/local/eyou/mail/app/lib/php/dataprocess/dbres/
+/usr/bin/install -c -m 664 -o root -g root em_dataprocess_dbres_filter_expr_exception.class.php /usr/local/eyou/mail/app/lib/php/dataprocess/dbres/
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/dataprocess/dbres'
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/dataprocess'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/db'
+Make Dir: /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_adapter_mysql.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_adapter_sqlite.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_exception.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_expr.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_profile.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_profile_exception.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_profile_query.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_select.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_select_exception.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_statement_abstract.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_statement_exception.class.php /usr/local/eyou/mail/app/lib/php/db/
+/usr/bin/install -c -m 664 -o root -g root em_db_statement_standard.class.php /usr/local/eyou/mail/app/lib/php/db/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/db'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/eyoucontrol'
+Make Dir: /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_dataparse.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_dataparse_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_dataparse_adapter_csv.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_dataparse_adapter_simple.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_dataparse_exception.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_exception.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_domain.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_domain_basic.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_domain_config.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user_auto_reply_black_list.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user_auto_reply_white_list.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user_basic.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user_black_list.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user_config.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user_custom.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user_filter.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user_personal.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+/usr/bin/install -c -m 664 -o root -g root em_eyoucontrol_operator_adapter_user_white_list.class.php /usr/local/eyou/mail/app/lib/php/eyoucontrol/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/eyoucontrol'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/fastconfig'
+Make Dir: /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_format.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_format_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_format_adapter_abstract_exception.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_format_adapter_default.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_format_adapter_login_ip.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_format_exception.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_map.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_map_exception.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_operator.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+/usr/bin/install -c -m 664 -o root -g root em_fastconfig_operator_exception.class.php /usr/local/eyou/mail/app/lib/php/fastconfig/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/fastconfig'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/filed'
+Make Dir: /usr/local/eyou/mail/app/lib/php/filed/
+/usr/bin/install -c -m 664 -o root -g root em_filed_abstract.class.php /usr/local/eyou/mail/app/lib/php/filed/
+/usr/bin/install -c -m 664 -o root -g root em_filed_client.class.php /usr/local/eyou/mail/app/lib/php/filed/
+/usr/bin/install -c -m 664 -o root -g root em_filed_exception.class.php /usr/local/eyou/mail/app/lib/php/filed/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/filed'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/hash'
+Make Dir: /usr/local/eyou/mail/app/lib/php/hash/
+/usr/bin/install -c -m 664 -o root -g root em_hash_exception.class.php /usr/local/eyou/mail/app/lib/php/hash/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/hash'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/innerapi'
+Make Dir: /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_exception.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_auth.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_config.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_domain_basic.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_domain_key.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_mta_pop.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_auto_reply_black_list.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_auto_reply_white_list.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_basic.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_black_list.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_contacts.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_custom.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_filter.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_forwarding.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_key.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_mail.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_pop_acct.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_signature.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_simple_user_white_list.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_upload.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_in_adapter_upload_mail.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_out.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+/usr/bin/install -c -m 664 -o root -g root em_innerapi_out_exception.class.php /usr/local/eyou/mail/app/lib/php/innerapi/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/innerapi'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/language'
+Make Dir: /usr/local/eyou/mail/app/lib/php/language/
+/usr/bin/install -c -m 664 -o root -g root em_language_exception.class.php /usr/local/eyou/mail/app/lib/php/language/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/language'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/log'
+Make Dir: /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_exception.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_formatter_abstract.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_formatter_exception.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_formatter_simple.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_message_abstract.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_message_auth.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_message_exception.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_message_simple.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_shortcut.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_writer_abstract.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_writer_exception.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_writer_file.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_writer_logsvr.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_writer_stream.class.php /usr/local/eyou/mail/app/lib/php/log/
+/usr/bin/install -c -m 664 -o root -g root em_log_writer_syslog.class.php /usr/local/eyou/mail/app/lib/php/log/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/log'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/member'
+Make Dir: /usr/local/eyou/mail/app/lib/php/member/
+/usr/bin/install -c -m 664 -o root -g root em_member_exception.class.php /usr/local/eyou/mail/app/lib/php/member/
+Install Dirs: auth operator property
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/member/auth'
+Make Dir: /usr/local/eyou/mail/app/lib/php/member/auth/
+/usr/bin/install -c -m 664 -o root -g root em_member_auth.class.php /usr/local/eyou/mail/app/lib/php/member/auth/
+/usr/bin/install -c -m 664 -o root -g root em_member_auth_exception.class.php /usr/local/eyou/mail/app/lib/php/member/auth/
+Install Dirs: condition
+make[4]: Entering directory `/home/libo/crane/trunk/src/lib/member/auth/condition'
+Make Dir: /usr/local/eyou/mail/app/lib/php/member/auth/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_auth_auth_auth.class.php /usr/local/eyou/mail/app/lib/php/member/auth/condition/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/lib/member/auth/condition'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/member/auth'
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/member/operator'
+Make Dir: /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_operator_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_operator_domain.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_operator_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_operator_group.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_operator_user.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_basic.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_basic_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_basic_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_basic_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_basic_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_basic_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_config_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_config_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_config_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_config_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_config_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_key.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_key_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_key_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_key_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_key_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_domain_key_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_group_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_acl.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_acl_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_acl_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_acl_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_acl_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_acl_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_black_list_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_black_list_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_black_list_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_black_list_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_black_list_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_white_list_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_white_list_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_white_list_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_white_list_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_auto_reply_white_list_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_basic.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_basic_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_basic_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_basic_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_basic_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_basic_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_black_list_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_black_list_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_black_list_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_black_list_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_black_list_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_config_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_config_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_config_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_config_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_config_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts_assoc.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts_extend.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts_group.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_contacts_key.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_custom.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_custom_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_custom_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_custom_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_custom_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_custom_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_fastconfig.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_fastconfig_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_fastconfig_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_forwarding_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_forwarding_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_forwarding_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_forwarding_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_filter_forwarding_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_folder_custom.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_folder_stat.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_forwarding_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_forwarding_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_forwarding_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_forwarding_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_forwarding_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_key.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_key_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_key_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_key_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_key_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_key_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_mail.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_mail_index.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_notice.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_notice_index.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_notice_state.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_notice_update_state.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_personal.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_personal_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_personal_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_personal_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_personal_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_personal_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_pop_acct.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_pop_acct_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_pop_acct_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_pop_acct_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_pop_acct_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_pop_acct_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_signature.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_signature_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_signature_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_signature_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_signature_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_signature_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_white_list_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_white_list_adapter_auto.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_white_list_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_white_list_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_operator_user_white_list_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/member/operator/
+Install Dirs: condition
+make[4]: Entering directory `/home/libo/crane/trunk/src/lib/member/operator/condition'
+Make Dir: /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_domain_basic_get_basic.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_domain_config_add_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_domain_config_del_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_domain_config_get_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_domain_config_mod_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_domain_get_deleted_domain_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_domain_get_domain_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_domain_key_get_alias.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_domain_key_get_key.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_acl_del_acl.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_acl_get_acl.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_acl_mod_acl.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_auto_reply_black_list_del_auto_reply_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_auto_reply_black_list_get_auto_reply_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_auto_reply_black_list_mod_auto_reply_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_auto_reply_white_list_del_auto_reply_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_auto_reply_white_list_get_auto_reply_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_auto_reply_white_list_mod_auto_reply_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_basic_get_basic.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_black_list_del_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_black_list_get_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_black_list_mod_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_config_add_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_config_del_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_config_get_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_config_mod_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_add_contacts.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_add_group.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_assoc_del_assoc.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_assoc_get_assoc.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_del_contacts.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_del_group.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_extend_del_extend.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_extend_get_extend.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_get_contacts.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_get_contacts_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_get_group.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_get_group_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_group_add_group.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_group_del_group.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_group_get_group.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_group_get_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_key_add_key.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_key_del_key.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_key_get_key.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_mod_contacts.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_contacts_mod_group.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_custom_get_custom.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_fastconfig_del_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_fastconfig_get_config.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_filter_del_filter.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_filter_forwarding_add_filter_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_filter_forwarding_del_filter_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_filter_forwarding_get_filter_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_filter_forwarding_mod_filter_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_filter_get_filter.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_filter_mod_filter.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_folder_custom_del_folder.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_folder_custom_get_folder.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_folder_custom_mod_folder.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_folder_stat_del_folder_stat.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_folder_stat_get_folder_stat.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_folder_stat_mod_folder_stat.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_forwarding_del_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_forwarding_get_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_forwarding_mod_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_get_deleted_user_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_get_user_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_key_get_alias.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_key_get_key.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_mail_index_del_mail_index.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_mail_index_get_mail_index.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_mail_index_mod_mail_index.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_notice_index_del_notice_index.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_notice_index_get_notice_index.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_notice_index_get_user_notice_index.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_notice_index_mod_notice_index.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_notice_state_del_notice_state.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_notice_state_del_user_notice_state.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_notice_state_mod_notice_state.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_notice_update_state_get_notice_update_state.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_notice_update_state_mod_notice_update_state.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_personal_get_personal.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_pop_acct_del_pop_acct.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_pop_acct_get_pop_acct.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_pop_acct_mod_pop_acct.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_signature_del_signature.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_signature_get_signature.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_signature_mod_signature.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_white_list_del_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_white_list_get_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+/usr/bin/install -c -m 664 -o root -g root em_condition_adapter_member_operator_user_white_list_mod_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/operator/condition/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/lib/member/operator/condition'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/member/operator'
+make[3]: Entering directory `/home/libo/crane/trunk/src/lib/member/property'
+Make Dir: /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_domain_basic.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_domain_config.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_domain_fastconfig.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_domain_key.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_exception.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_group_fastconfig.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_member_fastconfig_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_member_map.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_system_fastconfig.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_acl.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_auto_reply_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_auto_reply_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_basic.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_black_list.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_config.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_contacts_assoc.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_contacts_element.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_contacts_extend.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_contacts_group.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_contacts_key.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_custom.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_fastconfig.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_filter.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_filter_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_folder_custom.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_folder_stat.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_forwarding.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_key.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_mail_index.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_notice_index.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_notice_state.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_notice_update_state.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_personal.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_pop_acct.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_signature.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_white_list.class.php /usr/local/eyou/mail/app/lib/php/member/property/
+Install Dirs: format map
+make[4]: Entering directory `/home/libo/crane/trunk/src/lib/member/property/format'
+Make Dir: /usr/local/eyou/mail/app/lib/php/member/property/format/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_domain_config_format_adapter_default.class.php /usr/local/eyou/mail/app/lib/php/member/property/format/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_domain_config_format_adapter_logo_admin.class.php /usr/local/eyou/mail/app/lib/php/member/property/format/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_member_config_format_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/property/format/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_member_config_format_adapter_abstract_exception.class.php /usr/local/eyou/mail/app/lib/php/member/property/format/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_config_format_adapter_alert_expire.class.php /usr/local/eyou/mail/app/lib/php/member/property/format/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_config_format_adapter_default.class.php /usr/local/eyou/mail/app/lib/php/member/property/format/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_user_fastconfig_format_adapter_default.class.php /usr/local/eyou/mail/app/lib/php/member/property/format/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/lib/member/property/format'
+make[4]: Entering directory `/home/libo/crane/trunk/src/lib/member/property/map'
+Make Dir: /usr/local/eyou/mail/app/lib/php/member/property/map/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_member_config_map_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/member/property/map/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_member_config_map_adapter_abstract_exception.class.php /usr/local/eyou/mail/app/lib/php/member/property/map/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_member_config_map_adapter_domain_config.class.php /usr/local/eyou/mail/app/lib/php/member/property/map/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_member_config_map_adapter_user_config.class.php /usr/local/eyou/mail/app/lib/php/member/property/map/
+/usr/bin/install -c -m 664 -o root -g root em_member_property_member_config_map_adapter_user_fastconfig.class.php /usr/local/eyou/mail/app/lib/php/member/property/map/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/lib/member/property/map'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/lib/member/property'
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/member'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/memcache'
+Make Dir: /usr/local/eyou/mail/app/lib/php/memcache/
+/usr/bin/install -c -m 664 -o root -g root em_memcache_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/memcache/
+/usr/bin/install -c -m 664 -o root -g root em_memcache_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/memcache/
+/usr/bin/install -c -m 664 -o root -g root em_memcache_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/memcache/
+/usr/bin/install -c -m 664 -o root -g root em_memcache_adapter_memory.class.php /usr/local/eyou/mail/app/lib/php/memcache/
+/usr/bin/install -c -m 664 -o root -g root em_memcache_exception.class.php /usr/local/eyou/mail/app/lib/php/memcache/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/memcache'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/pager'
+Make Dir: /usr/local/eyou/mail/app/lib/php/pager/
+/usr/bin/install -c -m 664 -o root -g root Pager_Jumping_em.php /usr/local/eyou/mail/app/lib/php/pager/
+/usr/bin/install -c -m 664 -o root -g root em_pager_ajax.class.php /usr/local/eyou/mail/app/lib/php/pager/
+/usr/bin/install -c -m 664 -o root -g root em_pager_exception.class.php /usr/local/eyou/mail/app/lib/php/pager/
+/usr/bin/install -c -m 664 -o root -g root em_pager_tpl.class.php /usr/local/eyou/mail/app/lib/php/pager/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/pager'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/password'
+Make Dir: /usr/local/eyou/mail/app/lib/php/password/
+/usr/bin/install -c -m 664 -o root -g root em_password_exception.class.php /usr/local/eyou/mail/app/lib/php/password/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/password'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/searchmail'
+Make Dir: /usr/local/eyou/mail/app/lib/php/searchmail/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/searchmail'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/sequence'
+Make Dir: /usr/local/eyou/mail/app/lib/php/sequence/
+/usr/bin/install -c -m 664 -o root -g root em_sequence_exception.class.php /usr/local/eyou/mail/app/lib/php/sequence/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/sequence'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/serialize'
+Make Dir: /usr/local/eyou/mail/app/lib/php/serialize/
+/usr/bin/install -c -m 664 -o root -g root em_serialize_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/serialize/
+/usr/bin/install -c -m 664 -o root -g root em_serialize_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/serialize/
+/usr/bin/install -c -m 664 -o root -g root em_serialize_adapter_json.class.php /usr/local/eyou/mail/app/lib/php/serialize/
+/usr/bin/install -c -m 664 -o root -g root em_serialize_adapter_php.class.php /usr/local/eyou/mail/app/lib/php/serialize/
+/usr/bin/install -c -m 664 -o root -g root em_serialize_exception.class.php /usr/local/eyou/mail/app/lib/php/serialize/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/serialize'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/session'
+Make Dir: /usr/local/eyou/mail/app/lib/php/session/
+/usr/bin/install -c -m 664 -o root -g root em_session_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/session/
+/usr/bin/install -c -m 664 -o root -g root em_session_adapter_db.class.php /usr/local/eyou/mail/app/lib/php/session/
+/usr/bin/install -c -m 664 -o root -g root em_session_adapter_exception.class.php /usr/local/eyou/mail/app/lib/php/session/
+/usr/bin/install -c -m 664 -o root -g root em_session_adapter_memcache.class.php /usr/local/eyou/mail/app/lib/php/session/
+/usr/bin/install -c -m 664 -o root -g root em_session_exception.class.php /usr/local/eyou/mail/app/lib/php/session/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/session'
+make[2]: Entering directory `/home/libo/crane/trunk/src/lib/tempfile'
+Make Dir: /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_abstract.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_abstract_exception.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_compose_info.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_import_csv_fail.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_import_csv_success.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_mail_info.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_pop_cache.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_pop_cache_state.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_search_mail.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+/usr/bin/install -c -m 664 -o root -g root em_tempfile_adapter_upload_attach.class.php /usr/local/eyou/mail/app/lib/php/tempfile/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/lib/tempfile'
+make[1]: Leaving directory `/home/libo/crane/trunk/src/lib'
+make[1]: Entering directory `/home/libo/crane/trunk/src/shell'
+Make Dir: /usr/local/eyou/mail/app/bin/
+Install Dirs: cron exec utils
+make[2]: Entering directory `/home/libo/crane/trunk/src/shell/cron'
+Make Dir: /usr/local/eyou/mail/app/cron/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/shell/cron'
+make[2]: Entering directory `/home/libo/crane/trunk/src/shell/exec'
+Make Dir: /usr/local/eyou/mail/app/sbin/
+/usr/bin/install -c -m 755 -o root -g root check_sys_php.php /usr/local/eyou/mail/app/sbin/
+/usr/bin/install -c -m 755 -o root -g root check_system /usr/local/eyou/mail/app/sbin/
+/usr/bin/install -c -m 755 -o root -g root eyou_mail /usr/local/eyou/mail/app/sbin/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/shell/exec'
+make[2]: Entering directory `/home/libo/crane/trunk/src/shell/utils'
+/usr/bin/install -c -m 755 -o root -g root em_config /usr/local/eyou/mail/app/sbin/
+/usr/bin/install -c -m 755 -o root -g root em_control /usr/local/eyou/mail/app/sbin/
+make[2]: Leaving directory `/home/libo/crane/trunk/src/shell/utils'
+make[1]: Leaving directory `/home/libo/crane/trunk/src/shell'
+make[1]: Entering directory `/home/libo/crane/trunk/src/web'
+Install Dirs: php tpl
+make[2]: Entering directory `/home/libo/crane/trunk/src/web/php'
+Make Dir: /usr/local/eyou/mail/web/php/
+Install Dirs: inc user
+make[3]: Entering directory `/home/libo/crane/trunk/src/web/php/inc'
+Make Dir: /usr/local/eyou/mail/web/php/inc/
+/usr/bin/install -c -m 664 -o root -g root function_web.php /usr/local/eyou/mail/web/php/inc/
+make[3]: Leaving directory `/home/libo/crane/trunk/src/web/php/inc'
+make[3]: Entering directory `/home/libo/crane/trunk/src/web/php/user'
+Make Dir: /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_auth.class.php /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_base.class.php /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_blank.class.php /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_data.class.php /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_default.class.php /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_folder.class.php /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_login.class.php /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_logout.class.php /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_settings.class.php /usr/local/eyou/mail/web/php/user/
+/usr/bin/install -c -m 664 -o root -g root em_controller_action_template.class.php /usr/local/eyou/mail/web/php/user/
+make[3]: Leaving directory `/home/libo/crane/trunk/src/web/php/user'
+make[2]: Leaving directory `/home/libo/crane/trunk/src/web/php'
+make[2]: Entering directory `/home/libo/crane/trunk/src/web/tpl'
+Make Dir: /usr/local/eyou/mail/web/php/tpl/
+Install Dirs: public user
+make[3]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/
+Install Dirs: css fckeditor jquery js
+make[4]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/css'
+Make Dir: /usr/local/eyou/mail/web/php/tpl/public/css/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/css'
+make[4]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/
+/usr/bin/install -c -m 664 -o root -g root config_em.js /usr/local/eyou/mail/web/tpl/public/fckeditor/
+/usr/bin/install -c -m 664 -o root -g root fckconfig.js /usr/local/eyou/mail/web/tpl/public/fckeditor/
+Install Dirs: editor
+make[5]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/
+Install Dirs: dialog plugins skins
+make[6]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/dialog'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/dialog/
+/usr/bin/install -c -m 664 -o root -g root fck_image.html /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/dialog/
+make[6]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/dialog'
+make[6]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/plugins'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/plugins/
+Install Dirs: fck sign toggle
+make[7]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/plugins/fck'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/plugins/fck/
+/usr/bin/install -c -m 664 -o root -g root fckplugin.js /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/plugins/fck/
+make[7]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/plugins/fck'
+make[7]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/plugins/sign'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/plugins/sign/
+/usr/bin/install -c -m 664 -o root -g root fckplugin.js /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/plugins/sign/
+make[7]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/plugins/sign'
+make[7]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/plugins/toggle'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/plugins/toggle/
+/usr/bin/install -c -m 664 -o root -g root fckplugin.js /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/plugins/toggle/
+make[7]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/plugins/toggle'
+make[6]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/plugins'
+make[6]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/skins'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/
+Install Dirs: eyou
+make[7]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/skins/eyou'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/
+/usr/bin/install -c -m 664 -o root -g root fck_dialog.css /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/
+/usr/bin/install -c -m 664 -o root -g root fck_dialog_ie6.js /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/
+/usr/bin/install -c -m 664 -o root -g root fck_editor.css /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/
+/usr/bin/install -c -m 664 -o root -g root fck_strip.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/
+Install Dirs: images
+make[8]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/skins/eyou/images'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root dialog.sides.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root dialog.sides.png /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root dialog.sides.rtl.png /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root sprites.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root sprites.png /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root toolbar.arrowright.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root toolbar.buttonarrow.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root toolbar.collapse.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root toolbar.end.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root toolbar.expand.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root toolbar.separator.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+/usr/bin/install -c -m 664 -o root -g root toolbar.start.gif /usr/local/eyou/mail/web/tpl/public/fckeditor/editor/skins/eyou/images/
+make[8]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/skins/eyou/images'
+make[7]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/skins/eyou'
+make[6]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor/skins'
+make[5]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor/editor'
+make[4]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/fckeditor'
+make[4]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/jquery'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/jquery/
+/usr/bin/install -c -m 664 -o root -g root em_jquery.css /usr/local/eyou/mail/web/tpl/public/jquery/
+/usr/bin/install -c -m 664 -o root -g root em_jquery.js /usr/local/eyou/mail/web/tpl/public/jquery/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/jquery'
+make[4]: Entering directory `/home/libo/crane/trunk/src/web/tpl/public/js'
+Make Dir: /usr/local/eyou/mail/web/tpl/public/js/
+/usr/bin/install -c -m 664 -o root -g root copyright.js /usr/local/eyou/mail/web/tpl/public/js/
+make[4]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public/js'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/public'
+make[3]: Entering directory `/home/libo/crane/trunk/src/web/tpl/user'
+Make Dir: /usr/local/eyou/mail/web/php/tpl/user/
+Install Dirs: tpl1
+make[4]: Entering directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1'
+/usr/bin/install -c -m 664 -o root -g root base.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root blank.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root bookmark.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root bookmark.pub.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root compose.charset.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root compose.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root compose.origin.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root compose.print.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root contacts.export.iframe.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root contacts.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root contacts.import.iframe.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root findpwd.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root folder.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root listmail.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root listnotice.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root login.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root main.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root main.mlist.confirm.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root notice.read.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root resetpw.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root search.mail.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root settings.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+/usr/bin/install -c -m 664 -o root -g root upload_frame.html /usr/local/eyou/mail/template/tpl/user/tpl1/
+Install Dirs: css images js
+make[5]: Entering directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/css'
+Install Dirs: layout skins
+make[6]: Entering directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/css/layout'
+Make Dir: /usr/local/eyou/mail/web/tpl/user/tpl1/css/layout/
+/usr/bin/install -c -m 664 -o root -g root layout.css /usr/local/eyou/mail/web/tpl/user/tpl1/css/layout/
+make[6]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/css/layout'
+make[6]: Entering directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/css/skins'
+Make Dir: /usr/local/eyou/mail/web/tpl/user/tpl1/css/skins/
+/usr/bin/install -c -m 664 -o root -g root blue.css /usr/local/eyou/mail/web/tpl/user/tpl1/css/skins/
+/usr/bin/install -c -m 664 -o root -g root red.css /usr/local/eyou/mail/web/tpl/user/tpl1/css/skins/
+make[6]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/css/skins'
+make[5]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/css'
+make[5]: Entering directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/images'
+Make Dir: /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root btn.jpg /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root cr.jpg /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root eyou.jpg /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root find.jpg /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root icon-zuzhi.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root login.jpg /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root no-paper.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root pic.jpg /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root success.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root swfbutton.png /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root swfupload.swf /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root t_e_icon.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+/usr/bin/install -c -m 664 -o root -g root top.jpg /usr/local/eyou/mail/web/tpl/user/tpl1/images/
+Install Dirs: blue red
+make[6]: Entering directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/images/blue'
+Make Dir: /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root bodybg.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root icon1.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root icon2.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root loading.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root logo.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root rep_x.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root sidemenu.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root t_menu.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root test_paper.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+/usr/bin/install -c -m 664 -o root -g root toolbar_menu.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/blue/
+make[6]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/images/blue'
+make[6]: Entering directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/images/red'
+Make Dir: /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root bodybg.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root icon1.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root icon2.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root loading.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root logo.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root rep_x.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root sidemenu.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root t_menu.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root test_paper.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+/usr/bin/install -c -m 664 -o root -g root toolbar_menu.gif /usr/local/eyou/mail/web/tpl/user/tpl1/images/red/
+make[6]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/images/red'
+make[5]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/images'
+make[5]: Entering directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/js'
+Make Dir: /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root bookmark.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root cache_control.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root cjsv /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root common.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root compose.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root contacts.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root debug_timer.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root error_code /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root folder_control.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root history_control.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root lang.zh.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root listmail.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root listnotice.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root login.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root mail_rfc822.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root main.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root module_control.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root readnotice.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root resetpw.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root search_mail.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root settings.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root swfupload.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root upload.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+/usr/bin/install -c -m 664 -o root -g root url_control.js /usr/local/eyou/mail/web/tpl/user/tpl1/js/
+make[5]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1/js'
+make[4]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/user/tpl1'
+make[3]: Leaving directory `/home/libo/crane/trunk/src/web/tpl/user'
+make[2]: Leaving directory `/home/libo/crane/trunk/src/web/tpl'
+make[1]: Leaving directory `/home/libo/crane/trunk/src/web'
+Clean Makefile complete.
+U    lib/explain_db_schema/schema/db_schema.xml
+Updated to revision 4872.
+OK, Create ./Makefile complete.
+OK, Create ./shell/Makefile complete.
+OK, Create ./lib/phpDocumentor/docs/php_ext/Makefile complete.
+OK, Create ./lib/phpDocumentor/docs/php_ext/db4/Makefile complete.
+OK, Create ./lib/phpDocumentor/docs/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/templates/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/templates/phpedit/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/templates/phpedit/templates/media/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/templates/phpedit/templates/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/templates/DOM/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/templates/DOM/earthli/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/templates/DOM/earthli/templates/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/templates/earthli/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/frames/templates/earthli/templates/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/HTML/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Converters/Makefile complete.
+OK, Create ./lib/phpDocumentor/data/Makefile complete.
+OK, Create ./lib/phpDocumentor/Makefile complete.
+OK, Create ./lib/explain_db_schema/Makefile complete.
+OK, Create ./lib/explain_db_schema/schema/Makefile complete.
+OK, Create ./lib/create_db_xml/Makefile complete.
+OK, Create ./lib/phpdoc_log/Makefile complete.
+OK, Create ./lib/Makefile complete.
+OK, Create ./lib/phpunit_log/Makefile complete.
+OK, Create ./lib/path_struct/path/install/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/template/tpl/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/template/tpl_c/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/template/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/tmp/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/tmp/php/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/tmp/mail/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/opt/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/storage/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/log/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/cache/db/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/cache/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/cache/text/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/proc/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/admin/tpl1/js/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/admin/tpl1/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/admin/tpl1/images/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/admin/tpl1/css/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/admin/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/user/tpl1/js/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/user/tpl1/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/user/tpl1/images/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/user/tpl1/css/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/user/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/public/js/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/public/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/public/images/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/tpl/public/css/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/cabs/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/php/admin/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/php/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/php/user/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/php/interface/soap/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/php/interface/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/php/interface/get/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/web/php/inc/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/bin/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/lib/c/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/lib/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/lib/php/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/cron/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/etc/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/inc/static/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/inc/sys/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/inc/locale/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/inc/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/inc/language/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/inc/global/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/inc/conf/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/app/sbin/Makefile complete.
+OK, Create ./lib/path_struct/path/install/eyou/log_backup/Makefile complete.
+OK, Create ./lib/path_struct/Makefile complete.
+OK, Create ./inc/Makefile complete.
+OK, Create ./inc/conf/Makefile complete.
+OK, Create ./web/tpl/dbdoc/Makefile complete.
+OK, Create ./web/tpl/dbdoc/css/Makefile complete.
+OK, Create ./web/tpl/docs/Makefile complete.
+OK, Create ./web/tpl/Makefile complete.
+OK, Create ./web/tpl/pathdoc/Makefile complete.
+OK, Create ./web/tpl/pathdoc/images/Makefile complete.
+OK, Create ./web/Makefile complete.
+
+Create Makefile complete.
+Install Dirs: inc lib shell web
+make[1]: Entering directory `/home/libo/crane/trunk/tools/inc'
+Install Dirs: conf
+make[2]: Entering directory `/home/libo/crane/trunk/tools/inc/conf'
+/usr/bin/install -c -m 664 -o root -g root conf_path_devmail.php /usr/local/eyou/devmail/app/inc/conf/
+make[2]: Leaving directory `/home/libo/crane/trunk/tools/inc/conf'
+make[1]: Leaving directory `/home/libo/crane/trunk/tools/inc'
+make[1]: Entering directory `/home/libo/crane/trunk/tools/lib'
+/usr/bin/install -c -m 664 -o root -g root em_create_js_lang.class.php /usr/local/eyou/devmail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_create_makefile.class.php /usr/local/eyou/devmail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_create_static_version.class.php /usr/local/eyou/devmail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_smarty.class.php /usr/local/eyou/devmail/app/lib/php/
+Install Dirs: create_db_xml explain_db_schema path_struct phpDocumentor phpdoc_log phpunit_log
+make[2]: Entering directory `/home/libo/crane/trunk/tools/lib/create_db_xml'
+/usr/bin/install -c -m 664 -o root -g root eyou_lib_app_user_create_xml.class.php /usr/local/eyou/devmail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root eyou_lib_app_user_format_db_struct.class.php /usr/local/eyou/devmail/app/lib/php/
+make[2]: Leaving directory `/home/libo/crane/trunk/tools/lib/create_db_xml'
+make[2]: Entering directory `/home/libo/crane/trunk/tools/lib/explain_db_schema'
+/usr/bin/install -c -m 664 -o root -g root em_explain_db_schema.class.php /usr/local/eyou/devmail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_db_tables.class.tpl /usr/local/eyou/devmail/app/lib/php/
+Install Dirs: schema
+make[3]: Entering directory `/home/libo/crane/trunk/tools/lib/explain_db_schema/schema'
+/usr/bin/install -c -m 664 -o root -g root db_schema.xml /usr/local/eyou/devmail/app/lib/php/db_schema/
+make[3]: Leaving directory `/home/libo/crane/trunk/tools/lib/explain_db_schema/schema'
+make[2]: Leaving directory `/home/libo/crane/trunk/tools/lib/explain_db_schema'
+make[2]: Entering directory `/home/libo/crane/trunk/tools/lib/path_struct'
+/usr/bin/install -c -m 664 -o root -g root em_create_path_struct.class.php /usr/local/eyou/devmail/app/lib/php/
+make[2]: Leaving directory `/home/libo/crane/trunk/tools/lib/path_struct'
+make[2]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor'
+/usr/bin/install -c -m 664 -o root -g root README /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/
+Install Dirs: data docs
+make[3]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data'
+Install Dirs: Converters
+make[4]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters'
+Install Dirs: HTML
+make[5]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML'
+Install Dirs: frames
+make[6]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames'
+Install Dirs: templates
+make[7]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates'
+Install Dirs: DOM earthli phpedit
+make[8]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/DOM'
+Install Dirs: earthli
+make[9]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/DOM/earthli'
+Install Dirs: templates
+make[10]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/DOM/earthli/templates'
+/usr/bin/install -c -m 664 -o root -g root blank.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/DOM/earthli/templates/
+/usr/bin/install -c -m 664 -o root -g root header.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/DOM/earthli/templates/
+/usr/bin/install -c -m 664 -o root -g root index.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/DOM/earthli/templates/
+/usr/bin/install -c -m 664 -o root -g root top_frame.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/DOM/earthli/templates/
+make[10]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/DOM/earthli/templates'
+make[9]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/DOM/earthli'
+make[8]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/DOM'
+make[8]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/earthli'
+Install Dirs: templates
+make[9]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/earthli/templates'
+/usr/bin/install -c -m 664 -o root -g root blank.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/earthli/templates/
+/usr/bin/install -c -m 664 -o root -g root header.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/earthli/templates/
+/usr/bin/install -c -m 664 -o root -g root index.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/earthli/templates/
+/usr/bin/install -c -m 664 -o root -g root top_frame.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/earthli/templates/
+make[9]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/earthli/templates'
+make[8]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/earthli'
+make[8]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/phpedit'
+Install Dirs: templates
+make[9]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/phpedit/templates'
+/usr/bin/install -c -m 664 -o root -g root blank.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/phpedit/templates/
+/usr/bin/install -c -m 664 -o root -g root header.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/phpedit/templates/
+/usr/bin/install -c -m 664 -o root -g root index.tpl /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/phpedit/templates/
+Install Dirs: media
+make[10]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/phpedit/templates/media'
+/usr/bin/install -c -m 664 -o root -g root stylesheet.css /usr/local/eyou/devmail/opt/lib/php/data/PhpDocumentor/phpDocumentor/Converters/HTML/frames/templates/phpedit/templates/media/
+make[10]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/phpedit/templates/media'
+make[9]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/phpedit/templates'
+make[8]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates/phpedit'
+make[7]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames/templates'
+make[6]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML/frames'
+make[5]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters/HTML'
+make[4]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data/Converters'
+make[3]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/data'
+make[3]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/docs'
+Install Dirs: php_ext
+make[4]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/docs/php_ext'
+Install Dirs: db4
+make[5]: Entering directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/docs/php_ext/db4'
+/usr/bin/install -c -m 664 -o root -g root em_php_db4_doc.class.php /usr/local/eyou/devmail/app/lib/php/docs/php_ext/db4/
+make[5]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/docs/php_ext/db4'
+make[4]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/docs/php_ext'
+make[3]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor/docs'
+make[2]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpDocumentor'
+make[2]: Entering directory `/home/libo/crane/trunk/tools/lib/phpdoc_log'
+/usr/bin/install -c -m 664 -o root -g root em_doc_log.class.php /usr/local/eyou/devmail/app/lib/php/
+/usr/bin/install -c -m 664 -o root -g root em_doc_filter.ini /usr/local/eyou/devmail/app/lib/php/
+make[2]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpdoc_log'
+make[2]: Entering directory `/home/libo/crane/trunk/tools/lib/phpunit_log'
+/usr/bin/install -c -m 664 -o root -g root em_phpunit_log.class.php /usr/local/eyou/devmail/app/lib/php/
+make[2]: Leaving directory `/home/libo/crane/trunk/tools/lib/phpunit_log'
+make[1]: Leaving directory `/home/libo/crane/trunk/tools/lib'
+make[1]: Entering directory `/home/libo/crane/trunk/tools/shell'
+/usr/bin/install -c -m 755 -o root -g root add_test_member /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root analysis_doc_log /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root analysis_phpunit_log /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root build_install /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root build_test /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root create_dbcreation /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root create_dbdesc /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root create_dbdoc /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root create_dirs /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root create_docs /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root create_js /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root create_jsdoc /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root create_pathdoc /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root create_phpdoc /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root eyou_devmail /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root eyou_send /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root flush_memcache /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root install_ball /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root install_cm /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root install_svn_mail /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root jjcm /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root jjmake /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root jjsynclib /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root jjuselib /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root kkcm /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root replace /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root scp_devmail /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root scp_install_ball /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root scp_mail /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root send_check_code_partners /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root tar_devmail /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root tar_mail /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root untar_devmail /usr/local/eyou/devmail/app/bin/
+/usr/bin/install -c -m 755 -o root -g root untar_mail /usr/local/eyou/devmail/app/bin/
+make[1]: Leaving directory `/home/libo/crane/trunk/tools/shell'
+make[1]: Entering directory `/home/libo/crane/trunk/tools/web'
+Install Dirs: tpl
+make[2]: Entering directory `/home/libo/crane/trunk/tools/web/tpl'
+Install Dirs: dbdoc docs pathdoc
+make[3]: Entering directory `/home/libo/crane/trunk/tools/web/tpl/dbdoc'
+/usr/bin/install -c -m 664 -o root -g root index.html /usr/local/eyou/devmail/web/docs/dbdoc/
+/usr/bin/install -c -m 664 -o root -g root top.html /usr/local/eyou/devmail/web/docs/dbdoc/
+/usr/bin/install -c -m 664 -o root -g root main_default.html /usr/local/eyou/devmail/web/docs/dbdoc/
+/usr/bin/install -c -m 664 -o root -g root main.html /usr/local/eyou/devmail/template/tpl/dbdoc/
+/usr/bin/install -c -m 664 -o root -g root side.html /usr/local/eyou/devmail/template/tpl/dbdoc/
+Install Dirs: css
+make[4]: Entering directory `/home/libo/crane/trunk/tools/web/tpl/dbdoc/css'
+/usr/bin/install -c -m 664 -o root -g root layout.css /usr/local/eyou/devmail/web/docs/dbdoc/css/
+make[4]: Leaving directory `/home/libo/crane/trunk/tools/web/tpl/dbdoc/css'
+make[3]: Leaving directory `/home/libo/crane/trunk/tools/web/tpl/dbdoc'
+make[3]: Entering directory `/home/libo/crane/trunk/tools/web/tpl/docs'
+/usr/bin/install -c -m 664 -o root -g root index.html /usr/local/eyou/devmail/web/docs/
+make[3]: Leaving directory `/home/libo/crane/trunk/tools/web/tpl/docs'
+make[3]: Entering directory `/home/libo/crane/trunk/tools/web/tpl/pathdoc'
+/usr/bin/install -c -m 664 -o root -g root index.html /usr/local/eyou/devmail/template/tpl/pathdoc/
+Install Dirs: images
+make[4]: Entering directory `/home/libo/crane/trunk/tools/web/tpl/pathdoc/images'
+/usr/bin/install -c -m 664 -o root -g root line1.gif /usr/local/eyou/devmail/web/docs/pathdoc/images/
+/usr/bin/install -c -m 664 -o root -g root line3.gif /usr/local/eyou/devmail/web/docs/pathdoc/images/
+/usr/bin/install -c -m 664 -o root -g root line_right.gif /usr/local/eyou/devmail/web/docs/pathdoc/images/
+make[4]: Leaving directory `/home/libo/crane/trunk/tools/web/tpl/pathdoc/images'
+make[3]: Leaving directory `/home/libo/crane/trunk/tools/web/tpl/pathdoc'
+make[2]: Leaving directory `/home/libo/crane/trunk/tools/web/tpl'
+make[1]: Leaving directory `/home/libo/crane/trunk/tools/web'

@@ -1,0 +1,18 @@
+update 升级包目录结构
+
+|
+|------- (f)emu_upgrade
+   |
+   |---- (d)log
+   |
+   |---- (d)upgrade
+              |
+              |---- (f)list.php 补丁文件数组
+              |
+              |---- (f)list.txt 补丁文件列表 find .
+              |
+              |---- (d)mail
+                       |
+                       |---- 实际的补丁文件路径
+          
+

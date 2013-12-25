@@ -1,0 +1,24 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+EYOU="/usr/local/eyou/mail"
+EYOU_SBIN="$EYOU/app/sbin"
+EYOU_OPT="$EYOU/opt"
+EYOU_OPT_BIN="$EYOU_OPT/bin"
+
+PATH=$EYOU_SBIN:$EYOU_OPT_BIN:$HOME/bin:$HOME/my/tool/bash:$HOME/my/tool/php:$HOME/my/git/i_libo:$PATH:/usr/sbin
+export PATH
+unset USERNAME
+
+HOST=`hostname`
+PS1="[\u@${HOST:8} \W]\$ "
+export PS1
+
+# translate into chinese
+export LANG=zh_CN.utf8
+export EDITOR=vim

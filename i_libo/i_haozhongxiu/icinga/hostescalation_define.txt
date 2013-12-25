@@ -1,0 +1,43 @@
+define serviceescalation{
+	主机名
+	host_name 	
+
+	主机的组名,如果主机名指定将失效
+	hostgroup_name 	
+
+	联系人
+	contacts 	
+
+	联系人组名
+	contact_groups 	
+
+	首次发送通知的次数
+	first_notification 	
+
+	最后发送通知的次数
+	last_notification 	
+
+	通知间隔
+	notification_interval 	
+
+	该通知扩展的有效时间段
+	escalation_period
+	
+	该通知扩展有效的故障等级
+	escalation_options [w,u,c,r]
+	
+	该通知扩展的有效性条件
+	escalation_condition <condition> ( [ & / | ] <condition> )*
+
+	首次发宕机通知的次数
+	first_down_notification
+	
+	最后发送宕机通知的次数
+	last_down_notification
+	
+	首次发不可达通知的次数
+	first_unreachable_notification
+
+	最后发送不可达通知的次数	
+	last_unreachable_notification
+}

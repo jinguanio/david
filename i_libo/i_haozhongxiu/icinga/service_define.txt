@@ -1,0 +1,120 @@
+define service{
+	主机名
+	*host_name
+
+	主机的组名
+	hostgroup_name
+	
+	服务的名称
+	*service_description
+
+	显示名，如果没有指定默认是 host_name
+	display_name
+
+	服务的组名,多个组用逗号分隔
+	servicegroups
+
+	是否是可变的服务
+	is_volatile
+
+	检测告警等级的命令
+	check_command
+		
+	初始化的状态 o = UP, d = DOWN, and u = UNREACHABLE.
+	initial_state
+		
+	最大重试次数，当返回一个非正常状态的值的时候将做重试操作，如果该值设置大于1
+	*max_check_attempts
+		
+	检测间隔时间
+	check_interval
+
+	如果是重试检测操作，重试的时间间隔
+	retry_interval
+
+	主动检测是否开启
+	active_checks_enabled
+
+	被动检测是否开启
+	passive_checks_enabled
+
+	检测的时间段
+	*check_period
+
+	是否允许在服务每次检测后执行 ochp_command 定义指定的命令
+	obsess_over_service 
+
+	是否开启刷新检测，只有被动检测有效
+	check_freshness
+
+	刷新检测的阀值，如果超过这个阀值，被动仍没有数据就会触发刷新检测
+	freshness_threshold
+
+	事件处理定义的执行命令
+	event_handler
+
+	是否开启事件处理
+	event_handler_enabled
+
+	抖动感知的低阀值，当变化率低于这个值即认为是停止抖动
+	low_flap_threshold
+		
+	抖动感知的高阀值，当变化率超过这个值即认为是开始抖动
+	high_flap_threshold
+
+	是否开启抖动检测
+	flap_detection_enabled
+
+	抖动检测中考虑的状态  o = OK states, w = WARNING states, c = CRITICAL states, u = UNKNOWN
+	flap_detection_options
+
+	是否开启依赖检测
+	failure_prediction_enabled
+
+	是否要分析性能数据
+	process_perf_data
+
+	在重启的时候是否将相关的状态信息保留
+	retain_status_information
+
+	在重启的时候是否将相关的非状态信息保留
+	retain_nonstatus_information
+
+	联系人，多个用逗号分隔
+	contacts
+
+	联系人组，多个用逗号分隔
+	contact_groups
+
+	通知的时间间隔
+	*notification_interval 	
+
+	首次通知的时候延迟的时间
+	first_notification_delay
+
+	通知的时间段
+	*notification_period 	
+
+	通知的状态等级
+	notification_options  = w:WARNING  u:UNKNOWN c:CRITICAL r:RECOVER f:FLAPING s:DOWNTIME 
+
+	是否开启通知
+	notifications_enabled
+		
+	日志追踪的状态等级
+	stalking_options = o:OK w:WARNING  u:UNKNOWN c:CRITICAL
+
+	服务描述
+	notes
+
+	服务的描述信息 URL地址
+	notes_url
+		
+	action_url
+
+	服务的图标
+	icon_image
+
+	服务图标注释
+	icon_image_alt
+}

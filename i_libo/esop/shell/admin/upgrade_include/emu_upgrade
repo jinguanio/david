@@ -1,0 +1,956 @@
+#!/usr/local/eyou/mail/opt/php/bin/php
+<?php
+/**
+ * vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker:
+ *
+ * 邮件模块包升级程序
+ */
+
+/* 模块名 */
+$module = emu_upgrade::MN_ADMIN;
+
+date_default_timezone_set('Asia/Chongqing');
+define('PATH_EM', '/usr/local/eyou/mail');
+define('PATH_EM_BACKUP', PATH_EM . '/upgrade_backup');
+define('PATH_EM_TMP', PATH_EM . '/tmp');
+define('PATH_EM_APP', PATH_EM . '/app');
+define('PATH_EM_INC', PATH_EM_APP . '/inc');
+define('PATH_EM_CF_GLOBAL', PATH_EM_INC . '/conf/conf_global.php');
+
+define('PATH_BASE', dirname(realpath(__FILE__)));
+define('PATH_EMU_MAIL', PATH_BASE . '/mail');
+define('PATH_EMU_LOG', PATH_BASE . '/log');
+define('PATH_EMU_LOG_RELA', 'upgrade.log');
+define('PATH_EMU_LOG_FILE', PATH_EMU_LOG . '/' . PATH_EMU_LOG_RELA);
+
+define('PATH_EMU_UPGRADE_RELA',  'upgrade');
+define('PATH_EMU_UPGRADE_MAIL_RELA',  PATH_EMU_UPGRADE_RELA . '/mail');
+define('PATH_EMU_UPGRADE_MAIL', PATH_BASE . '/' . PATH_EMU_UPGRADE_MAIL_RELA);
+define('PATH_EMU_UPGRADE_LIST_RELA', PATH_EMU_UPGRADE_RELA . '/list.txt');
+define('PATH_EMU_UPGRADE_LIST', PATH_BASE . '/' . PATH_EMU_UPGRADE_LIST_RELA);
+define('PATH_EMU_UPGRADE_LISTPHP', PATH_BASE . '/' . PATH_EMU_UPGRADE_RELA . '/list.php');
+
+define('EMU_EXEC_USER', 'root');
+define('EMU_USER_EYOU', 'eyou');
+define('EMU_SIZE_MAX_BKDIR', 40960); // 单位 KB
+
+/* 模块版本号 */
+$version = require PATH_BASE . '/' . PATH_EMU_UPGRADE_RELA . '/version.php';
+
+/* 只允许替换 upgrade/mail 中如下目录的文件 */
+$upgrade_dir = require PATH_BASE . '/' . PATH_EMU_UPGRADE_RELA . '/upgrade_dir.php';
+
+/* 依赖关系 */
+$depends = require PATH_BASE . '/' . PATH_EMU_UPGRADE_RELA . '/depends.php';
+
+class emu_upgrade
+{
+    // {{{ consts
+
+    const LOG_ECHO = 1;
+    const LOG_FILE = 2;
+
+    const MN_MAIN = 'main';
+    const MN_SYS = 'sys';
+    const MN_MTA = 'mta';
+    const MN_USER = 'user';
+    const MN_ADMIN = 'admin';
+
+    const MK_SYS = 's';
+    const MK_MTA = 'm';
+    const MK_USER = 'u';
+    const MK_ADMIN = 'a';
+
+    // }}} end consts
+    // {{{ members
+
+    protected $__module = null;
+    protected $__module_version = null;
+    protected $__version = null;
+    protected $__version_main = null;
+    protected $__depends = array();
+    protected $__upgrade_dir = array();
+    protected $__log_path = null;
+
+    // }}} end members
+    // {{{ functions
+    // {{{ public function __construct()
+
+    /**
+     * 构造函数
+     */
+    public function __construct($module, $version, $depends, $upgrade_dir)
+    {
+        $module_map = $this->_get_module_map();
+        if (!isset($module_map['name'][$module])) {
+            throw new exception("模块名配置错误, 请联系研发人员修改升级包脚本.");
+        }
+        if (!is_int($version)) {
+            throw new exception("版本配置错误, 请联系研发人员修改升级包脚本.");
+        }
+        if (!isset($depends[self::MN_MAIN])) {
+            throw new exception("无法从 depends 中获取 main 版本, 请联系研发人员修改升级包脚本.");
+        }
+
+        $this->__module = $module;
+        $this->__version = $version;
+
+        $this->__module_version = $this->__module . '-u' . $this->__version;
+        $this->__depends = $this->__version;
+        $this->__upgrade_dir = $upgrade_dir;
+
+
+        $this->__version_main = $depends[self::MN_MAIN];
+    }
+
+    // }}}
+    // {{{ public function get_exec_user()
+
+    /**
+     * 获取脚本的用户
+     *
+     * @return string|boolean 如果获取成功则返回用户名 | 如果转换失败则返回 false
+     */
+    public function get_exec_user()
+    {
+        $array_user = posix_getpwuid(posix_getuid());
+        if (false === $array_user) {
+            return false;
+        }
+
+        return $array_user['name'];
+    }
+
+    // }}}
+    // {{{ public function color_red()
+
+    /**
+     * 把字符串变成红色
+     *
+     * @param string $str 需要变色的字符串
+     * @return string 变色之后的字符串
+     */
+    public function color_red($str)
+    {
+        return pack('H*', '1b5b303b33316d') . $str . pack('H*', '1b5b306d');
+    }
+
+    // }}}
+    // {{{ public function color_green()
+
+    /**
+     * 把字符串变成红色
+     *
+     * @param string $str 需要变色的字符串
+     * @return string 变色之后的字符串
+     */
+    public function color_green($str)
+    {
+        return pack('H*', '1b5b303b33326d') . $str . pack('H*', '1b5b306d');
+    }
+
+    // }}}
+    // {{{ public function get_content_crlf()
+
+    /**
+     * 获取一段字符串内容的换行是 \n or \r\n or \r
+     *
+     * @param string $content 内容
+     * @return string|boolean 如果找到了换行字符串 \n or \r\n or \r, 如果没有找到则返回 false
+     */
+    public function get_content_crlf($content)
+    {
+        if (false !== strpos($content, "\r\n")) {
+            return "\r\n";
+        }
+        if (false !== strpos($content, "\n")) {
+            return "\n";
+        }
+        if (false !== strpos($content, "\r")) {
+            return "\r";
+        }
+        return false;
+    }
+
+    // }}}
+    // {{{ public function check_exec_user()
+
+    /**
+     * 检查脚本的用户是否正确
+     *
+     * @param string $user 期望的用户
+     * @return void 用户不正确抛异常
+     * @throw exception
+     */
+    public function check_exec_user($user = EMU_EXEC_USER)
+    {
+        if ($user !== $this->get_exec_user()) {
+            throw new exception("检测到本脚本运行用户身份不是 $user, 必须以 $user 身份运行.");
+        }
+    }
+
+    // }}}
+    // {{{ public function mkdir_log()
+
+    public function mkdir_log()
+    {
+        if (!$this->_auto_mkdir(PATH_EMU_LOG)) {
+            throw new exception('创建日志目录失败, 请检查目录权限和脚本执行权限. 日志目录: ' . PATH_EMU_LOG);
+        }
+    }
+
+    // }}}
+    // {{{ public function log()
+
+    public function log($res, $log, $mode = null)
+    {
+        $this->_log($res, $log, $mode);
+    }
+
+    // }}}
+    // {{{ public function get_list_php()
+
+    public function get_list_php()
+    {           
+        $path = PATH_EMU_UPGRADE_LISTPHP;
+        if (!file_exists($path)) {
+            return array();
+        }   
+
+        return require $path;
+    }
+
+    // }}}  
+    // {{{ protected function _auto_mkdir()
+
+    protected function _auto_mkdir($dir)
+    {
+        if (!is_dir($dir) && !mkdir($dir, 0755, true) && !is_dir($dir)) {
+            return false;
+        }
+        return true;
+    }
+
+    // }}}
+    // {{{ protected function _auto_chown()
+
+    protected function _auto_chown($path, $owner, $is_rec = false)
+    {
+        $cmd = 'chown ' . escapeshellarg($owner) . ':' . escapeshellarg($owner) . ' ' . escapeshellarg($path);
+        $cmd .= $is_rec ? ' -R' : '';
+
+        $output = array();
+        $retval = null;
+        exec($cmd, $output, $retval);
+        return !$retval;
+    }
+
+    // }}}
+    // {{{ protected function _copy_r()
+
+    protected function _copy_r($from, $to)
+    {
+        $cmd = "cp -r " . escapeshellarg($from) . ' ' . escapeshellarg($to);
+
+        $output = array();
+        $retval = null;
+        exec($cmd, $output, $retval);
+        return !$retval;
+    }
+
+    // }}}
+    // {{{ protected function _copy_r_wid()
+
+    protected function _copy_r_wid($from, $wildcard, $to)
+    {
+        $cmd = "cp -r " . escapeshellarg($from) . '/' . $wildcard . ' ' . escapeshellarg($to);
+
+        $output = array();
+        $retval = null;
+        exec($cmd, $output, $retval);
+        return !$retval;
+    }
+
+    // }}}
+    // {{{ protected function _get_list()
+
+    protected function _get_list(array $list)
+    {
+        $list_file = array();
+        $list_dir = array();
+        foreach ($list as $key => $value) {
+            if ('f' === $value) {
+                $list_file[] = $key;
+            } else if ('d' === $value) {
+                $list_dir[] = $key;
+            }
+        }
+
+        return array('f' => $list_file, 'd' => $list_dir);
+    }
+
+    // }}}
+    // {{{ protected function _get_log_path()
+
+    protected function _get_log_path()
+    {
+        $path_log_file = PATH_EMU_LOG_FILE;
+
+        if (isset($this->__log_path)) {
+            return $this->__log_path;
+        }
+
+        $path_log_dir = PATH_EMU_LOG;
+        if (!is_dir($path_log_dir)) {
+            return $path_log_file;
+        }
+
+        $dh = opendir($path_log_dir);
+        if (!$dh) {
+            return $path_log_file;
+        }
+        $array_file = array();
+        while (($file = readdir($dh)) !== false) {
+            if (!trim($file, '.')) {
+                continue;
+            }
+            if (0 !== strpos($file, PATH_EMU_LOG_RELA)) {
+                continue;
+            }
+            $array_file[] = $file;
+        }
+        closedir($dh);
+
+        if (!$array_file) {
+            $path_log_file .= '.1';
+            $this->__log_path = $path_log_file;
+            return $path_log_file;
+        }
+
+        $array_num = array();
+        foreach ($array_file as $this_file) {
+            $index = strrpos($this_file, '.');
+            $num_postfix = substr($this_file, $index + 1);
+            if (ctype_digit($num_postfix)) {
+                $array_num[] = $num_postfix;
+            }
+        }
+
+        if (!$array_num) {
+            $path_log_file .= '.1';
+            $this->__log_path = $path_log_file;
+            return $path_log_file;
+        }
+
+        $num_next = max($array_num) + 1;
+
+        $path_log_file .= '.' . $num_next;
+        $this->__log_path = $path_log_file;
+        return $path_log_file;
+    }
+
+    // }}}
+    // {{{ protected function _log()
+
+    protected function _log($res, $log, $mode = null)
+    {
+        if (!isset($mode)) {
+            $mode = self::LOG_ECHO | self::LOG_FILE;
+        }
+
+        if (!is_string($log)) {
+            $log = str_replace(array("\r", "\n"), array('', ''), var_export($log, true));
+        }
+
+        $res_str = $res ? '+' : '-';
+        $res_str = is_int($res) ? $res : $res_str;
+        $res_str_echo = $res ? $this->color_green($res_str) : $this->color_red($res_str);
+        $log_prefix = $res ? 'OK' : 'ERROR';
+        $log_prefix = is_int($res) ? 'WARNING' : $log_prefix;
+        $log_prefix_echo = $res ? $this->color_green($log_prefix) : $this->color_red($log_prefix);
+
+        $log_file = $res_str . ' ' . date('c') . ' ' . $log_prefix . ' ' . $log . "\n";
+        $log_echo = $res_str_echo . ' ' . date('c') . ' ' . $log_prefix_echo . ' ' . $log . "\n";
+
+        if (self::LOG_FILE & $mode) {
+            $file_path = $this->_get_log_path();
+            error_log($log_file, 3, $file_path);
+        }
+        if (self::LOG_ECHO & $mode) {
+            echo $log_echo;
+        }
+    }
+
+    // }}}
+    // {{{ protected function _get_module_map()
+
+    /**
+     * 获取 module 的 map 表
+     *
+     * @return array
+     */
+    protected function _get_module_map()
+    {
+        $map =
+        array(
+            self::MN_SYS   => self::MK_SYS,
+            self::MN_MTA   => self::MK_MTA,
+            self::MN_ADMIN => self::MK_ADMIN,
+            self::MN_USER  => self::MK_USER,
+        );
+        return
+        array(
+            'name' => $map,
+            'key'  => array_flip($map),
+        );
+    }
+
+    // }}}
+    // {{{ protected function _get_em_version()
+
+    protected function _get_em_version()
+    {
+        $path_cf = PATH_EM_APP . '/inc/conf/conf_global.php';
+        if (!is_file($path_cf)) {
+            throw new exception("没有找到配置文件 $path_cf, 请确认要升级的邮件系统已经正确安装.");
+        }
+
+        if (!is_readable($path_cf)) {
+            throw new exception("配置文件不可读取 $path_cf, 可能是配置文件的权限问题引起.");
+        }
+
+        $con_cf = file_get_contents($path_cf);
+        if (!$con_cf) {
+            throw new exception("配置文件 $path_cf 的内容是空的, 必须不能为空.");
+        }
+
+        $is_match = preg_match("/'EYOUM_VERSION'[^']+'([^']+)'/", $con_cf, $array_match);
+        if (!$is_match) {
+            throw new exception("无法从配置文件中找到版本号 $path_cf, 配置文件可能被非法修改过.");
+        }
+        return $array_match[1];
+    }
+
+    // }}}
+    // {{{ protected function _get_em_version_map()
+
+    protected function _get_em_version_map()
+    {
+        $version = $this->_get_em_version();
+        $map = $this->_get_module_map();
+
+        list($ver_main, $ver_module) = explode('_', $version) + array(null, null);
+
+        $ver_map = array(self::MN_MAIN => $ver_main);
+        foreach ($map['name'] as $name => $value) {
+            $ver_map[$name] = 0;
+        }
+
+        if (!$ver_module) {
+            return $ver_map;
+        }
+
+        $array_ver_module = explode('.', $ver_module);
+        foreach ($array_ver_module as $this_ver) {
+            if (2 > strlen($this_ver)) {
+                continue;
+            }
+
+            $m_key = substr($this_ver, 0, 1);
+            $m_ver = substr($this_ver, 1);
+
+            if (!ctype_digit($m_ver)) {
+                continue;
+            }
+
+            if (isset($map['key'][$m_key])) {
+                $ver_map[$map['key'][$m_key]] = intval($m_ver);
+            }
+        }
+
+        return $ver_map;
+    }
+
+    // }}}
+    // {{{ protected function _implode_version()
+
+    protected function _implode_version()
+    {
+        $module_map = $this->_get_module_map();
+        $ver_map = $this->_get_em_version_map();
+        $ver_main = $ver_map[self::MN_MAIN];
+        unset($ver_map[self::MN_MAIN]);
+
+        $ver_map[$this->__module] = $this->__version;
+
+        $array_ver_module = array();
+        foreach ($ver_map as $module => $ver) {
+            if ($ver) {
+                $array_ver_module[] = $module_map['name'][$module] . $ver;
+            }
+        }
+
+        $version = $ver_main;
+        if ($array_ver_module) {
+            $version .= '_' . implode('.', $array_ver_module);
+        }
+
+        return $version;
+    }
+
+    // }}}
+    // {{{ protected function _get_file_contents()
+
+    protected function _get_file_contents($path)
+    {
+        if (!is_file($path)) {
+            throw new exception("文件不存在");
+        }
+
+        if (!is_readable($path)) {
+            throw new exception("没有权限读取该文件");
+        }
+
+        $content = file_get_contents($path);
+        if (false === $content || null === $content) {
+            throw new exception("文件读取系统错误");
+        }
+        return $content;
+    }
+
+    // }}}
+    // {{{ protected function _get_first_line()
+
+    protected function _get_first_line($content)
+    {
+        $array_lines = explode("\n", $content, 2);
+        return $array_lines[0];
+    }
+
+    // }}}
+
+    // {{{ public function check_depends()
+
+    public function check_depends($version)
+    {
+        return true;
+        $version_get = $this->_get_version();
+        $version = (array) $version;
+        if (!in_array($version_get, $version)) {
+            throw new exception("检测到的邮件版本号是 $version_get, 不符合升级条件. 版本号必须是下列版本号之一: " . implode(', ', $version));
+        }
+
+        return $version_get;
+    }
+
+    // }}}
+    // {{{ public function check_list()
+
+    public function check_list(array $list)
+    {
+        $list = $this->_get_list($list);
+        $is_success = true;
+        $list_dir_fail = array();
+        $list_file_fail = array();
+
+        $list_file = $list['f'];
+        $list_dir = $list['d'];
+        foreach ($list_file as $file_path) {
+            $file_path = PATH_EM . '/' . $file_path;
+            if (!is_file($file_path)) {
+                $is_success = false;
+                $list_file_fail[] = $file_path;
+                continue;
+            }
+        }
+        foreach ($list_dir as $file_path) {
+            $file_path = PATH_EM . '/' . $file_path;
+            if (!is_dir($file_path)) {
+                $is_success = false;
+                $list_dir_fail[] = $file_path;
+                continue;
+            }
+        }
+
+        return
+        array(
+            'res' => $is_success,
+            'file_fail' => $list_file_fail,
+            'dir_fail' => $list_dir_fail,
+        );
+    }
+
+    // }}}
+    // {{{ public function check_upgrade_run()
+
+    public function check_upgrade_run()
+    {
+        $cmd = "ps -ef | grep '[/]eyou/mail/'";
+        $error = "请用 $cmd 命令仔细检查邮件系统启动状态. 当前邮件系统服务启动状态不正确, 必须在只启动 MySQL 数据库, "
+               . "其他全部停止的状态下进行升级. 提示: 如果您在 vi 一个目标文件也可能会引起此错误, 请退出 vi.";
+
+        $output = array();
+        $retval = null;
+        exec($cmd, $output, $retval);
+        if ($retval) {
+            throw new exception($error);
+        }
+
+        $self_shell = isset($_SERVER['argv'][0]) ? $_SERVER['argv'][0] : 'upgrade.php';
+
+        // 只允许启动 mysql
+        $is_ok = true;
+        foreach ($output as $line) {
+            if (false !== stripos($line, $self_shell)) {
+                continue;
+            }
+            if (false !== stripos($line, 'mysql')) {
+                continue;
+            }
+
+            $is_ok = false;
+        }
+
+        if (!$is_ok) {
+            throw new exception($error);
+        }
+    }
+
+    // }}}
+    // {{{ public function check_upgrade_file()
+
+    public function check_upgrade_file()
+    {
+        // 检查 upgrade 文件列表
+        $upgrade_list = PATH_EMU_UPGRADE_LIST;
+        $upgrade_list_rela = PATH_EMU_UPGRADE_LIST_RELA;
+        if (!is_file($upgrade_list)) {
+            throw new exception("没有找到升级文件列表 $upgrade_list_rela 可能是被误删除了, 无法继续进行升级.");
+        }
+        if (!is_readable($upgrade_list)) {
+            throw new exception("升级文件列表 $upgrade_list_rela 不可读, 请检查文件权限和脚本权限.");
+        }
+
+        $mail_upgrade = PATH_EMU_UPGRADE_MAIL;
+        $mail_upgrade_rela = PATH_EMU_UPGRADE_MAIL_RELA;
+        if (!is_dir($mail_upgrade)) {
+            throw new exception("没有找到升级文件目录 $mail_upgrade_rela 可能是被误删除了, 无法继续进行升级.");
+        }
+        if (!is_writeable($mail_upgrade)) {
+            throw new exception("升级文件目录 $mail_upgrade_rela 不可写, 请检查目录权限和脚本权限.");
+        }
+
+        $dir_pwd = getcwd();
+        if (false === $dir_pwd) {
+            throw new exception("获取当前目录失败, 系统错误, 请检查升级程序目录是否存在.");
+        }
+
+        if (false === chdir($mail_upgrade)) {
+            throw new exception("切换到 $mail_upgrade_rela 目录失败, 请检查目录是否存在.");
+        }
+
+        // 列升级文件列表
+        $cmd = 'find .';
+        $output = array();
+        $retval = null;
+        exec($cmd, $output, $retval);
+        if ($retval) {
+            throw new exception("获取升级文件列表失败, 请检查系统是否可以运行命令: $cmd, 当前目录: $mail_upgrade_rela");
+        }
+
+        // 切换回原目录
+        if (false === chdir($dir_pwd)) {
+            throw new exception("切换回到原目录 $dir_pwd 目录失败, 请检查目录是否存在.");
+        }
+
+        // 比对
+        $upgrade_lines = file($upgrade_list, FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+        if (array_diff($output, $upgrade_lines) || array_diff($upgrade_lines, $output)) {
+            throw new exception("升级文件列表不符合升级要求, 请检查 $upgrade_list_rela 文件是否被非法修改, $mail_upgrade_rela 目录中是否非法添加过文件.");
+        }
+    }
+
+    // }}}
+    // {{{ public function mkdir_backup()
+
+    public function mkdir_backup()
+    {
+        $backup_path = PATH_EM_BACKUP . '/upgrade/' . $this->__version_main . '/' . $this->__module_version . '/' . date('Ymd_His');
+        if (!$this->_auto_mkdir($backup_path)) {
+            throw new exception('创建备份目录失败, 请检查目录权限和脚本执行权限. 备份目录: ' . $backup_path);
+        }
+
+        return $backup_path;
+    }
+
+    // }}}
+    // {{{ public function mkdir_temp()
+
+    public function mkdir_temp()
+    {
+        $temp_path = PATH_EM_TMP . '/upgrade/' . $this->__version_main . '/' . $this->__module_version . '/' . date('Ymd_His');
+        if (!$this->_auto_mkdir($temp_path)) {
+            throw new exception('创建临时目录失败, 请检查目录权限和脚本执行权限. 临时目录: ' . $temp_path);
+        }
+
+        return $temp_path;
+    }
+
+    // }}}
+    // {{{ public function backup()
+
+    public function backup($file_list, $backup_path)
+    {
+        $list_backup = $this->_get_list($file_list);
+        $list_file = $list_backup['f'];
+        $list_dir = $list_backup['d'];
+
+        // 检查目录大小
+        foreach ($list_dir as $this_dir) {
+            $dir_path = PATH_EM . '/' . $this_dir;
+            if (!is_dir($dir_path)) {
+                $this->log(true, "跳过目录 $dir_path 大小检查, 目录不存在.", self::LOG_FILE);
+                continue;
+            }
+
+            $cmd = "du -s $dir_path";
+            $output = array();
+            $retval = null;
+            exec($cmd, $output, $retval);
+            if ($retval) {
+                throw new exception("检测目录 $dir_path 的总大小失败, 请检查系统是否可以运行命令: $cmd");
+            }
+            list($size_dir) = explode("\t", $output[0]);
+            if ($size_dir > EMU_SIZE_MAX_BKDIR) {
+                $size_max = EMU_SIZE_MAX_BKDIR;
+                throw new exception("检测大目录 $dir_path 的总大小 {$size_dir}KB 太大, 最大允许 {$size_max}KB, "
+                    . "请检查此目录里是否包含无用的大文件, 请清理之后再次执行升级程序.");
+            }
+        }
+
+        // 进行备份
+        foreach ($list_file as $this_file) {
+            $file_name = basename($this_file);
+            $file_dir = dirname($this_file);
+
+            $file_dir_from = PATH_EM . '/' . $file_dir;
+            $file_dir_to = $backup_path . '/' . $file_dir;
+            $file_path_from = $file_dir_from . '/' . $file_name;
+            $file_path_to = $file_dir_to . '/' . $file_name;
+
+            if (!file_exists($file_path_from)) {
+                $this->log(true, "跳过文件 $file_path_from 备份, 文件不存在.", self::LOG_FILE);
+                continue;
+            }
+
+            if (!$this->_auto_mkdir($file_dir_to)) {
+                throw new exception("创建备份目录 $file_dir_to 失败, 请检查目录权限和脚本执行权限.");
+            }
+
+            if (!$this->_copy_r($file_path_from, $file_path_to)) {
+                throw new exception("备份文件 $file_path_from 到 $file_path_to 失败, 请检查文件权限和脚本执行权限.");
+            }
+        }
+
+        foreach ($list_dir as $this_dir) {
+            $file_name = basename($this_dir);
+            $file_dir = dirname($this_dir);
+
+            $file_dir_from = PATH_EM . '/' . $file_dir;
+            $file_dir_to = $backup_path . '/' . $file_dir;
+            $file_path_from = $file_dir_from . '/' . $file_name;
+            $file_path_to = $file_dir_to . '/' . $file_name;
+
+            if (!is_dir($file_path_from)) {
+                $this->log(true, "跳过目录 $file_path_from 备份, 目录不存在.", self::LOG_FILE);
+                continue;
+            }
+
+            if (!$this->_auto_mkdir($file_dir_to)) {
+                throw new exception("创建备份目录 $file_dir_to 失败, 请检查目录权限和脚本执行权限.");
+            }
+
+            // 目标就是 $file_dir_to, 没有写错, 如果用 $file_path_to 可能会 cp 到子目录.
+            if (!$this->_copy_r($file_path_from, $file_dir_to)) {
+                throw new exception("备份目录 $file_path_from 到 $file_path_to 失败, 请检查目录权限和脚本执行权限.");
+            }
+        }
+    }
+
+    // }}}
+    // {{{ public function upgrade_config()
+
+    public function upgrade_config($temp_path)
+    {
+        $array_cf =
+            array(
+                '_upgrade_config_conf_global_php' => PATH_EM_CF_GLOBAL,
+            );
+
+        foreach ($array_cf as $method => $path_cf) {
+            try {
+                $content = $this->_get_file_contents($path_cf);
+            } catch (exception $e) {
+                throw new exception("读取配置文件 $path_cf 的内容失败, 原因: " . $e->getMessage());
+            }
+
+            $content = $this->$method($content);
+
+            try {
+                $this->_replace_file($content, $path_cf, $temp_path);
+            } catch (exception $e) {
+                throw new exception("修改配置文件 $path_cf 失败, 原因: " . $e->getMessage());
+            }
+
+            $this->log(true, "升级配置文件 $path_cf 成功");
+        }
+    }
+
+    // }}}
+    // {{{ public function upgrade_file()
+
+    public function upgrade_file()
+    {
+        $to = PATH_EM;
+        foreach ($this->__upgrade_dir as $dir) {
+            $from = PATH_EMU_UPGRADE_MAIL . '/' . $dir;
+            $to_up = $to . '/' . $dir;
+            if (!is_dir($from)) {
+                continue;
+            }
+
+            if (!$this->_copy_r($from, $to)) {
+                throw new exception("升级 $to_up 目录的文件失败, 请检查文件权限和脚本执行权限.");
+            }
+
+            $this->log(true, "升级 $to_up 目录的文件成功.");
+        }
+    }
+
+    // }}}
+    // {{{ protected function _get_content_crlf()
+
+    protected function _get_content_crlf($content)
+    {
+        $crlf = $this->get_content_crlf($content);
+        return false === $crlf ? "\n" : $crlf;
+    }
+
+    // }}}
+    // {{{ protected function _replace_file()
+
+    protected function _replace_file($content, $dest, $temp_path)
+    {
+        if (!is_dir($temp_path)) {
+            throw new exception("替换文件所需的临时目录 $temp_path 不存在");
+        }
+        if (!is_writeable($temp_path)) {
+            throw new exception("替换文件所需的临时目录 $temp_path 没有写权限");
+        }
+        if (!is_file($dest)) {
+            throw new exception("需要被替换的文件 $dest 不存在");
+        }
+        if (!is_writeable($dest)) {
+            throw new exception("需要被替换的文件 $dest 没有写权限");
+        }
+
+        $temp_file = $temp_path . '/' . basename($dest) . '.' . time() . '.' . mt_rand(0, 999999);
+        $is_save = file_put_contents($temp_file, $content);
+        if (false === $is_save || null === $is_save) {
+            throw new exception("保存需要替换的临时文件 $temp_file 系统错误");
+        }
+
+        $is_copy = copy($temp_file, $dest);
+        if (!$is_copy) {
+            throw new exception("替换文件 $dest 系统错误");
+        }
+    }
+
+    // }}}
+    // {{{ protected function _upgrade_config_conf_global_php()
+
+    protected function _upgrade_config_conf_global_php($content)
+    {
+        $cf = 'conf_global.php';
+        $version = $this->_implode_version();
+
+        // define('EYOUM_VERSION', '8.1.0.3.fix1_a1');
+        $pattern = "/define\('EYOUM_VERSION'\s*,\s*'[^']*'\s*\)/";
+        $name = 'EYOUM_VERSION';
+        if (!preg_match($pattern, $content)) {
+            throw new exception("$cf 的 $name 修改失败, 没有找到替换参照物.");
+        }
+
+        $this->log(true, "准备修改 $cf 的 $name", self::LOG_FILE);
+        $content_replace = preg_replace($pattern, "define('EYOUM_VERSION', '$version')", $content, -1, $num);
+        if ($num) {
+            $this->log(true, "$cf 的 $name 修改完成", self::LOG_FILE);
+            $content = $content_replace;
+        } else {
+            throw new exception("$cf 的 $name 修改失败, 没有找到替换参照物.");
+        }
+
+        return $content;
+    }
+
+    // }}}
+    // }}} end functions
+}
+
+
+try {
+    $emu = new emu_upgrade($module, $version, $depends, $upgrade_dir);
+} catch (exception $e) {
+    echo $e->getMessage(), "\n";
+    exit(1);
+}
+
+try {
+    // 创建日志目录
+    $emu->mkdir_log();
+} catch (exception $e) {
+    $emu->log(false, $e->getMessage(), emu_upgrade::LOG_ECHO);
+    exit(1);
+}
+
+try {
+    // 检查 root 运行
+    $exec_user = EMU_EXEC_USER;
+    $emu->check_exec_user($exec_user);
+    $emu->log(true, "执行用户身份 $exec_user 正确");
+
+    // 检查版本号
+    $ver_get = $emu->check_depends($version);
+    $emu->log(true, "邮件版本号 $ver_get 符合升级要求");
+
+    // 检查升级文件
+    $emu->check_upgrade_file();
+    $emu->log(true, "检查升级文件成功, 升级文件符合要求.");
+
+    // 创建临时目录
+    $backup_path = $emu->mkdir_backup();
+    $emu->log(true, "创建备份目录成功. 备份目录: $backup_path");
+
+    // 创建临时目录
+    $temp_path = $emu->mkdir_temp();
+    $emu->log(true, "创建临时目录成功. 临时目录: $temp_path");
+
+    // 进行备份
+    $list_php = $emu->get_list_php();
+    $emu->backup($list_php, $backup_path);
+    $emu->log(true, "备份成功. 备份目录: $backup_path");
+
+    // 升级配置文件
+    $emu->upgrade_config($temp_path);
+    $emu->log(true, "升级配置文件全部成功");
+
+    // 升级程序文件
+    $emu->upgrade_file();
+    $emu->log(true, "升级程序文件成功");
+} catch (exception $e) {
+    $emu->log(false, $e->getMessage());
+    $emu->log(false, "检测出要升级的系统包含严重的错误, 不符合升级要求, 不能继续升级, 具体错误请看上面列出的错误信息.");
+    exit(1);
+}
+
+exit(0);

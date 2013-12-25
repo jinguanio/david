@@ -1,0 +1,104 @@
+#!/usr/local/eyou/mail/opt/bin/node
+module.paths.unshift('/usr/local/eyou/mail/opt/lib/node_modules/');
+
+function run() {
+    var channel = 'io_stat';
+    var Server = require('http').createServer().listen(3000);
+    var Socket = require('socket.io').listen(Server).of('/'+channel);
+
+    var Url = require('url');
+    var QueryString = require('querystring');
+    var Events = new (require('events').EventEmitter)();
+
+    Server.on('request', function(req, res) {
+        var urlObj = Url.parse(req.url);
+
+        if (-1 === urlObj.pathname.indexOf('/socket.io')) {
+            var postData = '';
+
+            req.setEncoding('utf8');
+
+            req.on('data', function(postDataChunk) {
+                postData += postDataChunk;
+            });
+
+            req.on('end', function() {
+                var ioStat = JSON.parse(QueryString.parse(postData)['data']);
+                //Socket.log.info(ioStat);
+                Events.emit('notify', ioStat, req, res);
+            });
+        }
+    });
+
+    Events.on('notify', function(data, req, res) {
+        var clients = Socket.clients(channel);
+
+        //Socket.log.info(clients.length);
+        if (0 !== clients.length) {
+            clients.forEach(function(client) {
+                client.emit('get stat', data);
+                res.end(JSON.stringify({ res: 0 }));
+            });
+        } else {
+            res.end(JSON.stringify({ res: 0 }));
+        }
+    });
+
+    Socket.on('connection', function (client){
+        client.join(channel);
+    });
+}
+
+var runType = 1;
+switch(runType) {
+case 1:
+    run();
+    break;
+
+case 2:
+    var util = require('util');
+    try {
+        var daemon = require('daemon');
+    } catch (ex) {
+        util.puts("Couldn't find 'daemon' add-on, did you install it yet?");
+        process.exit(0);
+    }
+
+    var config = {
+        // Location of lockFile
+        lockFile: process.argv[3] || '/tmp/statd.pid',
+        // Location of logFile (or stdout if `process.argv[5]` exists).
+        outFile:  process.argv[4] || '/tmp/statd.log',
+        // Location of stderr file
+        errFile:  process.argv[5] || '/tmp/statd.err'
+    };
+
+    var args = process.argv;
+
+    // Handle start stop commands
+    switch(args[2]) {
+    case "stop":
+        daemon.kill(config.lockFile, function (err, pid) {
+            if (err) {
+                return util.puts('Error stopping push server: ' + err);
+            }
+
+            util.puts('Successfully stopped push server with pid: ' + pid);
+        });
+        break;
+
+    case "start":
+        run();
+
+        daemon.start(config.outFile, config.errFile);
+        daemon.lock(config.lockFile);
+
+        console.log('Successfully started push server daemon');
+        break;
+
+    default:
+        console.log('Usage: statd [start|stop]');
+        break;
+    }
+    break;
+}

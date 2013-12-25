@@ -1,0 +1,13 @@
+<script src="http://172.16.100.114:3000/socket.io/socket.io.js" type="text/javascript"></script>
+<script>
+    var chat = io.connect('http://172.16.100.114:3000/chat')
+    , news = io.connect('http://172.16.100.114:3000/news');
+
+    chat.on('connect', function () {
+        chat.emit('hi!');
+    });
+
+    news.on('news', function () {
+        news.emit('woot');
+    });
+</script>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>主页面A</title>
+<script type="text/javascript">
+function init(){
+	document.domain = '172.16.100.120';
+	alert('我是主框架');
+
+	var ifm = document.createElement('iframe');
+	ifm.src = 'http://172.16.100.110:3333/html/cross_domain/b.html';
+	ifm.name = 444;
+	ifm.id = 'b';
+	document.body.appendChild(ifm);
+};
+
+function callback(h){
+	alert('b->a: ' + h);
+};
+</script>
+</head>
+<body onload="init();">
+<p>我是主页框架，我的域是：172.16.100.120</p>
+</body>
+</html>

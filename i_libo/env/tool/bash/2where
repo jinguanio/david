@@ -1,0 +1,21 @@
+#!/bin/bash
+# 建立文件并设定访问权限
+
+#
+# 错误处理
+#
+
+myexp() {
+    if [ "$?" != "0" ]; then
+        if [ "$1" ]; then
+            echo "$1"
+        fi
+        echo "fatal, program has stopped."
+        exit $?
+    fi
+}
+
+#
+# 逻辑
+#
+find . ! -name 'Makefile*' -type f | xargs grep -rn --color "$1"

@@ -1,0 +1,581 @@
+#!/usr/local/eyou/devmail/opt/bin/php
+<?php
+define('PATH_BASE', dirname(realpath(__FILE__)));
+require_once PATH_BASE . '/build_base.class.php';
+
+define('TAR_PRE', 'eyoumail5-admin-');
+define('PKG_TYPE', 'upgrade');
+define('UPGRADE_FILES', 'upgrade_include');
+
+define('PATH_LOG', PATH_HOME . '/' . PATH_BACKUP . '/' . PKG_TYPE . "/log");
+define('PATH_INI', PATH_BASE . '/' . 'upgrade_ini.php');
+define('PATH_EYOUMAIL', PATH_EYOU . '/mail');
+
+class build_admin_grade extends build_base
+{
+    // {{{ members
+
+    private $__repo = 'elephant_admin'; // 仓库
+    private $__tag = '';                // 标签
+    private $__strip_tag = '';          // 去掉前缀的标签
+    private $__branch = '';             // 分支
+    private $__version = 0;             // 版本
+    private $__setting = '';            // 脚本配置文件
+    private $__custom_file = '';        // 自定义文件
+    private $__filter_key = '';         // 过滤关键字
+
+    private $__is_press = false;        // 是否打包压缩
+    private $__diff = array();          // diff git 文件
+    private $__diff_dest = '';          // diff 目标代码
+    private $__real_pkg_name = '';      // 实际升级包名称
+
+    private $__pre_tag = 'v';           // 标签前缀
+
+    // }}}
+    // {{{ functions
+    // {{{ public function __construct()
+
+    /**
+     * __construct 
+     * 
+     * @param array $params 
+     * @return void
+     * @throws em_exception
+     */
+    public function __construct($params)
+    {
+        $this->_set_params($params);
+
+        $this->__real_pkg_name = TAR_PRE . "{$this->__strip_tag}-u{$this->__version}";
+
+        $this->_log("start to build upgrade...", __LINE__);
+        $this->_echo("Start to build upgrade", false, false);
+    }
+
+    // }}}
+    // {{{ public function run()
+
+    /**
+     * run 
+     * 
+     * @return void
+     * @throws em_exception
+     */
+    public function run()
+    {
+        $this->_create_repo();
+        $this->_init_eyou();
+        $this->_make_code();
+        $this->_git_diff();
+        $this->_init_pkg();
+
+        if (isset($this->__is_press)) {
+            $this->_create_tar();
+        }
+
+        if ($this->__is_upload) {
+            $this->_upload_upgrade();
+        }
+    }
+
+    // }}}
+    // {{{ protected function _log()
+
+    /**
+     * 日志 
+     * 
+     * @param string $msg 
+     * @param int $line 
+     * @return void
+     */
+    protected function _log($msg, $line)
+    {
+        if (!is_dir(PATH_LOG) && !mkdir(PATH_LOG, 0755, true)) {
+            $this->_log("Fail: dir `{$this->__path_real_backup}` not exist", __LINE__);
+            $this->_echo("dir `{$this->__path_real_backup}` not exist", true, false);
+        }
+        $file = PATH_LOG . "/build_upgrade_{$this->__tag}.log";
+
+        parent::_log($msg, $line, $file);
+    }
+
+    // }}}
+    // {{{ protected function _help()
+
+    /**
+     * 帮助 
+     * 
+     * @param string $msg
+     * @return void
+     */
+    protected function _help($msg = null)
+    {
+        if ($msg) {
+            echo "$msg\n\n";
+        }
+
+        $file = './'.basename(__FILE__);
+        echo <<<HELP
+{$file}
+    -r 仓库名称，默认值：elephant_admin
+    -t v8.1.0.3 tag 标签名
+    -b dev_8.1.0 对比 branch，确定升级脚本中的文件
+    -v 1，默认值：1
+
+    -c file 自定义的升级包包含文件
+    -k 查找 diff 时过滤关键字
+    -h 帮助
+    -p 打包成 tar.gz
+    -u 上传到 ftp 服务器
+
+    -x 标签前缀，默认值：v
+
+HELP;
+        exit(1);
+    }
+
+    // }}}
+    // {{{ protected function _set_params()
+
+    /**
+     * 设置命令行参数 
+     * 
+     * @param array $params 
+     * @return void
+     */
+    protected function _set_params($params)
+    {
+        if (empty($params)) {
+            $this->_help('Required parameter `-t -b -v` missing');
+        }
+
+        if (isset($params['x'])) {
+            $this->__pre_tag = $params['x'];
+        }
+
+        if (isset($params['r'])) {
+            $this->__repo = $params['r'];
+        }
+
+        if (!isset($params['t']) || 0 !== strpos($params['t'], $this->__pre_tag)) {
+            $this->_help('Lack -m argument or -m wrong');
+        }
+        $this->__tag = $params['t'];
+        $this->__strip_tag = $this->_strip_tag();
+
+        if (!isset($params['b'])) {
+            $this->_help('Lack -b argument');
+        }
+        $this->__branch = $params['b'];
+
+        if (!isset($params['v'])) {
+            $this->_help('Lack -v argument');
+        }
+        $this->__version = $params['v'];
+
+        if (isset($params['c'])) {
+            $this->__custom_file = $params['c'];
+        }
+
+        if (isset($params['k'])) {
+            $this->__filter_key = $params['k'];
+        }
+
+        if (isset($params['h'])) {
+            $this->_help();
+        }
+
+        if (isset($params['u'])) {
+            $this->__is_upload = true;
+        }
+    }
+
+    // }}}
+    // {{{ protected function _strip_tag()
+
+    /**
+     * 去掉 tag 前缀 
+     * 
+     * @return string
+     */
+    protected function _strip_tag()
+    {
+        return str_replace($this->__pre_tag, '', $this->__tag);
+    }
+
+    // }}}
+    // {{{ protected function _create_repo()
+
+    /**
+     * 建立 git 仓库 
+     * 
+     * @return void
+     */
+    protected function _create_repo()
+    {
+        $msg = "build git repository";
+
+        if (!parent::_create_repo($this->__repo)) {
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_log('Msg: build git respository succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _make_code()
+
+    /**
+     * make 代码 
+     * 
+     * @return void
+     */
+    protected function _make_code()
+    {
+        $msg = 'make code';
+        chdir(PATH_HOME . "/" . PATH_BACKUP . "/{$this->__repo}");
+
+        $cmd = "git checkout -b {$this->__branch} origin/{$this->__branch}";
+        if (false === $this->_cmd($cmd)) {
+            $this->_log("Fail: checkout branch `{$this->__branch}` fail, Cmd: {$cmd}", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (!chdir("src")) {
+            $this->_log('Fail: `src` dir not exist', __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (false === $ret = $this->_cmd("./configure create")) {
+            $this->_log('Fail: create Makefile file fail', __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (false === $ret = $this->_cmd("sudo make install")) {
+            $this->_log('Fail: make source code fail', __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_log('Msg: make source code succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _git_diff()
+
+    /**
+     * 查找变更文件 
+     * 
+     * @return void
+     * @throws em_exception
+     */
+    protected function _git_diff()
+    {
+        $msg = 'git diff code';
+        chdir(PATH_HOME . "/" . PATH_BACKUP . "/{$this->__repo}/src");
+
+        $cmd = "git diff {$this->__tag} | grep '+++'";
+        if (!empty($this->__filter_key)) {
+            $cmd .= " | grep '{$this->__filter_key}'";
+        }
+
+        if (false === $diff = $this->_cmd($cmd)) {
+            $this->_log("Fail: diff code fail, Cmd: {$cmd}", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        foreach ($diff as &$d) {
+            $s = strpos($d, 'src/');
+            $d = substr($d, $s + 4);
+        }
+        unset($d);
+
+        $this->__diff = $diff;
+        if (empty($this->__diff)) {
+            $this->_echo('Not need upgrade !!', true, false);
+        }
+
+        foreach ($this->__diff as $d) {
+            if (!$ret = $this->_get_dest_file($d)) {
+                $this->_log("Fail: ini `upgrade_ini.php` setting fail", __LINE__);
+                $this->_echo($msg, true, 'fail');
+            }
+            $this->__diff_dest[] = $ret;
+        }
+
+        $this->_log('Msg: git diff code succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _init_pkg()
+
+    /**
+     * 初始化升级包 
+     * 
+     * @return void
+     */
+    protected function _init_pkg()
+    {
+        $msg = 'init upgrade pkg';
+
+        $path_pkg = PATH_HOME . "/" . PATH_BACKUP . "/" . PKG_TYPE . "/{$this->__real_pkg_name}"; 
+        if (is_dir($path_pkg)) {
+            if (false === $ret = $this->_cmd("rm -rf {$path_pkg}")) {
+                $this->_log("Fail: del dir fail", __LINE__);
+                $this->_echo($msg, true, 'fail');
+            }
+        }
+        if (!mkdir($path_pkg, 0755, true)) {
+            $this->_log("Fail: dir `{$path_pkg}` not exist", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+        chdir($path_pkg);
+
+        if (!copy(PATH_BASE . "/" . UPGRADE_FILES . "/emu_upgrade", "{$path_pkg}/emu_upgrade")) {
+            $this->_log("Fail: copy `emu_upgrade` shell fail, Cmd: " . PATH_BASE . "/" . UPGRADE_FILES . "/emu_upgrade .", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+        if (!chmod("{$path_pkg}/emu_upgrade", 0775)) {
+            $this->_log("Fail: chmod `emu_upgrade` fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (!is_dir("{$path_pkg}/log") && !mkdir("{$path_pkg}/log", 0755, true)) {
+            $this->_log("Fail: create `log` dir fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (!is_dir("{$path_pkg}/upgrade/mail") && !mkdir("{$path_pkg}/upgrade/mail", 0755, true)) {
+            $this->_log("Fail: create `upgrade` dir fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        // list.php/upgrade_dir.php/mail
+        $diff = $upgrade = array();
+        foreach ($this->__diff_dest as $d) {
+            $diff[$d] = 'f';
+
+            $m = substr($d, 0, strpos($d, '/'));
+            if (!in_array($m, $upgrade)) {
+                $upgrade[] = $m;
+            }
+
+            if (false === $this->_copy($d, "{$path_pkg}/upgrade/mail")) {
+                $this->_echo($msg, true, 'fail');
+            }
+        }
+        $cont = $this->_file_tpl('list', $diff);
+        if (!file_put_contents("$path_pkg/upgrade/list.php", $cont)) {
+            $this->_log("Fail: create `list.php` file fail, Data: " . json_encode($diff), __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+        $cont = $this->_file_tpl('upgrade_dir', $upgrade);
+        if (!file_put_contents("$path_pkg/upgrade/upgrade_dir.php", $cont)) {
+            $this->_log("Fail: create `list.php` file fail, Data: " . json_encode($diff), __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        // version.php
+        $cont = $this->_file_tpl('version');
+        if (!file_put_contents("$path_pkg/upgrade/version.php", $cont)) {
+            $this->_log("Fail: create `version.php` file fail, Data: {$cont}", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        // depends.php
+        $cont = $this->_file_tpl('depends');
+        if (!file_put_contents("$path_pkg/upgrade/depends.php", $cont)) {
+            $this->_log("Fail: create `depends.php` file fail, Data: {$cont}", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        // list.txt
+        chdir("{$path_pkg}/upgrade/mail");
+        if (false === $ret = $this->_cmd("find .")) {
+            $this->_log("Fail: cmd find in `{$path_pkg}/upgrade/mail` dir fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+        if (!file_put_contents("$path_pkg/upgrade/list.txt", implode(PHP_EOL, $ret))) {
+            $this->_log("Fail: create `list.txt` file fail, Data: " . json_encode($ret), __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_log('Msg: init upgrade package succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _get_dest_file()
+
+    /**
+     * 转换地址为实际目标地址 
+     * 
+     * @param string $file 
+     * @return mixed
+     */
+    protected function _get_dest_file($file)
+    {
+        $ini = require PATH_INI;
+
+        $dir = dirname($file);
+        $filename = basename($file);
+
+        foreach ($ini as $k => $v) {
+            if ($dir === $k) {
+                return "{$v}/{$filename}";
+            }
+        }
+
+        return false;
+    }
+
+    // }}}
+    // {{{ protected function _copy()
+
+    /**
+     * 拷贝文件 
+     * 
+     * @param string $file 包含路径
+     * @param string $dest 目标路径
+     * @return bool
+     */
+    protected function _copy($file, $dest)
+    {
+        $dir = dirname($file);
+        $filename = basename($file);
+
+        if (!is_dir("{$dest}/{$dir}") && !mkdir("{$dest}/{$dir}", 0755, true)) {
+            $this->_log("Fail: dir `{$dest}/{$dir}` not exist", __LINE__);
+            return false;
+        }
+
+        if (!copy(PATH_EYOUMAIL . "/{$file}", "{$dest}/{$dir}/{$filename}")) {
+            $this->_log("Fail: copy file `" . PATH_HOME."/".PATH_BACKUP."/{$this->__repo}/src/{$file}` fail.", __LINE__);
+            return false;
+        }
+
+        return true;
+    }
+
+    // }}}
+    // {{{ protected function _file_tpl()
+
+    /**
+     * upgrade 升级文件 
+     * 
+     * @param string $ftype 
+     * @param array $dir 
+     * @return void
+     */
+    protected function _file_tpl($ftype, $args = null)
+    {
+        switch ($ftype) {
+        case 'version':
+            $tpl = <<<TPL
+<?php
+return {$this->__version};
+\n
+TPL;
+            break;
+
+        case 'depends':
+            $tpl = <<<TPL
+<?php
+return array(
+     emu_upgrade::MN_MAIN => '{$this->__strip_tag}',
+);
+\n
+TPL;
+            break;
+
+        case 'upgrade_dir':
+            $u_dir = var_export($args, true);
+            $tpl = <<<TPL
+<?php
+return {$u_dir};
+\n
+TPL;
+            break;
+
+        case 'list':
+            $list = var_export($args, true);
+            $tpl = <<<TPL
+<?php
+return {$list};
+\n
+TPL;
+            break;
+        }
+
+        return $tpl;
+    }
+
+    // }}}
+    // {{{ protected function _create_tar()
+
+    /**
+     * 建立 tar 压缩包 
+     * 
+     * @return void
+     */
+    protected function _create_tar()
+    {
+        $msg = 'create tar.gz';
+
+        $path = PATH_HOME . "/" . PATH_BACKUP . "/" . PKG_TYPE;
+        if (!chdir($path)) {
+            $this->_log("Msg: change dir `{$path}` fail", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        if (false === $ret = $this->_cmd("tar zcf {$this->__real_pkg_name}.tar.gz {$this->__real_pkg_name}")) {
+            $this->_log("Fail: create tar.gz fail, Out: " . json_encode($ret), __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_log('Msg: create tar.gz succ', __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // {{{ protected function _upload_upgrade()
+
+    /**
+     * 上传 upgrade 包 
+     * 
+     * @return void
+     */
+    protected function _upload_upgrade()
+    {
+        $msg = 'upload upgrade';
+
+        $upgrade = @fopen(PATH_HOME . "/" . PATH_BACKUP . "/" . PKG_TYPE . "/{$this->__real_pkg_name}.tar.gz", 'r');
+        if (!$upgrade) {
+            $this->_log("Fail: upgrade pkg not exist", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+        $ftp_url = "ftp://" . FTP_SERVER . "/release/{$this->__real_pkg_name}.tar.gz";
+
+        $ret = $this->_upload_ftp($upgrade, $ftp_url);
+        fclose($upgrade);
+
+        if (0 !== $ret['err_no']) {   
+            $this->_log("Fail: upload upgrade fail, {$ret['err_msg']}", __LINE__);
+            $this->_echo($msg, true, 'fail');
+        }
+
+        $this->_clear_repo($this->__repo);
+        $this->_log("Msg: upload upgrade succ", __LINE__);
+        $this->_echo($msg, false, 'succ');
+    }
+
+    // }}}
+    // }}}
+}
+
+$params = getopt('r:t:b:v:c:k:x:hpu');
+$admin_upgrade = new build_admin_grade($params);
+$admin_upgrade->run();
+

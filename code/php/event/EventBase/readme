@@ -1,0 +1,1 @@
+测试 EventBase::loop 和 EventBase::exit 机制，中间可以添加其它逻辑

@@ -1,0 +1,16 @@
+define timeperiod{
+
+	时间段名称
+	*timeperiod_name		
+
+	时间段别名
+	*alias
+
+	时间段表达式 规则见 3.4.7. Timeperiod Definition
+	[weekday] timeranges
+
+	[exception] timeranges
+
+	排除指定的时间段
+	exclude [timeperiod1,timeperiod2,...,timeperiodn]
+}

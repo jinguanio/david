@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- eminfo postdata start -->
+<data>
+    <id>614b1c188295b488c030163f1d27d6e7</id>
+    <hname>front-1_sem.tsinghua.edu.cn</hname>
+    <jobid>JuW14665</jobid>
+    <jobts>1383793024</jobts>
+    <!-- 处理结果 0-成功 1-失败 -->
+    <result>0</result>
+    <act>{ mail: ['a@a.com', 'b@b.com'], sms: [ 1581234656, 13243458658 ] }</act>
+    <config>
+        <basic>
+            <name>http_svr</name>
+            <comment>HTTP Service Check</comment>
+            <freq>3min</freq>
+            <timeout>2min</timeout>
+            <errnum>2</errnum>
+            <!-- 是否进行系统快照 -->
+            <snap>0</snap>
+            <mail>crit warn unkn tmout</mail>
+            <post>crit warn unkn succ tmout</post>
+            <recevier>zhangguangzheng@eyou.net root_bbk@126.com</recevier>
+            <attsnap>0</attsnap>
+            <auto>none(crit/warn/unkn/tmout) </auto>
+            <handler>default_handler</handler>
+            <debug>0</debug>
+        </basic>
+        <udef>
+            <!-- 封装一个同一的结构便于程序理解 -->
+            [ { flag: 'addr_port', 'title': '端口', val: 'http:127.0.0.1:80 https:127.0.0.1:443'}]
+        </udef>
+    </config>
+    <info>
+        <level>ok</level>
+        <type>str</type>
+        <body>
+            <title>HTTP SVR OK </title>
+            <summary>2/2 http check succeed </summary>
+            <!-- color 属性可以不提供，按默认颜色显示 -->
+            <detail>[ {'color': '', title: '标题1','val': 'intel'}, {...} ]</detail>
+        </body>
+        <auto>
+            <!-- color 属性可以不提供，按默认颜色显示 -->
+            [ {'color': '', title: '标题1','val': 'intel'}, {...} ]
+        </auto>
+    </info>
+    <extra></extra>
+</data>

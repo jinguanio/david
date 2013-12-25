@@ -1,0 +1,2918 @@
+#!/bin/bash
+
+# vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker:
+#
+# 用于构建 base 的脚本
+#
+# @copyright  $_EYOUMBR_COPYRIGHT_$
+# @version    $_EYOUMBR_VERSION_$
+
+# {{{ init
+
+echo_usage ()
+{
+    echo "$0 mail 8.1.0 32|64 [nomv]"
+}
+
+if test "" = "$1" -o "" = "$2" -o "" = "$3"; then
+    echo_usage
+    exit 1
+fi
+
+if test "mail" != "$1" -a "dev" != "$1" -a "tool" != "$1"; then
+    echo_usage
+    exit 1
+fi
+
+if test "32" != "$3" -a "64" != "$3"; then
+    echo_usage
+    exit 1
+fi
+
+if test "nomv" == "$4" ; then
+    WILLMV=""
+else
+    WILLMV="yes"
+fi
+
+if test "64" = "$3"; then
+    OS_BIT="64"
+    OS64="yes"
+else
+    OS_BIT="32"
+    OS64=""
+fi
+
+if test "mail" = "$1"; then
+    OPT_TYPE_DIR="mail"
+elif test "dev" = "$1"; then
+    OPT_TYPE_DIR="devmail"
+else
+    OPT_TYPE_DIR="toolmail"
+fi
+
+VERSION_MAIN=$2
+OPT_TYPE=$1
+
+# }}} end init
+
+# {{{ config
+
+## path
+PATH_MAKE="/home/libo/build/make"
+PATH_TARBALL="$PATH_MAKE/tarball"
+PATH_TARBALL_PECL="$PATH_TARBALL/pecl"
+PATH_EXTRACT="$PATH_MAKE/extract"
+PATH_MAIL="/usr/local/eyou/$OPT_TYPE_DIR"
+PATH_MAIL_ETC="$PATH_MAIL/etc"
+PATH_MAIL_LOG="$PATH_MAIL/log"
+PATH_MAIL_TMP="$PATH_MAIL/tmp"
+PATH_INSTALL="$PATH_MAIL/opt"
+PATH_BIN="$PATH_INSTALL/bin"
+PATH_SBIN="$PATH_INSTALL/sbin"
+PATH_LIB="$PATH_INSTALL/lib"
+PATH_PKGC="$PATH_LIB/pkgconfig"
+PATH_LIB64="$PATH_INSTALL/lib64"
+PATH_INCLUDE="$PATH_INSTALL/include"
+PATH_ETC="$PATH_INSTALL/etc"
+PATH_LOGS="$PATH_INSTALL/logs"
+PATH_SHARE="$PATH_INSTALL/share"
+PATH_TMP="$PATH_INSTALL/tmp"
+NAME_PHP="php"
+PATH_PHP="$PATH_INSTALL/$NAME_PHP"
+PATH_PHP_BIN="$PATH_PHP/bin"
+PATH_PHP_LIB="$PATH_PHP/lib"
+PATH_PHP_LIBPHP="$PATH_PHP_LIB/php"
+PATH_PHP_INCLUDE="$PATH_PHP/include/php"
+NAME_PHPZTS="phpzts"
+PATH_PHPZTS="$PATH_INSTALL/$NAME_PHPZTS"
+PATH_PHPZTS_BIN="$PATH_PHPZTS/bin"
+PATH_PHPZTS_LIB="$PATH_PHPZTS/lib"
+PATH_PHPZTS_LIBPHP="$PATH_PHPZTS_LIB/php"
+PATH_PHPZTS_INCLUDE="$PATH_PHPZTS/include/php"
+PATH_ENV="$PATH_BIN:$PATH_INSTALL/mysql/bin:/usr/local/buildeyou/bin"
+
+## tmp
+DYNAMIC_BASE_PHP=$PATH_PHP
+
+## command
+CMD_UNTAR="tar -xf"
+CMD_UNTAR_BZ2="tar -jxf"
+CMD_UNTAR_GZ="tar -zxf"
+CMD_TAR_GZ="tar -zcf"
+CMD_MAKE="make"
+CMD_CMAKE="cmake"
+CMD_MAKE_J="make -j 2"
+CMD_CHOWN_ROOT="chown root:root -R"
+CMD_NOW="date +'%Y-%m-%d %H:%M:%S'"
+CMD_NOW_U="date +'%Y%m%d-%H%M%S'"
+
+## oth
+HR_STR="===================="
+
+# 8.1.0, 8.2.0
+ARRAY_BUILD_BALLS=(
+    ____ "_____" "__" pcre "pcre/pcre-7.9.tar.gz" "pcre-7.9"
+
+    ____ "_____" "__" libiconv "libiconv/libiconv-1.14.tar.gz" "libiconv-1.14"
+
+    ____ "_____" "__" curl "curl/curl-7.19.5.tar.gz" "curl-7.19.5"
+
+    ____ "_____" "__" gd "gd/gd-2.0.35.tar.gz" "gd-2.0.35"
+
+    ____ "_____" "__" imagemagick "ImageMagick/ImageMagick-6.6.9-1.tar.gz" "ImageMagick-6.6.9-1"
+
+    ____ "_____" "__" json_c "json/json-c-0.9-eyoumod.tar.gz" "json-c-0.9-eyoumod"
+
+    ____ "_____" "__" libmcrypt "libmcrypt/libmcrypt-2.5.8.tar.gz" "libmcrypt-2.5.8"
+
+    ____ "_____" "__" libevent "libevent/libevent-2.0.21-stable.tar.gz" "libevent-2.0.21-stable"
+
+    ____ "_____" "__" confuse "confuse/confuse-2.7.tar.gz" "confuse-2.7"
+
+    ____ "_____" "__" expat "expat/expat-2.1.0.tar.gz" "expat-2.1.0"
+
+    ____ "_____" "__" libwbxml "libwbxml/libwbxml-0.11.0.tar.gz" "libwbxml-0.11.0"
+
+    ____ "_____" "__" cronolog "cronolog/cronolog-1.6.2.tar.gz" "cronolog-1.6.2"
+
+    ____ "_____" "__" tidy "tidy/tidy-html5-git-2013.05.18-eyoumod.tar.gz" "tidy-html5-git-2013.05.18-eyoumod"
+
+    ____ "_____" "32" mysql_clientlib "mysql/mysql-clientlib-5.6.12-linux-glibc2.5-i686-eyoumod.tar.gz" "mysql-clientlib-5.6.12-linux-glibc2.5-i686-eyoumod"
+    ____ "_____" "64" mysql_clientlib "mysql/mysql-clientlib-5.6.12-linux-glibc2.5-x86_64-eyoumod.tar.gz" "mysql-clientlib-5.6.12-linux-glibc2.5-x86_64-eyoumod"
+
+    ____ "_____" "__" libnet "libnet/libnet-1.2-rc2.tar.gz" "libnet-1.2-rc2"
+
+    ____ "_____" "__" librelp "librelp/librelp-1.0.3.tar.gz" "librelp-1.0.3"
+
+    ____ "_____" "__" libestr "libestr/libestr-0.1.5.tar.gz" "libestr-0.1.5"
+
+    ____ "_____" "__" libee "libee/libee-0.4.1.tar.gz" "libee-0.4.1"
+
+    ____ "_____" "__" liblognorm "liblognorm/liblognorm-0.3.6.tar.gz" "liblognorm-0.3.6"
+
+    ____ "_____" "__" rsyslog "rsyslog/rsyslog-7.4.2.tar.gz" "rsyslog-7.4.2"
+
+    ____ "_____" "__" sqlite "sqlite/sqlite-autoconf-3070602.tar.gz" "sqlite-autoconf-3070602"
+
+    ____ "_____" "__" memcached "memcache/memcached-1.4.15.tar.gz" "memcached-1.4.15"
+
+    ____ "_____" "__" libmemcached "memcache/libmemcached-1.0.13.tar.gz" "libmemcached-1.0.13"
+
+    ____ "_____" "__" rrdtool "rrdtool/rrdtool-1.4.7.tar.gz" "rrdtool-1.4.7"
+
+    ____ "_____" "__" qrencode "qrencode/qrencode-3.4.1.tar.gz" "qrencode-3.4.1"
+
+    ____ "_____" "32" drizzle_clientlib "drizzle/drizzle-7.1.35-i386-clientlib-eyoumod.tar.gz" "drizzle-7.1.35-i386-clientlib-eyoumod"
+    ____ "_____" "64" drizzle_clientlib "drizzle/drizzle-7.1.35-x86_64-clientlib-eyoumod.tar.gz" "drizzle-7.1.35-x86_64-clientlib-eyoumod"
+
+    ____ "_____" "__" libdrizzle "drizzle/libdrizzle-5.1.4.tar.gz" "libdrizzle-5.1.4"
+
+    ____ "_____" "__" rabbitmq_c "rabbitmq/rabbitmq_c-git-2013.03.23.tar.gz" "rabbitmq_c-git-2013.03.23"
+
+    ____ "_____" "__" gearmand "gearmand/gearmand-0.33.tar.gz" "gearmand-0.33"
+
+    ____ "_____" "__" redis "redis/redis-2.6.16.tar.gz" "redis-2.6.16"
+
+    ____ "_____" "__" httpd "httpd/httpd-2.2.25.tar.gz" "httpd-2.2.25"
+
+    ____ "_____" "__" nginx "nginx/nginx-1.4.2.tar.gz" "nginx-1.4.2"
+
+    mail "_____" "__" crtmpserver "crtmpserver/crtmpserver-717-eyoumod.tar.gz" "crtmpserver-717-eyoumod"
+
+    mail "_____" "32" yamdi "crtmpserver/yamdi-1.8-linux-i386-binary.tar.gz" "yamdi-1.8-linux-i386-binary"
+    mail "_____" "64" yamdi "crtmpserver/yamdi-1.8-linux-x86_64-binary.tar.gz" "yamdi-1.8-linux-x86_64-binary"
+
+    mail "_____" "__" node "node/node-v0.10.18.tar.gz" "node-v0.10.18"
+
+    mail "_____" "__" npm "npm/npm.tgz" "npm"
+
+    mail "_____" "32" libkav "kav/libkav-8.1.3-rhel5.i386.tar.gz" "libkav-8.1.3-rhel5.i386"
+    mail "_____" "64" libkav "kav/libkav-8.1.3-rhel5.x86_64.tar.gz" "libkav-8.1.3-rhel5.x86_64"
+
+    ____ "_____" "__" php54 "php/php-5.4.20.tar.gz" "php-5.4.20"
+
+    ____ "_____" "__" pear "pear/pear.tgz" "pear"
+
+    ____ "_____" "__" pecl "pecl/pecl.tgz" "pecl"
+
+    ____ "_____" "__" phpzts54 "php/php-5.4.20.tar.gz" "php-5.4.20"
+
+    ____ "_____" "__" pearzts "pear/pear.tgz" "pear"
+
+    ____ "_____" "__" peclzts "pecl/pecl.tgz" "pecl"
+
+    ____ "_____" "__" ganglia "ganglia/ganglia-3.5.0-eyoumod.tar.gz" "ganglia-3.5.0-eyoumod"
+)
+
+ARRAY_BUILD_BALLS_PECL=(
+    mail "_____" "__" pecl_newt "newt/newt-1.2.6-eyoumod.tgz" "newt-1.2.6-eyoumod"
+    ____ "_____" "__" pecl_xdebug "xdebug/xdebug-2.2.3.tgz" "xdebug-2.2.3"
+    # event 嵌入 PHP 编译会与 pecl http 冲突
+    ____ "_____" "__" pecl_event "event/event-1.7.8.tgz" "event-1.7.8"
+    ____ "_____" "__" pecl_rrd "rrd/rrd-1.1.1.tgz" "rrd-1.1.1"
+)
+
+ARRAY_BUILD_BALLS_PECL_ZTS=(
+    mail "_____" "__" pecl_newt "newt/newt-1.2.6-eyoumod.tgz" "newt-1.2.6-eyoumod"
+    ____ "_____" "__" pecl_xdebug "xdebug/xdebug-2.2.3.tgz" "xdebug-2.2.3"
+    # event 嵌入 PHP 编译会与 pecl http 冲突
+    ____ "_____" "__" pecl_event_zts "event/event-1.7.8.tgz" "event-1.7.8"
+)
+
+ARRAY_PECL_EXT=(
+    memcached "memcached/memcached-2.1.0.tgz" "memcached-2.1.0"
+    dio       "dio/dio-0.0.7.tgz" "dio-0.0.7"
+    apc       "APC/APC-3.1.13.tgz" "APC-3.1.13"
+    imagick   "imagick/imagick-3.1.0RC2.tgz" "imagick-3.1.0RC2"
+    gearman   "gearman/gearman-1.0.3.tgz" "gearman-1.0.3"
+    http      "pecl_http/pecl_http-1.7.6.tgz" "pecl_http-1.7.6"
+    qrencode  "qrencode/qrencode-0.4.tar.bz2" "qrencode-0.4"
+    libevent  "libevent/libevent-0.1.0.tgz" "libevent-0.1.0"
+    wbxml     "wbxml/wbxml-1.0.3-eyoumod.tgz" "wbxml-1.0.3-eyoumod"
+    amqp      "amqp/amqp-1.0.10.tgz" "amqp-1.0.10"
+    pthreads  "pthreads/pthreads-0.0.45.tgz" "pthreads-0.0.45"
+    redis     "redis/redis-2.2.4.tgz" "redis-2.2.4"
+    embase    "embase/embase-0.0.3.tgz" "embase-0.0.3"
+)
+
+# }}} end config
+
+# {{{ global vars
+
+PATH_PWD=`pwd`
+export PATH="$PATH_ENV:$PATH"
+
+# }}} end global vars
+
+# {{{ global functions
+
+check_return_exit ()
+{
+    if ! test 0 = $?; then
+        __tmp_echo_mv=""
+        if test -d $PATH_MAIL; then
+            eval "__tmp_time_now_u=`$CMD_NOW_U`"
+
+            if test "$WILLMV"; then
+                __tmp_path_mail_opt_bak="$PATH_MAIL.opt.$__tmp_time_now_u"
+                mv $PATH_MAIL $__tmp_path_mail_opt_bak
+                __tmp_echo_mv=", mv $PATH_MAIL to $__tmp_path_mail_opt_bak"
+            fi
+        fi
+
+        echo ""
+        echo "!!!!!!!!!! Error, will exit$__tmp_echo_mv !!!!!!!!!!"
+        echo ""
+
+        exit $?
+    fi
+}
+
+cd_pwd ()
+{
+    cd $PATH_PWD
+}
+
+# 检查是否是 .{0,}, 如果是返回 0, 否返回 1
+check_match_all ()
+{
+    _tmp_grep_res=`echo "$1" | grep "^_\+$"`
+
+    if test "$_tmp_grep_res"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# }}} end global functions
+
+# {{{ main functions
+
+build_balls ()
+{
+    _tmp_ball_opt_type=""
+    _tmp_ball_version=""
+    _tmp_ball_os_bit=""
+    _tmp_ball_name=""
+    _tmp_ball_tar=""
+    _tmp_ball_dir=""
+
+    nb=0
+    for ib in "$@"; do
+        let "nb += 1"
+
+        rm -rf $PATH_EXTRACT/*
+
+        let "nb_mod = nb % 6"
+
+        if test 1 = $nb_mod; then
+            # mail / dev / tool
+            _tmp_ball_opt_type="$ib"
+        elif test 2 = $nb_mod; then
+            # version
+            _tmp_ball_version="$ib"
+        elif test 3 = $nb_mod; then
+            # os bit
+            _tmp_ball_os_bit="$ib"
+        elif test 4 = $nb_mod; then
+            # ball name
+            _tmp_ball_name="$ib"
+        elif test 5 = $nb_mod; then
+            # ball tar name
+            _tmp_ball_tar="$ib"
+        elif test 0 = $nb_mod; then
+            # the last, ball dir
+            _tmp_ball_dir="$ib"
+
+            if ! check_match_all "$_tmp_ball_opt_type"; then
+                if test "$_tmp_ball_opt_type" != "$OPT_TYPE"; then
+                    continue
+                fi
+            fi
+
+            if ! check_match_all "$_tmp_ball_version"; then
+                if test "$_tmp_ball_version" != "$VERSION_MAIN"; then
+                    continue
+                fi
+            fi
+
+            if ! check_match_all "$_tmp_ball_os_bit"; then
+                if test "$_tmp_ball_os_bit" != "$OS_BIT"; then
+                    continue
+                fi
+            fi
+
+            # echo "$_tmp_ball_opt_type $_tmp_ball_version $_tmp_ball_os_bit $_tmp_ball_name $_tmp_ball_tar $_tmp_ball_dir"
+
+            eval "TIME_NOW=\`$CMD_NOW\`"
+            echo -e "\n$HR_STR\n$HR_STR\nBuild $_tmp_ball_name start\n\n$TIME_NOW\n$HR_STR\n"
+
+            build_$_tmp_ball_name "$_tmp_ball_tar" "$_tmp_ball_dir"
+
+            eval "TIME_NOW=\`$CMD_NOW\`"
+            echo -e "\n$HR_STR\nBuild $_tmp_ball_name finish\n\n$TIME_NOW\n$HR_STR\n"
+
+            cd_pwd
+        fi
+    done
+}
+
+pecl_to_ext ()
+{
+    _path_php=$1
+    _path_php_ext=$_path_php/ext
+    _path_pwd=`pwd`
+
+    np=0
+    for ip in "${@:2}"; do
+        let "np += 1"
+        let "np_mod = np % 3"
+
+        if test 1 = $np_mod; then
+            _ext_name="$ip"
+        elif test 2 = $np_mod; then
+            _tarball_name="$ip"
+        elif test 0 = $np_mod; then
+            _dir_name="$ip"
+            _dir_extract="$PATH_EXTRACT/pecl_$_ext_name"
+
+            echo -n "cp pecl $_ext_name to $_path_php_ext ... "
+            mkdir -p $_dir_extract
+
+            if test "bz2" = "${_tarball_name:(-3)}"; then
+                _cmd_untar="$CMD_UNTAR_BZ2"
+            else
+                _cmd_untar="$CMD_UNTAR_GZ"
+            fi
+
+            $_cmd_untar $PATH_TARBALL_PECL/$_tarball_name -C $_dir_extract
+            check_return_exit
+            cp -r $_dir_extract/$_dir_name $PATH_EXTRACT/$_path_php_ext/$_ext_name
+            check_return_exit
+            echo "ok"
+        fi
+    done
+
+    cd $PATH_EXTRACT/$_path_php
+    check_return_exit
+    ./buildconf --force
+    check_return_exit
+    cd $_path_pwd
+    check_return_exit
+}
+
+check_state ()
+{
+    echo
+    echo -n "Checking ..."
+
+    nc=1
+    for ic in "${ARRAY_BUILD_BALLS[@]}"; do
+        let "nc_mod = nc % 6"
+
+        if test 5 = $nc_mod; then
+            if ! test -f "$PATH_TARBALL/$ic"; then
+                echo "tarball $ic is not exists."
+                return 1
+            fi
+        fi
+
+        let "nc += 1"
+    done
+
+    nc=1
+    for ic in "${ARRAY_BUILD_BALLS_PECL[@]}"; do
+        let "nc_mod = nc % 6"
+
+        if test 5 = $nc_mod; then
+            if ! test -f "$PATH_TARBALL_PECL/$ic"; then
+                echo "pecl tarball $ic is not exists."
+                return 1
+            fi
+        fi
+
+        let "nc += 1"
+    done
+
+    nc=1
+    for ic in "${ARRAY_BUILD_BALLS_PECL_ZTS[@]}"; do
+        let "nc_mod = nc % 6"
+
+        if test 5 = $nc_mod; then
+            if ! test -f "$PATH_TARBALL_PECL/$ic"; then
+                echo "peclzts tarball $ic is not exists."
+                return 1
+            fi
+        fi
+
+        let "nc += 1"
+    done
+
+    echo "ok"
+}
+
+# }}} end main functions
+
+# {{{ build functions
+
+## {{{ openssl
+
+build_openssl ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./config
+    shared \
+    --openssldir=$PATH_INSTALL/openssl \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ pcre
+
+build_pcre ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --enable-utf8 \
+    --enable-unicode-properties \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libiconv
+
+build_libiconv ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ expat
+
+build_expat ()
+{
+    # 不能用系统自带的 1.95, 因为 libwbxml 和 php 的 模块编译不过去.
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ curl
+
+build_curl ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --disable-ldap \
+    --disable-ldaps \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ gd
+
+build_gd ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --with-libiconv-prefix=$PATH_INSTALL \
+    --with-png \
+    --with-freetype \
+    --with-fontconfig \
+    --with-jpeg \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    # if error, make again
+    if ! test 0 = $?; then
+        $CMD_MAKE_J
+    fi
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ imagemagick
+
+build_imagemagick ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --disable-openmp \
+    --with-x=no \
+    --without-dps \
+    --without-djvu \
+    --without-fftw \
+    --without-fpx \
+    --without-gslib \
+    --without-gvc \
+    --without-jbig \
+    --without-lcms \
+    --without-lcms2 \
+    --without-lqr \
+    --without-lzma \
+    --without-openexr \
+    --without-rsvg \
+    --without-webp \
+    --without-wmf \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ tidy
+
+build_tidy ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    sh build/gnuauto/setup.sh
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --enable-utf16 \
+    --enable-asian \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ json_c
+
+build_json_c ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+
+    cp *.h $PATH_INCLUDE/json
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libmcrypt
+
+build_libmcrypt ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libevent
+
+build_libevent ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ confuse
+
+build_confuse ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --enable-shared \
+    --with-libiconv-prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ glib
+
+build_glib ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --with-libiconv=gnu \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libwbxml
+
+build_libwbxml ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    mkdir build
+    check_return_exit
+    cd build
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    $CMD_CMAKE \
+    -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE \
+    -DCMAKE_INSTALL_PREFIX=$PATH_INSTALL ../ \
+    "
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ file
+
+build_file ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ cronolog
+
+build_cronolog ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ mysql_clientlib
+
+build_mysql_clientlib ()
+{
+    install_dir_own="mclient"
+
+    rm -rf $PATH_INSTALL/$install_dir_own
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+    find . -maxdepth 1 -type f | xargs rm -f
+
+    cp -r $PATH_EXTRACT/$2 $PATH_INSTALL/$install_dir_own
+    check_return_exit
+
+    if test "$OS64"; then
+        cd $PATH_INSTALL/$install_dir_own
+        check_return_exit
+        ln -s lib lib64
+        check_return_exit
+        cd_pwd
+    fi
+}
+
+## }}}
+
+## {{{ mysql
+
+build_mysql ()
+{
+    install_dir_own="mysql"
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+    find . -maxdepth 1 -type f | xargs rm -f
+
+    cp -r $PATH_EXTRACT/$2 $PATH_INSTALL/$install_dir_own
+    check_return_exit
+
+    if test "$OS64"; then
+        cd $PATH_INSTALL/$install_dir_own
+        check_return_exit
+        ln -s lib lib64
+        check_return_exit
+        cd_pwd
+    fi
+}
+
+## }}}
+
+## {{{ mysql_proxy
+
+build_mysql_proxy ()
+{
+    install_dir_own="mproxy"
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    cp -r $PATH_EXTRACT/$2 $PATH_INSTALL/$install_dir_own
+    check_return_exit
+}
+
+## }}}
+
+## {{{ xtrabackup
+
+build_xtrabackup ()
+{
+    install_dir_own="xtrabackup"
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    cp -r $PATH_EXTRACT/$2 $PATH_INSTALL/$install_dir_own
+    check_return_exit
+}
+
+## }}}
+
+## {{{ db4
+
+build_db4 ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2/build_unix
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ../dist/configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libnet
+
+build_libnet ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ librelp
+
+build_librelp ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libestr
+
+build_libestr ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libee
+
+build_libee ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    PKG_CONFIG_PATH='$PATH_PKGC' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    # 这里不能用 make -j 2, 否则会报错.
+    $CMD_MAKE
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ liblognorm
+
+build_liblognorm ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    PKG_CONFIG_PATH='$PATH_PKGC' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    # 这里不能用 make -j 2, 否则会报错.
+    $CMD_MAKE
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ rsyslog
+
+build_rsyslog ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    PKG_CONFIG_PATH='$PATH_PKGC' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --enable-cached-man-pages \
+    --enable-diagtools \
+    --enable-usertools \
+    --enable-gnutls \
+    --enable-extended-tests \
+    --enable-mail \
+    --enable-mmnormalize \
+    --enable-mmjsonparse \
+    --enable-relp \
+    --enable-testbench \
+    --enable-imfile \
+    --enable-imptcp \
+    --enable-imttcp \
+    --enable-omudpspoof \
+    --enable-omstdout \
+    --enable-omruleset \
+    --enable-omuxsock \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ sqlite
+
+build_sqlite ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ memcached
+
+build_memcached ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --with-libevent=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libmemcached
+
+build_libmemcached ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --with-memcached=$PATH_BIN/memcached \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="CFLAGS='-I$PATH_INCLUDE' $CMD_CONFIG"
+    else
+        CMD_CONFIG="CFLAGS='-I$PATH_INCLUDE -O3 -march=i686' $CMD_CONFIG --disable-64bit"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ rrdtool
+
+build_rrdtool ()
+{
+    # rrdtool 暂时只能用 1.2.x 版本. 1.3.x 版本以及以上版本需要 pango 等 lib 库,
+    # 并且编译完之后会依赖 libX11 libXau libXdmcp libXext libXft libXrender 等库,
+    # 所以暂时用 1.2.x 版本.
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ memcachedb
+
+build_memcachedb ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --enable-threads \
+    --with-libevent=$PATH_INSTALL \
+    --with-bdb=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libdrizzle
+
+build_libdrizzle ()
+{
+    install_dir_own="libdrizzle"
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL/$install_dir_own \
+    --with-lib-prefix=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ drizzle_clientlib
+
+build_drizzle_clientlib ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    cp -r $PATH_EXTRACT/$2/* $PATH_INSTALL
+    check_return_exit
+}
+
+## }}}
+
+## {{{ rabbitmq_c
+
+build_rabbitmq_c ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    mkdir build
+    check_return_exit
+    cd build
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    $CMD_CMAKE \
+    -DCMAKE_INSTALL_PREFIX=$PATH_INSTALL ../ \
+    "
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ drizzle
+
+build_drizzle ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --with-libpcre-prefix=$PATH_INSTALL \
+
+    --disable-auth-http-plugin \
+    --disable-auth-ldap-plugin \
+    --disable-auth-pam-plugin \
+    --disable-auth-test-plugin \
+    --disable-compression-plugin \
+    --disable-default-replicator-plugin \
+    --disable-filtered-replicator-plugin \
+    --disable-gearman-udf-plugin \
+    --disable-logging-gearman-plugin \
+    --disable-memcached-functions-plugin \
+    --disable-memcached-query-cache-plugin \
+    --disable-memcached-stats-plugin \
+    --disable-rabbitmq-plugin \
+    --disable-replication-dictionary-plugin \
+    --disable-slave-plugin \
+    --disable-trigger-dictionary-plugin \
+
+    --without-auth-http-plugin \
+    --without-static-auth-http-plugin \
+    --without-auth-ldap-plugin \
+    --without-static-auth-ldap-plugin \
+    --without-auth-pam-plugin \
+    --without-static-auth-pam-plugin \
+    --without-auth-test-plugin \
+    --without-static-auth-test-plugin \
+    --without-compression-plugin \
+    --without-static-compression-plugin \
+    --without-default-replicator-plugin \
+    --without-static-default-replicator-plugin \
+    --without-filtered-replicator-plugin \
+    --without-static-filtered-replicator-plugin \
+    --without-gearman-udf-plugin \
+    --without-static-gearman-udf-plugin \
+    --without-logging-gearman-plugin \
+    --without-static-logging-gearman-plugin \
+    --without-memcached-functions-plugin \
+    --without-static-memcached-functions-plugin \
+    --without-memcached-query-cache-plugin \
+    --without-static-memcached-query-cache-plugin \
+    --without-memcached-stats-plugin \
+    --without-static-memcached-stats-plugin \
+    --without-rabbitmq-plugin \
+    --without-replication-dictionary-plugin \
+    --without-static-replication-dictionary-plugin \
+    --without-static-rabbitmq-plugin \
+    --without-slave-plugin \
+    --without-static-slave-plugin \
+    --without-trigger-dictionary-plugin \
+    --without-static-trigger-dictionary-plugin \
+    "
+
+    #--disable-auth-all-plugin \
+    #--disable-auth-file-plugin \
+    #--disable-ascii-plugin \
+    #--disable-benchmark-plugin \
+    #--disable-catalog-plugin \
+    #--disable-charlength-plugin \
+    #--disable-coercibility-function-plugin \
+    #--disable-collation-dictionary-plugin \
+    #--disable-connection-id-plugin \
+    #--disable-console-plugin \
+    #--disable-crc32-plugin \
+    #--disable-debug-plugin \
+    #--disable-errmsg-stderr-plugin \
+    #--disable-error-dictionary-plugin \
+    #--disable-function-dictionary-plugin \
+    #--disable-function-engine-plugin \
+    #--disable-haildb-plugin \
+    #--disable-hello-events-plugin \
+    #--disable-hello-world-plugin \
+    #--disable-hex-functions-plugin \
+    #--disable-information-schema-dictionary-plugin \
+    #--disable-length-plugin \
+    #--disable-logging-query-plugin \
+    #--disable-logging-stats-plugin \
+    #--disable-math-functions-plugin \
+    #--disable-md5-plugin \
+    #--disable-pbms-plugin \
+    #--disable-performance-dictionary-plugin \
+    #--disable-protocol-dictionary-plugin \
+    #--disable-rand-function-plugin \
+    #--disable-regex-policy-plugin \
+    #--disable-registry-dictionary-plugin \
+    #--disable-reverse-function-plugin \
+    #--disable-rot13-plugin \
+    #--disable-schema-dictionary-plugin \
+    #--disable-schema-engine-plugin \
+    #--disable-session-dictionary-plugin \
+    #--disable-show-dictionary-plugin \
+    #--disable-show-schema-proto-plugin \
+    #--disable-shutdown-function-plugin \
+    #--disable-signal-handler-plugin \
+    #--disable-simple-user-policy-plugin \
+    #--disable-sleep-plugin \
+    #--disable-status-dictionary-plugin \
+    #--disable-storage-engine-api-tester-plugin \
+    #--disable-string-functions-plugin \
+    #--disable-substr-functions-plugin \
+    #--disable-syslog-plugin \
+    #--disable-tableprototester-plugin \
+    #--disable-transaction-log-plugin \
+    #--disable-user-locks-plugin \
+    #--disable-utility-dictionary-plugin \
+    #--disable-utility-functions-plugin \
+    #--disable-uuid-function-plugin \
+    #--disable-version-plugin \
+
+    #--without-auth-all-plugin \
+    #--without-static-auth-all-plugin \
+    #--without-auth-file-plugin \
+    #--without-static-auth-file-plugin \
+    #--without-ascii-plugin \
+    #--without-static-ascii-plugin \
+    #--without-benchmark-plugin \
+    #--without-static-benchmark-plugin \
+    #--without-catalog-plugin \
+    #--without-static-catalog-plugin \
+    #--without-charlength-plugin \
+    #--without-static-charlength-plugin \
+    #--without-coercibility-function-plugin \
+    #--without-static-coercibility-function-plugin \
+    #--without-collation-dictionary-plugin \
+    #--without-static-collation-dictionary-plugin \
+    #--without-connection-id-plugin \
+    #--without-static-connection-id-plugin \
+    #--without-console-plugin \
+    #--without-static-console-plugin \
+    #--without-crc32-plugin \
+    #--without-static-crc32-plugin \
+    #--without-debug-plugin \
+    #--without-static-debug-plugin \
+    #--without-static-drizzle-protocol-plugin \
+    #--without-errmsg-stderr-plugin \
+    #--without-static-errmsg-stderr-plugin \
+    #--without-error-dictionary-plugin \
+    #--without-static-error-dictionary-plugin \
+    #--without-function-dictionary-plugin \
+    #--without-static-function-dictionary-plugin \
+    #--without-function-engine-plugin \
+    #--without-static-function-engine-plugin \
+    #--without-haildb-plugin \
+    #--without-static-haildb-plugin \
+    #--without-hello-events-plugin \
+    #--without-static-hello-events-plugin \
+    #--without-hello-world-plugin \
+    #--without-static-hello-world-plugin \
+    #--without-hex-functions-plugin \
+    #--without-static-hex-functions-plugin \
+    #--without-information-schema-dictionary-plugin \
+    #--without-static-information-schema-dictionary-plugin \
+    #--without-length-plugin \
+    #--without-static-length-plugin \
+    #--without-logging-query-plugin \
+    #--without-static-logging-query-plugin \
+    #--without-logging-stats-plugin \
+    #--without-static-logging-stats-plugin \
+    #--without-math-functions-plugin \
+    #--without-static-math-functions-plugin \
+    #--without-md5-plugin \
+    #--without-static-md5-plugin \
+    #--without-pbms-plugin \
+    #--without-static-pbms-plugin \
+    #--without-performance-dictionary-plugin \
+    #--without-static-performance-dictionary-plugin \
+    #--without-protocol-dictionary-plugin \
+    #--without-static-protocol-dictionary-plugin \
+    #--without-rand-function-plugin \
+    #--without-static-rand-function-plugin \
+    #--without-regex-policy-plugin \
+    #--without-static-regex-policy-plugin \
+    #--without-registry-dictionary-plugin \
+    #--without-static-registry-dictionary-plugin \
+    #--without-reverse-function-plugin \
+    #--without-static-reverse-function-plugin \
+    #--without-rot13-plugin \
+    #--without-static-rot13-plugin \
+    #--without-schema-dictionary-plugin \
+    #--without-static-schema-dictionary-plugin \
+    #--without-schema-engine-plugin \
+    #--without-static-schema-engine-plugin \
+    #--without-session-dictionary-plugin \
+    #--without-static-session-dictionary-plugin \
+    #--without-show-dictionary-plugin \
+    #--without-static-show-dictionary-plugin \
+    #--without-show-schema-proto-plugin \
+    #--without-static-show-schema-proto-plugin \
+    #--without-shutdown-function-plugin \
+    #--without-static-shutdown-function-plugin \
+    #--without-signal-handler-plugin \
+    #--without-static-signal-handler-plugin \
+    #--without-simple-user-policy-plugin \
+    #--without-static-simple-user-policy-plugin \
+    #--without-sleep-plugin \
+    #--without-static-sleep-plugin \
+    #--without-status-dictionary-plugin \
+    #--without-static-status-dictionary-plugin \
+    #--without-storage-engine-api-tester-plugin \
+    #--without-static-storage-engine-api-tester-plugin \
+    #--without-string-functions-plugin \
+    #--without-static-string-functions-plugin \
+    #--without-substr-functions-plugin \
+    #--without-static-substr-functions-plugin \
+    #--without-syslog-plugin \
+    #--without-static-syslog-plugin \
+    #--without-tableprototester-plugin \
+    #--without-static-tableprototester-plugin \
+    #--without-transaction-log-plugin \
+    #--without-static-transaction-log-plugin \
+    #--without-user-locks-plugin \
+    #--without-static-user-locks-plugin \
+    #--without-utility-dictionary-plugin \
+    #--without-static-utility-dictionary-plugin \
+    #--without-utility-functions-plugin \
+    #--without-static-utility-functions-plugin \
+    #--without-uuid-function-plugin \
+    #--without-static-uuid-function-plugin \
+    #--without-version-plugin \
+    #--without-static-version-plugin \
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ qrencode
+
+build_qrencode ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ gearmand
+
+build_gearmand ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    libdrizzle_CFLAGS='-I$PATH_INCLUDE/libdrizzle' libdrizzle_LIBS='-ldrizzle' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --with-lib-prefix=$PATH_INSTALL \
+    --disable-libmemcached \
+    --disable-libpq \
+    --disable-libtokyocabinet \
+    --disable-hires \
+    --with-sqlite3=no \
+    --with-mysql=no \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ httpd
+
+build_httpd ()
+{
+    rm -rf $PATH_INSTALL/modules \
+           $PATH_INCLUDE/ap_*.h \
+           $PATH_INCLUDE/apr.h \
+           $PATH_INCLUDE/apr_*.h \
+           $PATH_INCLUDE/apu.h \
+           $PATH_INCLUDE/apu_*.h \
+           $PATH_LIB/libapr* \
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    __release_h="include/ap_release.h"
+    __release_h_bk="include/ap_release.h.bk"
+    cp $__release_h $__release_h_bk
+    check_return_exit
+    cat $__release_h_bk | sed -e 's/#define AP_SERVER_BASEVENDOR \+"[^"]*"/#define AP_SERVER_BASEVENDOR "eYou"/' \
+                        | sed -e 's/#define AP_SERVER_BASEPROJECT \+"[^"]*"/#define AP_SERVER_BASEPROJECT "eYou Web Server"/' \
+                        | sed -e 's/#define AP_SERVER_BASEPRODUCT \+"[^"]*"/#define AP_SERVER_BASEPRODUCT "eYouWS"/' \
+                        > $__release_h
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --sysconfdir=$PATH_MAIL_ETC/httpd/conf \
+    --enable-so \
+    --with-mpm=prefork \
+    --enable-modules='expires deflate logio rewrite ssl headers' \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ redis
+
+build_redis ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    $CMD_MAKE
+    check_return_exit
+
+    PREFIX=$PATH_INSTALL $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ ganglia
+
+build_ganglia ()
+{
+    rm -rf $PATH_INSTALL/lib/ganglia
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    if test "$OS64"; then
+        CMD_CONFIG=" \
+        CFLAGS='-I$PATH_INCLUDE -I$PATH_PHPZTS_INCLUDE' \
+        CPPFLAGS='-I$PATH_INCLUDE -I$PATH_PHPZTS_INCLUDE' \
+        "
+    else
+        # 32bit 需要加 -D_LARGEFILE64_SOURCE 否则会因为 off64_t 未定义导致报 apr.h 错误
+        CMD_CONFIG=" \
+        CFLAGS='-D_LARGEFILE64_SOURCE -I$PATH_INCLUDE -I$PATH_PHPZTS_INCLUDE' \
+        CPPFLAGS='-D_LARGEFILE64_SOURCE -I$PATH_INCLUDE -I$PATH_PHPZTS_INCLUDE' \
+        "
+    fi
+
+    CMD_CONFIG="$CMD_CONFIG \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB -L$PATH_PHPZTS_LIB -Wl,-R$PATH_PHPZTS_LIB' \
+    GANGLIA_ACK_SYSCONFDIR=1 \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --sysconfdir=$PATH_MAIL_ETC/ganglia \
+    --enable-setgid \
+    --with-gmetad \
+    --disable-python \
+    --enable-php \
+    --enable-status \
+    --with-php=$PATH_PHPZTS_BIN/php-config \
+    --with-librrd=$PATH_INSTALL \
+    --with-libapr=$PATH_INSTALL \
+    --with-libexpat=$PATH_INSTALL \
+    --with-libconfuse=$PATH_INSTALL \
+    --with-libpcre=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ node
+
+build_node ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    CMD_CONFIG=" \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ npm
+
+build_npm ()
+{
+    build_npm_install
+}
+
+## }}}
+
+## {{{ npm
+
+build_npm_install ()
+{
+    this_exrtact="npm"
+
+    mkdir -p $PATH_EXTRACT/$this_exrtact
+    check_return_exit
+    cd $PATH_EXTRACT/$this_exrtact
+    check_return_exit
+
+    # 首先删除目标的 node_modules
+    find $PATH_LIB/node_modules -maxdepth 1 -mindepth 1 -type d | grep -v '/npm$' | xargs rm -rf
+
+    tmp_array_npm_install=(
+        node-ini
+        socket.io
+        fs-ext
+        groan
+        memcached
+    )
+
+    for ipe in "${tmp_array_npm_install[@]}"; do
+        echo "start install npm $ipe"
+        $PATH_BIN/npm install $ipe
+        echo -e "install npm $ipe ok\n"
+    done
+
+    echo "check npm install"
+    tmp_array_pear_check=(
+        "node-ini/node-ini.js"
+        "socket.io/lib/socket.io.js"
+        "fs-ext/fs-ext.js"
+    )
+
+    for ipc in "${tmp_array_pear_check[@]}"; do
+        ls $PATH_EXTRACT/$this_exrtact/node_modules/$ipc
+        check_return_exit
+    done
+
+    # 做一些清理
+    ## 里面几个文件包含了 use namespace
+    rm -rf $PATH_EXTRACT/$this_exrtact/node_modules/socket.io/node_modules/socket.io-client/lib/vendor/web-socket-js/flash-src
+
+    echo "copy npm to opt"
+    mkdir -p $PATH_LIB/node_modules
+    check_return_exit
+    cp -r $PATH_EXTRACT/$this_exrtact/node_modules/* $PATH_LIB/node_modules
+    check_return_exit
+    echo "ok"
+}
+
+## }}}
+
+## {{{ nginx
+
+build_nginx ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    __path_nginx_dir="$PATH_EXTRACT/$2"
+    __path_pcre_tarball="$PATH_TARBALL/pcre/pcre-7.9.tar.gz"
+    __path_pcre_dir="$__path_nginx_dir/pcre-7.9"
+    __path_zlib_tarball="$PATH_TARBALL/zlib/zlib-1.2.7.tar.gz"
+    __path_zlib_dir="$__path_nginx_dir/zlib-1.2.7"
+    __path_openssl_tarball="$PATH_TARBALL/openssl/openssl-1.0.1e.tar.gz"
+    __path_openssl_dir="$__path_nginx_dir/openssl-1.0.1e"
+    __path_uploadprogress_tarball="$PATH_TARBALL/nginx/nginx-upload-progress-module-0.9.0.tar.gz"
+    __path_uploadprogress_dir="$__path_nginx_dir/nginx-upload-progress-module-0.9.0"
+    __path_uploadprogress_dir_module="$__path_nginx_dir/nginx_uploadprogress_module"
+    __path_push_stream_tarball="$PATH_TARBALL/nginx/nginx-push-stream-module-0.3.5.tar.gz"
+    __path_push_stream_dir="$__path_nginx_dir/nginx-push-stream-module-0.3.5"
+    __path_push_stream_dir_module="$__path_nginx_dir/nginx-push-stream-module"
+    __path_sticky_tarball="$PATH_TARBALL/nginx/nginx-sticky-module-1.1.tar.gz"
+    __path_sticky_dir="$__path_nginx_dir/nginx-sticky-module-1.1"
+    __path_sticky_dir_module="$__path_nginx_dir/nginx-sticky-module"
+
+    $CMD_UNTAR_GZ $__path_pcre_tarball -C $__path_nginx_dir
+    check_return_exit
+    $CMD_UNTAR_GZ $__path_zlib_tarball -C $__path_nginx_dir
+    check_return_exit
+    $CMD_UNTAR_GZ $__path_openssl_tarball -C $__path_nginx_dir
+    check_return_exit
+    $CMD_UNTAR_GZ $__path_uploadprogress_tarball -C $__path_nginx_dir
+    check_return_exit
+    mv $__path_uploadprogress_dir $__path_uploadprogress_dir_module
+    check_return_exit
+    $CMD_UNTAR_GZ $__path_push_stream_tarball -C $__path_nginx_dir
+    check_return_exit
+    mv $__path_push_stream_dir $__path_push_stream_dir_module
+    check_return_exit
+    $CMD_UNTAR_GZ $__path_sticky_tarball -C $__path_nginx_dir
+    check_return_exit
+    mv $__path_sticky_dir $__path_sticky_dir_module
+    check_return_exit
+
+    CMD_CONFIG=" \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --conf-path=$PATH_MAIL_ETC/nginx/conf/nginx.conf \
+    --http-log-path=$PATH_MAIL_LOG/nginx/http.log \
+    --error-log-path=$PATH_MAIL_LOG/nginx/error.log \
+    --http-client-body-temp-path=$PATH_MAIL_TMP/nginx/client_body_temp \
+    --http-proxy-temp-path=$PATH_MAIL_TMP/nginx/proxy_temp \
+    --http-fastcgi-temp-path=$PATH_MAIL_TMP/nginx/fastcgi_temp \
+    --http-uwsgi-temp-path=$PATH_MAIL_TMP/nginx/uwsgi_temp \
+    --http-scgi-temp-path=$PATH_MAIL_TMP/nginx/scgi_temp \
+    --with-ipv6 \
+    --with-http_ssl_module \
+    --with-http_realip_module \
+    --with-http_addition_module \
+    --with-http_gzip_static_module \
+    --with-http_random_index_module \
+    --with-mail \
+    --with-mail_ssl_module \
+    --with-pcre=$__path_pcre_dir \
+    --with-zlib=$__path_zlib_dir \
+    --with-openssl=$__path_openssl_dir \
+    --with-http_stub_status_module \
+    --with-http_spdy_module \
+    --add-module=$__path_uploadprogress_dir_module \
+    --add-module=$__path_push_stream_dir_module \
+    --add-module=$__path_sticky_dir_module \
+    "
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    # 这里不能用 make -j 2, 否则会报 openssl 的 .openssl/include/openssl/ssl.h Error 2
+    $CMD_MAKE
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ crtmpserver
+
+build_crtmpserver ()
+{
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    cd builders/cmake
+    check_return_exit
+    mkdir build
+    check_return_exit
+    cd build
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    $CMD_CMAKE \
+    -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE \
+    -DCRTMPSERVER_INSTALL_PREFIX=$PATH_INSTALL ../ \
+    "
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ yamdi
+
+build_yamdi ()
+{
+    install_dir_own="yamdi"
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    cp -r $PATH_EXTRACT/$2/* $PATH_INSTALL
+    check_return_exit
+}
+
+## }}}
+
+## {{{ libkav
+
+build_libkav ()
+{
+    install_dir_own="kav"
+
+    rm -rf $PATH_INSTALL/$install_dir_own
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    cp -r $PATH_EXTRACT/$2 $PATH_INSTALL/$install_dir_own
+    check_return_exit
+
+    if test "$OS64"; then
+        cd $PATH_INSTALL/$install_dir_own
+        check_return_exit
+        ln -s lib lib64
+        check_return_exit
+        cd_pwd
+    fi
+}
+
+## }}}
+
+## {{{ php54
+
+build_php54 ()
+{
+    rm -rf $PATH_INSTALL/$NAME_PHP \
+           $PATH_INSTALL/modules/libphp5.so
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    pecl_to_ext $2 ${ARRAY_PECL_EXT[@]}
+
+    # 必须加 --with-iconv=$PATH_INSTALL, 虽然 --help 中没有, 但是不加就不会用 opt 下的 iconv,
+    # 会用 /usr 下 glibc 中的 iconv, 并且导致内置的 libgd 编译 iconv 支持的时候报错
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE -I$PATH_INCLUDE/libwbxml-1.0/wbxml' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_PHP \
+    --with-config-file-path=$PATH_MAIL_ETC/$NAME_PHP \
+    --with-apxs2=$PATH_BIN/apxs \
+    --with-openssl \
+    --with-zlib \
+    --with-zlib-dir
+    --with-gd \
+    --without-iconv \
+    --with-jpeg-dir \
+    --with-png-dir \
+    --with-freetype-dir \
+    --enable-gd-native-ttf \
+    --enable-exif \
+    --with-gettext \
+    --enable-mbstring \
+    --with-iconv=$PATH_INSTALL \
+    --with-iconv-dir=$PATH_INSTALL \
+    --with-mysql=mysqlnd \
+    --with-mysqli=mysqlnd \
+    --with-pdo-mysql=mysqlnd \
+    --with-pdo-sqlite=$PATH_INSTALL \
+    --without-sqlite3 \
+    --with-curl=$PATH_INSTALL \
+    --with-mcrypt=$PATH_INSTALL \
+    --with-imap \
+    --with-imap-ssl \
+    --with-kerberos \
+    --with-gmp \
+    --with-tidy=$PATH_INSTALL \
+    --enable-zip \
+    --enable-pcntl \
+    --enable-shmop \
+    --enable-bcmath \
+    --enable-soap \
+
+    --enable-memcached \
+    --with-libmemcached-dir=$PATH_INSTALL \
+    --enable-dio \
+    --enable-apc \
+    --enable-apc-mmap \
+    --enable-embase \
+    --with-imagick=$PATH_INSTALL \
+    --with-gearman=$PATH_INSTALL \
+    --enable-http \
+    --enable-redis \
+    --with-http-curl-requests=$PATH_INSTALL \
+    --with-http-curl-libevent=$PATH_INSTALL \
+    --with-http-zlib-compression \
+    --with-http-magic-mime=$PATH_INSTALL \
+    --with-qrencode=$PATH_INSTALL \
+    --with-libevent=$PATH_INSTALL \
+    --with-wbxml=$PATH_INSTALL \
+    --with-libexpat-dir=$PATH_INSTALL \
+    --with-amqp \
+    --with-librabbitmq-dir=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+
+    # default php.ini
+    mkdir -p $PATH_MAIL_ETC/$NAME_PHP
+    check_return_exit
+    cp php.ini-development $PATH_MAIL_ETC/$NAME_PHP/php.ini
+    check_return_exit
+
+    # link php bin
+    rm -f $PATH_BIN/$NAME_PHP
+    ln -s $PATH_PHP_BIN/php $PATH_BIN/$NAME_PHP
+    check_return_exit
+
+    cd_pwd
+}
+
+## }}}
+
+## {{{ phpzts54
+
+build_phpzts54 ()
+{
+    rm -rf $PATH_INSTALL/$NAME_PHPZTS \
+           $PATH_INSTALL/lib/ganglia/modphp.so
+
+    $CMD_UNTAR_GZ $PATH_TARBALL/$1 -C $PATH_EXTRACT
+    cd $PATH_EXTRACT/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    pecl_to_ext $2 ${ARRAY_PECL_EXT[@]}
+
+    # 必须加 --with-iconv=$PATH_INSTALL, 虽然 --help 中没有, 但是不加就不会用 opt 下的 iconv,
+    # 会用 /usr 下 glibc 中的 iconv, 并且导致内置的 libgd 编译 iconv 支持的时候报错
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE -I$PATH_INCLUDE/libwbxml-1.0/wbxml' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_PHPZTS \
+    --with-config-file-path=$PATH_MAIL_ETC/$NAME_PHPZTS \
+    --enable-maintainer-zts \
+    --with-openssl \
+    --with-zlib \
+    --with-zlib-dir
+    --with-gd \
+    --without-iconv \
+    --with-jpeg-dir \
+    --with-png-dir \
+    --with-freetype-dir \
+    --enable-gd-native-ttf \
+    --enable-exif \
+    --with-gettext \
+    --enable-mbstring \
+    --with-iconv=$PATH_INSTALL \
+    --with-iconv-dir=$PATH_INSTALL \
+    --with-mysql=mysqlnd \
+    --with-mysqli=mysqlnd \
+    --with-pdo-mysql=mysqlnd \
+    --with-pdo-sqlite=$PATH_INSTALL \
+    --without-sqlite3 \
+    --with-curl=$PATH_INSTALL \
+    --with-mcrypt=$PATH_INSTALL \
+    --with-imap \
+    --with-imap-ssl \
+    --with-kerberos \
+    --with-gmp \
+    --with-tidy=$PATH_INSTALL \
+    --enable-zip \
+    --enable-pcntl \
+    --enable-shmop \
+    --enable-bcmath \
+    --enable-soap \
+    --enable-embed \
+
+    --enable-memcached \
+    --with-libmemcached-dir=$PATH_INSTALL \
+    --enable-dio \
+    --enable-apc \
+    --enable-apc-mmap \
+    --enable-apc-pthreadrwlocks \
+    --enable-pthreads \
+    --enable-embase \
+    --with-imagick=$PATH_INSTALL \
+    --with-gearman=$PATH_INSTALL \
+    --enable-http \
+    --enable-redis \
+    --with-http-curl-requests=$PATH_INSTALL \
+    --with-http-curl-libevent=$PATH_INSTALL \
+    --with-http-zlib-compression \
+    --with-http-magic-mime=$PATH_INSTALL \
+    --with-qrencode=$PATH_INSTALL \
+    --with-libevent=$PATH_INSTALL \
+    --with-wbxml=$PATH_INSTALL \
+    --with-libexpat-dir=$PATH_INSTALL \
+    --with-amqp \
+    --with-librabbitmq-dir=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+
+    # default php.ini
+    mkdir -p $PATH_MAIL_ETC/$NAME_PHPZTS
+    check_return_exit
+    cp php.ini-development $PATH_MAIL_ETC/$NAME_PHPZTS/php.ini
+    check_return_exit
+
+    # link php bin
+    rm -f $PATH_BIN/$NAME_PHPZTS
+    ln -s $PATH_PHPZTS_BIN/php $PATH_BIN/$NAME_PHPZTS
+    check_return_exit
+
+    cd_pwd
+}
+
+## }}}
+
+## {{{ pear
+
+build_pear ()
+{
+    DYNAMIC_BASE_PHP=$PATH_PHP
+    build_pear_install
+}
+
+## }}}
+
+## {{{ pearzts
+
+build_pearzts ()
+{
+    DYNAMIC_BASE_PHP=$PATH_PHPZTS
+    build_pear_install
+}
+
+## }}}
+
+## {{{ pear
+
+build_pear_install ()
+{
+    # rm tmp file
+    rm -f ~/.pearrc
+    rm -rf $DYNAMIC_BASE_PHP/lib/php/.channels
+    $DYNAMIC_BASE_PHP/bin/pear channel-update pear.php.net
+    $DYNAMIC_BASE_PHP/bin/pear upgrade --force Archive_Tar
+
+    tmp_array_pear_install=(
+        Archive_Zip-beta
+        Net_POP3
+        Net_SMTP
+        Auth_SASL
+        Contact_Vcard_Build
+        Contact_Vcard_Parse
+        Mail_Mime
+        Mail
+    )
+
+    for ipe in "${tmp_array_pear_install[@]}"; do
+        $DYNAMIC_BASE_PHP/bin/pear install --alldeps $ipe
+    done
+
+    $DYNAMIC_BASE_PHP/bin/pear channel-discover pear.firephp.org
+    $DYNAMIC_BASE_PHP/bin/pear install --alldeps firephp/FirePHPCore
+
+    $DYNAMIC_BASE_PHP/bin/pear config-set auto_discover 1
+    $DYNAMIC_BASE_PHP/bin/pear install pear.phpunit.de/PHPUnit
+
+    tmp_array_pear_check=(
+        "Archive/Zip.php"
+        "Net/POP3.php"
+        "Net/SMTP.php"
+        "Auth/SASL.php"
+        "Contact_Vcard_Build.php"
+        "Contact_Vcard_Parse.php"
+        "Mail/mime.php"
+        "Mail/mail.php"
+        "FirePHPCore/fb.php"
+        "PHPUnit/Autoload.php"
+    )
+
+    for ipc in "${tmp_array_pear_check[@]}"; do
+        ls $PATH_PHP_LIBPHP/$ipc
+        check_return_exit
+    done
+}
+
+## }}}
+
+## {{{ pecl
+
+build_pecl ()
+{
+    DYNAMIC_BASE_PHP=$PATH_PHP
+    build_balls ${ARRAY_BUILD_BALLS_PECL[@]}
+}
+
+## }}}
+
+## {{{ peclzts
+
+build_peclzts ()
+{
+    DYNAMIC_BASE_PHP=$PATH_PHPZTS
+    build_balls ${ARRAY_BUILD_BALLS_PECL_ZTS[@]}
+}
+
+## }}}
+
+## {{{ pecl newt
+
+build_pecl_newt ()
+{
+    this_exrtact="pecl_newt"
+
+    mkdir $PATH_EXTRACT/$this_exrtact
+    $CMD_UNTAR_GZ $PATH_TARBALL_PECL/$1 -C $PATH_EXTRACT/$this_exrtact
+    cd $PATH_EXTRACT/$this_exrtact/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    $DYNAMIC_BASE_PHP/bin/phpize
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$DYNAMIC_BASE_PHP/bin/php-config \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ pecl xdebug
+
+build_pecl_xdebug ()
+{
+    this_exrtact="pecl_xdebug"
+
+    mkdir $PATH_EXTRACT/$this_exrtact
+    $CMD_UNTAR_GZ $PATH_TARBALL_PECL/$1 -C $PATH_EXTRACT/$this_exrtact
+    cd $PATH_EXTRACT/$this_exrtact/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    $DYNAMIC_BASE_PHP/bin/phpize
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$DYNAMIC_BASE_PHP/bin/php-config \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ pecl event
+
+build_pecl_event ()
+{
+    this_exrtact="pecl_event"
+
+    mkdir $PATH_EXTRACT/$this_exrtact
+    $CMD_UNTAR_GZ $PATH_TARBALL_PECL/$1 -C $PATH_EXTRACT/$this_exrtact
+    cd $PATH_EXTRACT/$this_exrtact/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    $DYNAMIC_BASE_PHP/bin/phpize
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$DYNAMIC_BASE_PHP/bin/php-config \
+    --disable-event-sockets \
+    --with-event-core \
+    --with-event-extra \
+    --with-event-openssl \
+    --with-event-libevent-dir=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ pecl event zts
+
+build_pecl_event_zts ()
+{
+    this_exrtact="pecl_event_zts"
+
+    mkdir $PATH_EXTRACT/$this_exrtact
+    $CMD_UNTAR_GZ $PATH_TARBALL_PECL/$1 -C $PATH_EXTRACT/$this_exrtact
+    cd $PATH_EXTRACT/$this_exrtact/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    $DYNAMIC_BASE_PHP/bin/phpize
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$DYNAMIC_BASE_PHP/bin/php-config \
+    --disable-event-sockets \
+    --with-event-core \
+    --with-event-pthreads \
+    --with-event-extra \
+    --with-event-openssl \
+    --with-event-libevent-dir=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ pecl zts event
+
+build_pecl_zts_event ()
+{
+    this_exrtact="pecl_zts_event"
+
+    mkdir $PATH_EXTRACT/$this_exrtact
+    $CMD_UNTAR_GZ $PATH_TARBALL_PECL/$1 -C $PATH_EXTRACT/$this_exrtact
+    cd $PATH_EXTRACT/$this_exrtact/$2
+    check_return_exit
+    $CMD_CHOWN_ROOT *
+
+    $DYNAMIC_BASE_PHP/bin/phpize
+    check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$DYNAMIC_BASE_PHP/bin/php-config \
+    --with-event-core \
+    --with-event-pthreads \
+    --with-event-extra \
+    --with-event-openssl \
+    --with-event-libevent-dir=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    eval $CMD_CONFIG
+    check_return_exit
+
+    $CMD_MAKE_J
+    check_return_exit
+
+    $CMD_MAKE install
+    check_return_exit
+}
+
+## }}}
+
+## {{{ pecl rrd
+
+build_pecl_rrd ()
+{
+    this_exrtact="pecl_rrd"
+
+    #mkdir $PATH_EXTRACT/$this_exrtact
+    #$CMD_UNTAR_GZ $PATH_TARBALL_PECL/$1 -C $PATH_EXTRACT/$this_exrtact
+    #cd $PATH_EXTRACT/$this_exrtact/$2
+    #check_return_exit
+    #$CMD_CHOWN_ROOT *
+
+    #$DYNAMIC_BASE_PHP/bin/phpize
+    #check_return_exit
+
+    CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$DYNAMIC_BASE_PHP/bin/php-config \
+    --with-rrd=$PATH_INSTALL \
+    "
+
+    if test "$OS64"; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+    fi
+
+    echo $CMD_CONFIG
+    #eval $CMD_CONFIG
+    #check_return_exit
+
+    #$CMD_MAKE_J
+    #check_return_exit
+
+    #$CMD_MAKE install
+    #check_return_exit
+}
+
+## }}}
+
+# }}} end build functions
+
+# {{{ check
+
+#check_state
+#check_return_exit
+
+# }}} end check
+
+# {{{ build
+
+#mkdir -p $PATH_LIB
+#check_return_exit
+#
+#if test "$OS64"; then
+#    if test -e "$PATH_LIB64"; then
+#        if ! test -L "$PATH_LIB64"; then
+#            echo "error: $PATH_LIB64 is exists but it is not a link to lib."
+#            exit 1
+#        fi
+#    else
+#        cd $PATH_INSTALL
+#        check_return_exit
+#        ln -s lib lib64
+#        check_return_exit
+#    fi
+#fi
+#
+#echo "Clean $PATH_EXTRACT"
+#rm -rf $PATH_EXTRACT/*
+#mkdir -p $PATH_EXTRACT
+#
+#export PATH="$PATH_BIN:$PATH"
+#
+#build_balls ${ARRAY_BUILD_BALLS[@]}
+#
+#eval "TIME_NOW=\`$CMD_NOW\`"
+#eval "TIME_NOW_U=\`$CMD_NOW_U\`"
+#
+#__mv_msg=""
+#if test "$WILLMV"; then
+#    __tmp_path_mail_opt_bak="$PATH_MAIL.opt.$TIME_NOW_U"
+#    mv $PATH_MAIL $__tmp_path_mail_opt_bak
+#    __mv_msg="mv $PATH_MAIL to $__tmp_path_mail_opt_bak\n\n"
+#fi
+#echo -e "\n$HR_STR\nBuild all finish\n\n$__mv_msg$TIME_NOW\n$HR_STR\n"
+#
+#exit 0
+
+build_pecl_rrd
+
+# }}} end build

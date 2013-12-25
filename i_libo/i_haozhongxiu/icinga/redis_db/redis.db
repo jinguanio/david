@@ -1,0 +1,176 @@
+// 检测队列
+LIST mn.CHECK_QUEUE  Object
+
+1.gmond_check_queue 负责读取分析配置将符合检测的PUSH到 CHECK_QUEUE 队列中
+2.gmond_check_scan 负责扫描 CHECK_QUEUE 队列，根据 status 信息判断是否到达 BASIC_NOTICE 队列中
+
+// 待通知队列
+LIST mn.BASIC_NOTICE  Object
+SORT SETS mn.RESCHEDUL_NOTICE TIME Object
+
+1. gmond_notify_queue 会将该队列扫描并且将发信人分发到 SEND_NOTICE 队列中，将时间没有到的分发到 RESCHEDUL_NOTICE 中，继续扫描 RESCHEDUL_NOTICE 队列将到时的通知 PUSH 到 SEND_NOTICE 队列中
+
+// 发送通知队列
+LIST mn.SEND_NOTICE = JSON_STRING
+
+
+// 服务状态信息
+HASH mn.CLUSTER.HOST.METRIC metric.id
+HASH mn.status.(metric.id) data serializer Object
+SETS mn.status.(metric.id).status 
+
+HASH mn.HOST_NAME METRIC serializer Object
+
+// 通知历史
+HASH mn.RECOVER_NOTICE.CLUSTER.HOST.METRIC  contact Object
+
+em_alarm_property_abstract
+// {{{ em_alarm_property_host
+em_alarm_property_host extends em_alarm_property_abstract
+	* property => contact 
+	* property => contact_group 
+	* property => notice_time_period 
+
+	- attr => host_name *
+	- attr => dispaly_name
+	- attr => description 
+// }}}
+// {{{ em_alarm_property_metric
+em_alarm_property_metric extends em_alarm_property_abstract
+	* property => host 
+	* property => check_time_period 
+
+	- attr => metric_name *
+	- attr => dispaly_name
+	- attr => description 
+	- attr => initial_state
+	- attr => max_check_attempt 
+	- attr => check_interval 
+	- attr => retry_interval
+	- attr => cache_interval
+	- attr => check_type
+	- attr => flap_enable
+	- attr => flap_options
+	- attr => low_flap_threshold
+	- attr => high_flap_threshold
+	- attr => notice_enable
+	- attr => notice_interval
+	- attr => notice_options
+
+// }}}
+// {{{ em_alarm_property_contact
+em_alarm_property_contact extends em_alarm_property_abstract
+	* property => contact_group 
+	* property => time_period 
+
+	- attr => contact_name
+	- attr => description
+	- attr => dispaly_name
+	- attr => contact_address
+	- attr => notice_enable 
+	- attr => notice_options
+
+// }}}
+// {{{ em_alarm_property_contact_group
+em_alarm_property_contact_group extends em_alarm_property_abstract
+	- attr => group_name
+	- attr => dispaly_name
+	- attr => description 
+
+// }}}
+// {{{ em_alarm_property_time_period
+em_alarm_property_time_period extends em_alarm_property_abstract
+// }}}
+
+em_alarm_opreator_abstract
+	- func => get_property()
+// {{{ em_alarm_opreator_host
+em_alarm_opreator_host extends em_alarm_opreator_abstract
+	- func => process_key()
+	- func => get_contact()
+	- func => get_contact_group()
+	- func => get_notice_time_period()
+// }}}
+// {{{ em_alarm_opreator_metric
+em_alarm_opreator_metric extends em_alarm_opreator_abstract
+	- func => process_key()
+	- func => get_status()
+	- func => get_host()
+	- func => get_contact()
+	- func => get_contact_group()
+	- func => get_check_time()
+// }}}
+// {{{ em_alarm_opreator_contact
+em_alarm_opreator_contact extends em_alarm_opreator_abstract
+	* opreator => contact_group 
+	* opreator => time_period 
+
+	- func => process_key()
+	- func => get_notice_time_period()
+// }}}
+// {{{ em_alarm_opreator_contact_group
+em_alarm_opreator_contact_group extends em_alarm_opreator_abstract
+	- attr => group_name
+	- attr => dispaly_name
+	- attr => description 
+
+	- func => process_key()
+	- func => get_contact()
+// }}}
+// {{{ em_alarm_opreator_time_period
+em_alarm_opreator_time_period extends em_alarm_opreator_abstract
+	- func => process_key()
+	- func => get_start_time()
+// }}}
+
+// {{{ em_alarm_metric_status
+em_alarm_metric_status 
+	- property metric_property
+	- attr status_update
+	- attr output
+	- attr long_output
+	- attr current_state
+	- attr current_check_attempt
+	-
+	- func => set_data()
+	- func => get_data()
+// }}}
+
+// {{{ em_alarm_check_queue
+em_alarm_check_queue
+	* property => metric_object
+	
+	- func => get_status() // 获取状态信息 
+	- func => check_metric() // 检测数据源的状态 
+	- func => update_status() // 更新状态信息 
+	- func => insert_notice_queue() // 插入通知的基础队列中 
+// }}}
+// {{{ em_alarm_dispatcher
+em_alarm_dispatcher
+	* property => metric_object
+	
+	- func => dispatcher() // 分发联系人 
+	- func => insert_send_notice() // 插入通知的发送队列中 
+	- func => insert_delay_notice() // 插入延迟通知队列中 
+	- func => _pre_dispatcher() // 分发前加载主机或服务的相关的过滤器 
+	- func => _post_dispatcher() // 分发后加载联系人的相关的过滤器 
+// }}}
+// {{{ em_alarm_filter
+em_alarm_filter
+	* property => metric_object
+	
+	- func => check_notice() // 检测通知是否通过 
+// }}}
+// {{{ em_alarm_send_notice
+em_alarm_send_notice
+	* property => metric_object
+	
+	- func => send_notice() // 检测通知是否通过 
+// }}}
+// {{{ em_alarm_property_recover_notice
+em_alarm_property_recover_notice
+	* property => metric_object
+	
+	- func => set_notice_history() // 获取通知历史 
+	- func => del_notice_history() // 删除通知历史 
+// }}}

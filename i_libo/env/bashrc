@@ -1,0 +1,36 @@
+# .bashrc
+
+# User specific aliases and functions
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+alias c="clear"
+alias la="ls -Alh --color=auto"
+alias ll="ls -lh --color=auto --time-style=long-iso"
+alias j="jobs -l"
+alias dir="ls -l | grep -e "^d""
+alias xf="ls -l | grep -e "^-""
+
+alias i="git"
+alias idf="git diff"
+alias ist="git status"
+alias ibr="git branch -a"
+alias ici="git commit"
+alias iall="git commit -a -m 'tmp'"
+
+alias devphp="/usr/local/eyou/devmail/opt/bin/php"
+alias toolphp="/usr/local/eyou/toolmail/opt/bin/php"
+
+alias svi="sudo vim"
+alias vi="vim"
+alias vd="vimdiff -O"
+
+alias mysql="/usr/local/eyou/mail/opt/mysql/bin/mysql -uroot -S /usr/local/eyou/mail/run/em_mysql.sock"
+alias mysql_idx="/usr/local/eyou/mail/opt/mysql/bin/mysql -uroot -D eyou_mail_index -S /usr/local/eyou/mail/run/em_mysql_index.sock"
+
+lang="/usr/local/eyou/devmail/web/lang"
+
+. $HOME/.git-completion.bash

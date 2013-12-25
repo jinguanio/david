@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <style type="text/css">
+            * { margin:0; padding:0 }
+            .menu {
+                border: 0px;
+                position: absolute;
+                left: 5px;
+                height: 25px;
+                width:600px;
+                padding: 2px;
+            }
+            .menu ul {
+                list-style-type:none;
+            }
+            .menu ul li {
+                float:left;
+                padding:10px;
+                border: 1px solid #000;
+                margin:2px;
+            }
+            .menu ul li:hover {
+                cursor:pointer;
+                color:red;
+            }
+
+            .sub {
+                position:absolute;
+                border:1px dotted #000;
+                top:45px;
+                left:10px;
+                width: 100px;
+                background: #e0e0e0;
+            }
+            .sub ul {
+                list-style-type:none;
+            }
+            .sub ul li {
+                padding: 5px;
+                border-bottom: 1px solid #000;
+            }
+            .sub ul li:hover {
+                cursor:pointer;
+                background-color:#ff00ff;
+            }
+        </style>
+        <script type="text/javascript" src="machine.js"></script>
+        <script type="text/javascript">
+            Menu.bind({
+                init: [
+                    { 'parent': 'm1', 'child': 'sub_m1', 'to': 'h' }
+                ],
+                events: [
+                    { 'name': 'show', 'to': 's' },
+                    { 'name': 'hide', 'to': 'h' }
+                ]
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="menu">
+            <ul>
+                <li id="m1">菜单一</li>
+            </ul>
+        </div>
+        <div class="sub" id="sub_m1">
+            <ul>
+                <li>测试一</li>
+                <li>测试二</li>
+                <li>测试三</li>
+            </ul>
+        </div>
+    </body>
+</html>

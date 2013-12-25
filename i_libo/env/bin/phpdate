@@ -1,0 +1,21 @@
+#!/usr/local/eyou/toolmail/opt/bin/php
+<?php
+$d = $argv[1];
+if (false !== strpos($d, ':')) {
+    list($start, $end) = explode(':', $d);
+} else {
+    $start = $d;
+}
+
+$ret = [];
+if (isset($start)) {
+    $start= date('Y-m-d N H:i:s', $start);
+    $ret['start'] = $start;
+}
+if (isset($end)) {
+    $end= date('Y-m-d N H:i:s', $end);
+    $ret['end'] = $end;
+}
+
+print_r($ret);
+

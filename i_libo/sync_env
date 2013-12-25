@@ -1,0 +1,70 @@
+#!/bin/bash
+#===============================================================================
+#
+#          FILE:  install.sh
+# 
+#         USAGE:  ./install.sh 
+# 
+#   DESCRIPTION:  环境安装脚本
+# 
+#        AUTHOR:  jacob, libo@eyou.net
+#       CREATED:  2012年10月16日 09时55分09秒 CST
+#===============================================================================
+
+MY="$HOME/my"
+ENV="$MY/git/david/i_libo/env"
+
+check_dir() {
+    if [ ! -d "$1" ]; then
+        echo -e "\e[0;31;1m<$1> directory not exists.\e[0m"
+        exit 1
+    fi;
+}
+check_dir "$ENV"
+
+#################
+#   同    步    #
+#################
+
+check_dir "$MY/git"
+rm -rf $HOME/git
+ln -s $MY/git $HOME/git
+
+rm -rf $HOME/.vim
+ln -s $ENV/vim $HOME/.vim
+
+rm -rf $HOME/.vimrc
+ln -s $ENV/vimrc $HOME/.vimrc
+
+rm -rf $HOME/.git-completion.bash
+ln -s $ENV/git-completion.bash $HOME/.git-completion.bash
+
+rm -rf $HOME/.gitconfig
+ln -s $ENV/gitconfig $HOME/.gitconfig
+
+# tool 配置
+rm -rf $MY/tool
+ln -s $ENV/tool $MY/tool
+
+#################
+#    覆   盖    #
+#################
+
+if [ ! -d "$HOME/bin" ]; then
+    mkdir "$HOME/bin"
+fi;
+cp $ENV/bin/* $HOME/bin
+
+cp $ENV/ssh/authorized_keys $HOME/.ssh/authorized_keys
+cp $ENV/ssh/id_rsa $HOME/.ssh/id_rsa
+cp $ENV/ssh/id_rsa.pub $HOME/.ssh/id_rsa.pub
+# 调整 git 权限 clone 问题
+chmod 600 $HOME/.ssh/authorized_keys $HOME/.ssh/id_rsa
+
+cp $ENV/bashrc $HOME/.bashrc
+. $HOME/.bashrc
+
+cp $ENV/bash_profile $HOME/.bash_profile
+. $HOME/.bash_profile
+
+echo -e "\e[0;32;1m+OK\e[0m"

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebSocket & Node.JS Test Page</title>
+<script src="jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://172.16.100.114:3000/socket.io/socket.io.js" type="text/javascript"></script>
+<script type="text/javascript">
+window.onload = function() {
+    var socket = io.connect('http://172.16.100.114:3000/io_stat');
+    socket.on('get stat', function (data) {
+        var body = '';
+
+        for (var i = 0, c = data.length; i < c; i++) {
+            body += '<tr><td>';
+            body += data[i];
+            body += '</td></tr>';
+        }
+
+        $("#data_area").html(body);
+    });
+}
+</script>
+</head>
+<body>
+    <table>
+        <tbody id="data_area"></tbody>
+    </table>
+</body>
+</html>
+

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ -z $1 ]; then
+    proc="phpd"
+else
+    proc=$1
+fi
+
+eyou_mail stop $proc 
+eyou_mail start $proc
+eyou_mail watch $proc

@@ -1,0 +1,64 @@
+*bashhotkeys.txt*                Bash Support                      Aug 01 2006
+                Vim-Plugin 
+        bash-support.vim 
+               Version 1.13 
+
+      Plugin: http://vim.sourceforge.net 
+      Fritz Mehner (mehner@fh-swf.de) 
+                   April 2006 
+
+            Hot keys 
+
+    Key mappings for Vim without GUI. 
+      All mappings also work for gVim. 
+
+                Load / Unload Bash Support                 
+\lbs       Load Bash Support                (normal)        
+           The  key  sequences below are  defined. 
+\ubs       Unload Bash Support              (normal) 
+           The  key  sequences below are  undefined.        
+
+                Comments             
+\cl        Line End Comment            (normal,  visual)    
+\cf        Frame Comment                    (normal)        
+\cu        Function Description             (normal)        
+\ch        File Header                      (normal)        
+\ckb       Keyword BUG                      (normal)        
+\ckt       Keyword TODO                     (normal)         
+\ckr       Keyword TRICKY                   (normal)        
+\ckw       Keyword WARNING                  (normal)        
+\ckn       Keyword: new keyword             (normal)                    
+\cc        code -> comment               (normal,  visual) 
+\co        comment -> code               (normal,  visual) 
+\cd        Date                             (normal) 
+\ct        Date & Time                      (normal) 
+\ce        echo "<line>"                    (normal) 
+\cr        remove echo                      (normal) 
+\cv        vim modeline                     (normal) 
+
+                Statements 
+\ac        case in ... esac                 (normal) 
+\al        elif then                        (normal) 
+\af        for in do done              (normal,  visual) 
+\ai        if then fi                  (normal,  visual) 
+\ae        if then else fi             (normal,  visual) 
+\as        select in do done           (normal,  visual) 
+\at        until do done               (normal,  visual) 
+\aw        while do done               (normal,  visual) 
+\ao        echo -e "\n"                (normal,  visual) 
+
+                Run 
+\rr        update file, run script           (normal) 
+\rc        update file, check syntax         (normal) 
+\ra        set command line arguments        (normal) 
+\rd        start debugger                    (normal) 
+\re        make script executable            (normal) 
+\rh        hardcopy buffer                   (normal) 
+           to FILENAME.ps 
+\rs        settings and hotkeys              (normal) 
+\rt        set xterm size           (normal,  GUI  only) 
+\ro        change output destination         (normal)
+
+                Help 
+\h         display help for builtin          (normal) 
+           name under the cursor

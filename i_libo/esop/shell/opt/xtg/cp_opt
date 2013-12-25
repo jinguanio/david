@@ -1,0 +1,68 @@
+#!/bin/bash
+
+echo_usage ()
+{
+    echo "$0 mail|tool|dev rhel5.i386|rhel5.x86_64|rhel6.x86_64"
+    exit 1
+}
+
+if test "mail" != "$1" -a "tool" != "$1" -a "dev" != "$1"; then
+    echo_usage;
+    exit 1
+fi
+
+if test "rhel5.i386" != "$2" -a "rhel5.x86_64" != "$2" -a "rhel6.x86_64" != "$2"; then
+    echo_usage;
+    exit 1
+fi
+
+PROJECT=$1
+OS=$2
+PATH_BUILD="/home/xtg/build"
+PATH_MAKE="$PATH_BUILD/make"
+PATH_MAKE_MAIL="$PATH_MAKE/opt/mail"
+PATH_MAKE_TOOL="$PATH_MAKE/opt/toolmail"
+PATH_MAKE_DEV="$PATH_MAKE/opt/devmail"
+PATH_RPM="$PATH_BUILD/rpm"
+PATH_RPM_MAIL="$PATH_RPM/mail/include"
+PATH_RPM_TOOL="$PATH_RPM/toolmail/include"
+PATH_RPM_DEV="$PATH_RPM/devmail/include"
+TGZ="opt.tar.gz"
+
+if ! test -f "$TGZ"; then
+    echo "current dir $TGZ is not exists";
+    exit 1
+fi
+
+ARRAY_MAIL_TARGET=(
+    "$PATH_MAKE_MAIL/8.1.0"
+    "$PATH_RPM_MAIL/8.1.0/$OS/opt"
+)
+
+ARRAY_TOOLMAIL_TARGET=(
+    "$PATH_MAKE_TOOL/1.0.0"
+    "$PATH_RPM_TOOL/1.0.0/$OS/opt"
+)
+
+ARRAY_DEVMAIL_TARGET=(
+    "$PATH_MAKE_DEV/1.0.0"
+    "$PATH_RPM_DEV/1.0.0/$OS/opt"
+)
+
+if test "mail" = "$PROJECT"; then
+    ARRAY_TARGET=(`echo ${ARRAY_MAIL_TARGET[@]}`)
+elif test "tool" = "$PROJECT"; then
+    ARRAY_TARGET=(`echo ${ARRAY_TOOLMAIL_TARGET[@]}`)
+else
+    ARRAY_TARGET=(`echo ${ARRAY_DEVMAIL_TARGET[@]}`)
+fi
+
+for i in "${ARRAY_TARGET[@]}"; do
+    echo -n "will cp $TGZ to $i ... "
+    if ! cp ./opt.tar.gz $i/opt.tar.gz; then
+        echo "fail"
+        exit 1
+    else
+        echo "ok"
+    fi
+done

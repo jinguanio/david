@@ -1,0 +1,19 @@
+#!/usr/local/eyou/mail/opt/bin/php
+<?php
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+set_time_limit(0);
+error_reporting('E_ALL');
+
+define('EYOUM_EXEC_ROOT', true);
+require_once 'conf_global.php';
+require_once PATH_EYOUM_LIB . 'em_exception.class.php';
+require_once PATH_EYOUM_LIB . 'iterator/em_iterator_eyou_mail.class.php';
+try {
+$file_infos = new em_iterator_eyou_mail('/usr/local/eyou/mail82/opt/php/include/php/ssss');
+foreach ($file_infos as $file_path => $value) {
+    echo "-====---" . $value . PHP_EOL;
+}
+
+} catch (Exception $e) {
+   echo  $e;
+}
