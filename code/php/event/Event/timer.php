@@ -7,6 +7,8 @@ function display($data) {
     if ($ev) {
         $ev->delTimer();
     }
+    $ev = null;
+
     timer();
 }
 
