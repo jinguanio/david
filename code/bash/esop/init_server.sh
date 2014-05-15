@@ -15,6 +15,7 @@ git_branch="release/15710-v1.0.1"
 path_base="/usr/local/eyou/toolmail"
 path_git_tk="/home/libo/git/tk/src"
 path_git_eagleeye="/home/libo/git/eagleeye/src"
+path_nfs="/data/esop_servercodes"
 
 # 停止 toolmail
 sudo eyou_toolmail stop
@@ -66,9 +67,12 @@ sudo eyou_toolmail start mysql
 $path_base/opt/mysql/bin/mysql -uroot -S /usr/local/eyou/toolmail/run/etm_mysql.sock < $path_git_tk/sql/db_creation_eyou_monitor.sql
 $path_base/opt/mysql/bin/mysql -uroot -S /usr/local/eyou/toolmail/run/etm_mysql.sock < $path_git_tk/sql/db_init_eyou_monitor.sql
 
-sudo eyou_toolmail start httpd
-sudo eyou_toolmail start redis
-sudo eyou_toolmail start phptd
+# 备份目标目录
+sudo eyou_toolmail stop 
+sudo rm -fr $path_nfs/*
+sudo cp -a $path_base/{web,etc,app,implements,tmp_install} $path_nfs
 
-# eyou_toolmail watch
+# 启动 eyou_toolmail 服务
+sudo eyou_toolmail start 
 sudo eyou_toolmail watch
+
