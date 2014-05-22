@@ -1,0 +1,436 @@
+-- MySQL dump 10.13  Distrib 5.6.12, for linux-glibc2.5 (x86_64)
+--
+-- Host: 127.1    Database: eyou_monitor
+-- ------------------------------------------------------
+-- Server version	5.6.12-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `agent_config`
+--
+
+DROP TABLE IF EXISTS `agent_config`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `agent_config` (
+  `serial_id` varchar(32) NOT NULL DEFAULT '',
+  `config_type` varchar(128) NOT NULL DEFAULT '',
+  `config_value` varchar(1024) NOT NULL DEFAULT '',
+  PRIMARY KEY (`serial_id`,`config_type`),
+  KEY `ik_0` (`serial_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `agent_package`
+--
+
+DROP TABLE IF EXISTS `agent_package`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `agent_package` (
+  `package_id` int(11) NOT NULL DEFAULT '0',
+  `init_time` int(11) NOT NULL DEFAULT '0',
+  `acct_id` int(11) NOT NULL DEFAULT '0',
+  `parter_id` varchar(32) NOT NULL DEFAULT '',
+  `os_id` int(11) NOT NULL DEFAULT '0',
+  `hash` varchar(64) NOT NULL DEFAULT '',
+  `desc` varchar(1024) NOT NULL DEFAULT '',
+  PRIMARY KEY (`package_id`),
+  KEY `ik_0` (`acct_id`),
+  KEY `ik_1` (`parter_id`),
+  KEY `ik_2` (`os_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `feedback`
+--
+
+DROP TABLE IF EXISTS `feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `feedback` (
+  `feed_id` int(11) NOT NULL DEFAULT '0',
+  `acct_id` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(1024) NOT NULL DEFAULT '',
+  `content` text NOT NULL,
+  `product_cid` int(11) NOT NULL DEFAULT '0',
+  `question_cid` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`feed_id`),
+  KEY `ik_0` (`feed_id`,`acct_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `feedback_category`
+--
+
+DROP TABLE IF EXISTS `feedback_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `feedback_category` (
+  `feed_cid` int(11) NOT NULL DEFAULT '0',
+  `feed_pid` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(128) NOT NULL DEFAULT '',
+  PRIMARY KEY (`feed_cid`),
+  KEY `ik_0` (`feed_pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `feel_template`
+--
+
+DROP TABLE IF EXISTS `feel_template`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `feel_template` (
+  `tpl_id` int(11) NOT NULL DEFAULT '0',
+  `acct_id` int(11) NOT NULL DEFAULT '0',
+  `tpl_name` varchar(128) NOT NULL DEFAULT '',
+  `email` varchar(250) NOT NULL DEFAULT '',
+  `domain` varchar(256) NOT NULL DEFAULT '',
+  `password` varchar(128) NOT NULL DEFAULT '',
+  `web` varchar(256) NOT NULL DEFAULT '',
+  `smtp` varchar(256) NOT NULL DEFAULT '',
+  `pop3` varchar(256) NOT NULL DEFAULT '',
+  `imap` varchar(256) NOT NULL DEFAULT '',
+  PRIMARY KEY (`acct_id`,`tpl_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `host`
+--
+
+DROP TABLE IF EXISTS `host`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `host` (
+  `serial_id` varchar(32) NOT NULL DEFAULT '',
+  `parter_id` varchar(32) NOT NULL DEFAULT '',
+  `host_name` varchar(128) NOT NULL DEFAULT '',
+  `alias` varchar(1024) NOT NULL DEFAULT '',
+  `is_alive` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`parter_id`,`serial_id`),
+  UNIQUE KEY `uk_0` (`host_name`),
+  KEY `ik_0` (`is_alive`),
+  KEY `ik_1` (`alias`(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `industry`
+--
+
+DROP TABLE IF EXISTS `industry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `industry` (
+  `industry_id` int(11) NOT NULL DEFAULT '0',
+  `industry_pid` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(128) NOT NULL DEFAULT '',
+  PRIMARY KEY (`industry_id`),
+  KEY `ik_0` (`industry_pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `notify_agency`
+--
+
+DROP TABLE IF EXISTS `notify_agency`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notify_agency` (
+  `parter_id` varchar(32) NOT NULL DEFAULT '',
+  `serial_id` varchar(32) NOT NULL DEFAULT '',
+  `plugin_name` varchar(128) NOT NULL DEFAULT '',
+  `notify_level` varchar(32) NOT NULL DEFAULT '',
+  `notify_method` varchar(128) NOT NULL DEFAULT 'email',
+  `notify_max` int(11) NOT NULL DEFAULT '0',
+  `notify_num` int(11) NOT NULL DEFAULT '0',
+  `last_time` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`parter_id`,`serial_id`,`plugin_name`,`notify_level`,`notify_method`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `notify_heartbeat`
+--
+
+DROP TABLE IF EXISTS `notify_heartbeat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notify_heartbeat` (
+  `parter_id` varchar(32) NOT NULL DEFAULT '',
+  `serial_id` varchar(32) NOT NULL DEFAULT '',
+  `notify_method` varchar(128) NOT NULL DEFAULT 'email',
+  `notify_max` int(11) NOT NULL DEFAULT '0',
+  `notify_num` int(11) NOT NULL DEFAULT '0',
+  `last_time` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`parter_id`,`serial_id`,`notify_method`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `notify_history`
+--
+
+DROP TABLE IF EXISTS `notify_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notify_history` (
+  `notify_id` int(11) NOT NULL DEFAULT '0',
+  `parter_id` varchar(32) NOT NULL DEFAULT '',
+  `notify_type` tinyint(4) NOT NULL DEFAULT '0',
+  `member_id` varchar(32) NOT NULL DEFAULT '',
+  `contact` varchar(128) NOT NULL DEFAULT '',
+  `send_method` varchar(128) NOT NULL DEFAULT '',
+  `send_msg` varchar(1024) NOT NULL DEFAULT '',
+  `send_time` int(11) NOT NULL DEFAULT '0',
+  `send_result` varchar(2048) NOT NULL DEFAULT '',
+  PRIMARY KEY (`notify_id`),
+  KEY `ik_0` (`send_time`),
+  KEY `ik_1` (`send_method`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `os_platform`
+--
+
+DROP TABLE IF EXISTS `os_platform`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `os_platform` (
+  `os_id` int(11) NOT NULL DEFAULT '0',
+  `os_name` varchar(64) NOT NULL DEFAULT '',
+  `version` varchar(32) NOT NULL DEFAULT '',
+  PRIMARY KEY (`os_id`),
+  KEY `ik_0` (`os_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `package_log`
+--
+
+DROP TABLE IF EXISTS `package_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `package_log` (
+  `log_id` int(11) NOT NULL DEFAULT '0',
+  `download_time` int(11) NOT NULL DEFAULT '0',
+  `acct_id` int(11) NOT NULL DEFAULT '0',
+  `package_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`log_id`),
+  KEY `ik_0` (`acct_id`),
+  KEY `ik_1` (`package_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `parter`
+--
+
+DROP TABLE IF EXISTS `parter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parter` (
+  `parter_id` varchar(32) NOT NULL DEFAULT '',
+  `parter_name` varchar(128) NOT NULL DEFAULT '',
+  `domain_name` varchar(256) NOT NULL DEFAULT '',
+  `district` varchar(32) NOT NULL DEFAULT '',
+  `province` varchar(32) NOT NULL DEFAULT '',
+  `city` varchar(64) NOT NULL DEFAULT '',
+  `area` varchar(64) NOT NULL DEFAULT '',
+  `industry_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`parter_id`),
+  UNIQUE KEY `uk_0` (`parter_name`),
+  KEY `ik_0` (`industry_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `parter_admin`
+--
+
+DROP TABLE IF EXISTS `parter_admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parter_admin` (
+  `parter_id` varchar(32) NOT NULL DEFAULT '',
+  `member_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`parter_id`,`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `parter_extra`
+--
+
+DROP TABLE IF EXISTS `parter_extra`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parter_extra` (
+  `parter_id` varchar(32) NOT NULL DEFAULT '',
+  `service_level` tinyint(4) NOT NULL DEFAULT '1',
+  `expire_time` int(11) NOT NULL DEFAULT '0',
+  `machine_num` int(11) NOT NULL DEFAULT '0',
+  `extra` varchar(1024) NOT NULL DEFAULT '',
+  PRIMARY KEY (`parter_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `plugin`
+--
+
+DROP TABLE IF EXISTS `plugin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plugin` (
+  `serial_id` varchar(32) NOT NULL DEFAULT '',
+  `plugin_name` varchar(128) NOT NULL DEFAULT '',
+  `comment` varchar(1024) NOT NULL DEFAULT '',
+  `frequency` varchar(128) NOT NULL DEFAULT '',
+  `timeout` varchar(128) NOT NULL DEFAULT '',
+  `errnum` tinyint(4) NOT NULL DEFAULT '0',
+  `snapshot_stat` varchar(128) NOT NULL DEFAULT '',
+  `mail_stat` varchar(128) NOT NULL DEFAULT '',
+  `sms_stat` varchar(128) NOT NULL DEFAULT '',
+  `post_stat` varchar(128) NOT NULL DEFAULT '',
+  `auto_stat` varchar(128) NOT NULL DEFAULT '',
+  `is_attach` tinyint(4) NOT NULL DEFAULT '0',
+  `is_debug` tinyint(4) NOT NULL DEFAULT '0',
+  `is_enable` tinyint(4) NOT NULL DEFAULT '0',
+  `locale` varchar(32) NOT NULL DEFAULT '',
+  `mail_rec` varchar(1024) NOT NULL DEFAULT '',
+  `sms_rec` varchar(1024) NOT NULL DEFAULT '',
+  `handler` varchar(128) NOT NULL DEFAULT '',
+  `userdef` varchar(2048) NOT NULL DEFAULT '',
+  PRIMARY KEY (`serial_id`,`plugin_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `plugin_desc`
+--
+
+DROP TABLE IF EXISTS `plugin_desc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plugin_desc` (
+  `plugin_name` varchar(128) NOT NULL DEFAULT '',
+  `desc` varchar(1024) NOT NULL DEFAULT '',
+  `category` varchar(64) NOT NULL DEFAULT '',
+  `platform` varchar(256) NOT NULL DEFAULT '',
+  `source` varchar(256) NOT NULL DEFAULT '',
+  `feature` varchar(2048) NOT NULL DEFAULT '',
+  `usage` varchar(2048) NOT NULL DEFAULT '',
+  `demo` varchar(2048) NOT NULL DEFAULT '',
+  PRIMARY KEY (`plugin_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `postlog`
+--
+
+DROP TABLE IF EXISTS `postlog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `postlog` (
+  `serial_id` varchar(32) NOT NULL DEFAULT '',
+  `plugin_name` varchar(128) NOT NULL DEFAULT '',
+  `job_id` varchar(32) NOT NULL DEFAULT '',
+  `job_time` int(11) NOT NULL DEFAULT '0',
+  `platform_time` int(11) NOT NULL DEFAULT '0',
+  `post_level` varchar(128) NOT NULL DEFAULT '',
+  `err_num` int(11) NOT NULL DEFAULT '0',
+  `info_type` varchar(32) NOT NULL DEFAULT '',
+  `title` varchar(1024) NOT NULL DEFAULT '',
+  `summary` varchar(1024) NOT NULL DEFAULT '',
+  `detail` text NOT NULL,
+  `auto` text NOT NULL,
+  `extra` varchar(1024) NOT NULL DEFAULT '',
+  `result` tinyint(4) NOT NULL DEFAULT '0',
+  `action` varchar(1024) NOT NULL DEFAULT '',
+  `snap` varchar(1024) NOT NULL DEFAULT '',
+  PRIMARY KEY (`serial_id`,`plugin_name`,`job_time`),
+  KEY `ik_0` (`job_time`),
+  KEY `ik_1` (`post_level`),
+  KEY `ik_2` (`platform_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `sequence_int`
+--
+
+DROP TABLE IF EXISTS `sequence_int`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sequence_int` (
+  `sequence_name` varchar(32) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `sequence_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`sequence_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `acct_id` int(11) NOT NULL DEFAULT '0',
+  `password` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email` varchar(250) NOT NULL DEFAULT '',
+  `valid_email` tinyint(4) NOT NULL DEFAULT '0',
+  `email_active_code` varchar(32) NOT NULL DEFAULT '',
+  `email_active_time` int(11) NOT NULL DEFAULT '0',
+  `tel` varchar(32) NOT NULL DEFAULT '',
+  `valid_tel` tinyint(4) NOT NULL DEFAULT '0',
+  `tel_active_code` varchar(32) NOT NULL DEFAULT '',
+  `tel_active_time` int(11) NOT NULL DEFAULT '0',
+  `contact_email` varchar(1024) NOT NULL DEFAULT '',
+  `contact_tel` varchar(128) NOT NULL DEFAULT '',
+  `real_name` varchar(128) NOT NULL DEFAULT '',
+  `gender` tinyint(4) NOT NULL DEFAULT '0',
+  `lock_status` tinyint(4) NOT NULL DEFAULT '0',
+  `lock_time` int(11) NOT NULL DEFAULT '0',
+  `init_time` int(11) NOT NULL DEFAULT '0',
+  `deleted_time` int(11) NOT NULL DEFAULT '0',
+  `user_type` tinyint(4) NOT NULL DEFAULT '3',
+  PRIMARY KEY (`acct_id`),
+  UNIQUE KEY `uk_0` (`email`),
+  KEY `ik_0` (`real_name`),
+  KEY `ik_1` (`tel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-05-22 12:12:19
