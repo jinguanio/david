@@ -95,18 +95,9 @@ let g:pydiction_location = '~/.vim/complete-dict'
 "defalut g:pydiction_menu_height == 15
 let g:pydiction_menu_height = 20 
 
-" vim 编写 tracker 插件
-let g:eyou_work_log_user="libo"
-let g:eyou_work_log_token="4423f3812d3eaeda369e9cbe963a7854"
-let g:eyou_work_log_charset="UTF-8"
-
 " }}}
 
 " {{{ shortcut (custom command)
-" log
-:nmap ,,r :LogGet<CR>
-:nmap ,,w :LogSet<CR>
-
 " fast write
 :nmap fw :w<CR>
 
