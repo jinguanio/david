@@ -7,7 +7,7 @@ class ProxyServer
 
     function run()
     {
-        $serv = new swoole_server("127.0.0.1", 8548);
+        $serv = new swoole_server("127.0.0.1", 8001);
         $serv->set(array(
             'timeout' => 1, //select and epoll_wait timeout.
             'poll_thread_num' => 1, //reactor thread num
@@ -31,7 +31,6 @@ class ProxyServer
     function onStart($serv)
     {
         $this->serv = $serv;
-        //echo "Server: start.Swoole version is [" . SWOOLE_VERSION . "]\n";
     }
 
     function onShutdown($serv)
@@ -41,23 +40,22 @@ class ProxyServer
 
     function onClose($serv, $fd, $from_id)
     {
-
     }
 
     function onConnect($serv, $fd, $from_id)
     {
-        
+        echo "Server: start.Swoole version is [" . SWOOLE_VERSION . "]\n";
     }
 
     function onReceive($serv, $fd, $from_id, $data)
     {
-		$socket = new swoole_client(SWOOLE_SOCK_TCP);
-        if($socket->connect('127.0.0.1', 8538, 0.5))
+		$socket = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_SYNC);
+        if($socket->connect('127.0.0.1', 8002, 0.5))
         {
 			$socket->send($data);
 			$serv->send($fd, $socket->recv(8192, 0));
 		}
-        unset($socket);
+        //unset($socket);
         $serv->close($fd);
     }
 }

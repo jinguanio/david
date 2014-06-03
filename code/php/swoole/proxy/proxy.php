@@ -9,7 +9,7 @@ class ProxyServer
 {
     function run()
     {
-        $serv = new swoole_server("127.0.0.1", 8548);
+        $serv = new swoole_server("127.0.0.1", 8001);
         $serv->set(array(
             'timeout' => 1, //select and epoll_wait timeout.
             'poll_thread_num' => 1, //reactor thread num
@@ -38,27 +38,24 @@ class ProxyServer
         $socket = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
        
         $socket->on('connect', function (swoole_client $socket) use ($data) {
-            $socket->send($data . "\r\n");
-            echo socket_strerror($socket->errCode), '|', __LINE__ , "\n";
+            $socket->send($data);
         });
         $socket->on('error', function (swoole_client $socket) use ($serv, $fd) {
             _e("connect to backend server fail", __LINE__);
             $serv->send($fd, "backend server not connected. please try reconnect.");
-            echo socket_strerror($socket->errCode), '|', __LINE__ , "\n";
-            //$socket->close();
+            $socket->close();
         });
 
         $socket->on('close', function (swoole_client $socket) use ($serv, $fd) {
-            //$serv->close($fd);
+            $serv->close($fd);
         });
 
         $socket->on('receive', function (swoole_client $socket, $data) use ($serv, $from_id, $fd) {
             $serv->send($fd, $data, $from_id);
-            echo socket_strerror($socket->errCode), '|', __LINE__ , "\n";
-            //$socket->close();
+            $socket->close();
         });
         
-        $socket->connect('127.0.0.1', 8538, 0.2);
+        $socket->connect('127.0.0.1', 8002, 0.2);
     }
 }
 

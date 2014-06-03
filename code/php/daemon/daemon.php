@@ -155,6 +155,19 @@ class Daemon
     }
 
     // }}}
+    // {{{ public function run()
+
+    /**
+     * 别名函数 fork_proc 
+     * 
+     * @return void
+     */
+    public function run()
+    {
+        $this->fork_proc();
+    }
+
+    // }}}
     // {{{ public function kill_proc()
 
     /**
@@ -166,6 +179,35 @@ class Daemon
     {
         $ppid = file_get_contents($this->__pid_file);
         posix_kill($ppid, SIGUSR1);
+    }
+
+    // }}}
+    // {{{ public function stop()
+    
+    /**
+     * 别名函数 kill_proc 
+     * 
+     * @return void
+     * @throws Exception
+     */
+    public function stop()
+    {
+        $this->kill_proc();
+    }
+
+    // }}}
+    // {{{ public function status()
+
+    /**
+     * 进程状态 
+     * 
+     * @return void
+     */
+    public function status()
+    {
+        $ppid = file_get_contents($this->__pid_file);
+        exec("ps -ef | grep {$ppid}", $out);
+        print_r(implode("\n", $out)."\n");
     }
 
     // }}}
