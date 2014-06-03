@@ -15,50 +15,38 @@ error_reporting(E_ALL);
  */
 require_once __DIR__ . '/../daemon/daemon.php';
 
-$count = 1; $url = '127.0.0.1'; $port = 8538;
+$count = 1; $url = '127.0.0.1'; $port = 8548;
 $base = new EventBase();
-
 $fork_num = 4;
-$max_send_num = 50;
-$send_interval = 5;
 
 function send_data()
 {
-    global $count, $max_send_num, $send_interval;
+    global $count;
     global $url, $port;
     global $base;
 
     $pid = posix_getpid();
+    $rand = random();
+    $data = time() . "-{$rand}-{$pid}-{$count}";
 
-    while (1) {
-        if ($max_send_num < $count) {
-            $count = 1;
-            $base->exit();
-            sleep($send_interval);
-            continue;
-            //exit(0);
-        }
+    $bev = new EventBufferEvent($base, null,                                
+        EventBufferEvent::OPT_CLOSE_ON_FREE | EventBufferEvent::OPT_DEFER_CALLBACKS);
+    $bev->setTimeouts(3, 3);                     
+    $bev->setCallbacks('readcb', null, 'eventcb', $pid);  
+    $bev->enable(Event::READ|Event::WRITE);                                             
+    $bev->connect("{$url}:{$port}");
+    $bev->write($data . "\r\n");                                           
+    $base->dispatch();
 
-        $rand = random();
-        $data = time() . "-{$rand}-{$pid}-{$count}";
-
-        $bev = new EventBufferEvent($base, null,                                
-            EventBufferEvent::OPT_CLOSE_ON_FREE | EventBufferEvent::OPT_DEFER_CALLBACKS);
-        $bev->setTimeouts(3, 3);                     
-        $bev->setCallbacks('readcb', null, 'eventcb');  
-        $bev->enable(Event::READ|Event::WRITE);                                             
-        $bev->connect("{$url}:{$port}");
-        $bev->write($data . "\r\n");                                           
-        $base->dispatch();
-
-        lg("pid:{$pid},count:{$count}");
-    }
+    lg("[$pid] $data");
+    //lg("pid:{$pid},count:{$count}");
+    exit(0);
 }
 
 function readcb($bev, $args)
 {
     $ret = trim($bev->read(1024));
-    lg("readcb: {$ret}");
+    //lg("[$args] readcb: {$ret}");
     $bev->setCallbacks('readcb', 'writecb', 'eventcb');  
     $bev->enable(Event::WRITE);
 }
@@ -73,7 +61,7 @@ function writecb($bev, $args)
 
 function eventcb($bev, $events, $args)
 {
-    lg("events: {$events}");
+    //lg("[$args] events: {$events}");
 }
 
 function random()
@@ -98,12 +86,6 @@ function help()
 HELP;
 }
 
-function status()
-{
-    exec("ps -ef | grep 'php r'", $out);
-    print_r(implode("\n", $out)."\n");
-}
-
 //send_data();
 //exit(0);
 
@@ -121,7 +103,7 @@ if (isset($argv[1])) {
     } elseif ('k' === $argv[1]) {
         $daemon->kill_proc();
     } elseif ('s' === $argv[1]) {
-        status();
+        $daemon->status();
     } else {
         help();
     }

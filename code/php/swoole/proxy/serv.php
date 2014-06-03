@@ -1,8 +1,9 @@
 <?php
 
-function _e($msg, $line)
+function lg($msg)
 {
-    echo "$msg, line: $line\n";
+    $msg = date('c') . " $msg\n";
+    file_put_contents('/tmp/b', $msg, FILE_APPEND | LOCK_EX);
 }
 
 class Server
@@ -30,11 +31,12 @@ class Server
 
     function onClose($serv, $fd, $from_id)
     {
-        //$serv->close($fd);
+        // 关闭会导致连接的客户端报错
     }
 
     function onReceive($serv, $fd, $from_id, $data)
     {
+        //lg($data);
         echo $data . "\n";
         $serv->send($fd, $data);
     }

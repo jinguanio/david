@@ -17,40 +17,26 @@ require_once __DIR__ . '/../daemon/daemon.php';
 
 $count = 1; $url = 'localhost'; $port = 8548;
 $fork_num = 10;
-$max_send_num = 50;
-$send_interval = 5;
 
 function send_data()
 {
-    global $count, $max_send_num, $send_interval;
+    global $count;
     global $url, $port;
 
     $pid = posix_getpid();
 
-    while (1) {
-        if ($max_send_num < $count) {
-            $count = 1;
-            sleep($send_interval);
-            continue;
-            //exit(0);
-        }
-
-        $fp = @stream_socket_client("tcp://{$url}:{$port}", $errno, $errstr, 30);
-        if (!$fp) {
-            exit(1);
-        }
-
-        $rand = random();
-        $data = time() . "-{$rand}-{$pid}-{$count}";
-        fwrite($fp, $data . "\r\n");
-        lg("c: $data");
-        //fgets($fp, 1024);
-        fclose($fp);
-
-        $count++;
-
-        usleep(5000);
+    $fp = @stream_socket_client("tcp://{$url}:{$port}", $errno, $errstr, 30);
+    if (!$fp) {
+        exit(1);
     }
+
+    $rand = random();
+    $data = time() . "-{$rand}-{$pid}-{$count}";
+    fwrite($fp, $data . "\r\n");
+    lg("c: $data");
+    //$ret = fgets($fp, 1024);
+    fclose($fp);
+    exit(0);
 }
 
 function random()
