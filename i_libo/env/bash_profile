@@ -15,8 +15,7 @@ PATH=$EYOU_SBIN:$EYOU_OPT_BIN:$HOME/bin:$HOME/my/tool/bash:$HOME/my/tool/php:$HO
 export PATH
 unset USERNAME
 
-HOST=`hostname`
-PS1="[\u@${HOST:8} \W]\$ "
+PS1="[\u@\h \W]\$ "
 export PS1
 
 # translate into chinese
