@@ -1,0 +1,11 @@
+[2014-05-27 02-11-01] http://www.baidu.com | Undefined variable: undefinedVarible /data1/home/libo/my/git/david/code/php/error/fatal.php line:12
+[2014-05-27 02-11-01] http://www.baidu.com | Class 'Tesdt' not found /data1/home/libo/my/git/david/code/php/error/fatal.php line:49
+[2014-05-27 03-33-55] http://www.baidu.com | Undefined variable: undefinedVarible /data1/home/libo/my/git/david/code/php/error/fatal.php line:13
+[2014-05-27 03-33-55] http://www.baidu.com | Class 'Tesdt' not found /data1/home/libo/my/git/david/code/php/error/fatal.php line:52
+[2014-05-27 03-34-30] http://www.baidu.com | Undefined variable: undefinedVarible /data1/home/libo/my/git/david/code/php/error/fatal.php line:13
+[2014-05-27 03-34-30] http://www.baidu.com | Class 'Tesdt' not found /data1/home/libo/my/git/david/code/php/error/fatal.php line:52
+[2014-05-27 03-40-06] http://www.baidu.com | Undefined variable: undefinedVarible /data1/home/libo/my/git/david/code/php/error/fatal.php line:13
+[2014-05-27 03-40-06] http://www.baidu.com | Class 'Tesdt' not found /data1/home/libo/my/git/david/code/php/error/fatal.php line:53
+[2014-05-27 03-40-30] http://www.baidu.com | Undefined variable: undefinedVarible /data1/home/libo/my/git/david/code/php/error/fatal.php line:13
+[2014-05-27 03-40-40] http://www.baidu.com | Undefined variable: undefinedVarible /data1/home/libo/my/git/david/code/php/error/fatal.php line:13
+[2014-05-27 03-40-40] http://www.baidu.com | Class 'Tesdt' not found /data1/home/libo/my/git/david/code/php/error/fatal.php line:53
