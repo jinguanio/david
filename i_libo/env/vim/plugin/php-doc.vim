@@ -79,9 +79,8 @@ let g:pdv_cfg_CommentHead1 = "/*"
 let g:pdv_cfg_Type = "mixed"
 let g:pdv_cfg_Author = "libo <libo@eyou.net>"
 let g:pdv_cfg_License = ""
-let g:pdv_cfg_Class = "eYou Mail lib"
-let g:pdv_cfg_Category = "eYou_Mail"
-let g:pdv_cfg_Package = "Em_"
+let g:pdv_cfg_Class = "eYou ESOP lib"
+let g:pdv_cfg_Package = "ESOP"
 let g:pdv_cfg_Version = "$_EYOUMBR_VERSION$_$"
 let g:pdv_cfg_Copyright = "$_EYOUMBR_COPYRIGHT_$"
 
@@ -279,7 +278,7 @@ func! PhpDocFunc()
         exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . g:pdv_cfg_EOL
     endif
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@return " . g:pdv_cfg_ReturnVal . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@throws em_exception" . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@throws Exception" . g:pdv_cfg_EOL
 
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
@@ -360,9 +359,8 @@ func! PhpDocClass()
         exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . g:pdv_cfg_EOL
     endif
     
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@category   eYou_Mail" . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@package    Em_Core"  . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@subpackage Em_Core"  . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@package    ESOP"  . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@subpackage Esop_Core"  . g:pdv_cfg_EOL
 
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
@@ -440,7 +438,6 @@ func! PhpDocPHP()
     exe l:txtBOL . g:pdv_cfg_CommentHead . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Comment1 . g:pdv_cfg_Class . g:pdv_cfg_EOL
     exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@category   " . g:pdv_cfg_Category . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@package    " . g:pdv_cfg_Package . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright  " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@version    " . g:pdv_cfg_Version . g:pdv_cfg_EOL
