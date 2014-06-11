@@ -12,7 +12,7 @@
 #===============================================================================
 
 if [ -z $@ ]; then
-    echo "$0 [api lib suffix] [web lib suffix]"
+    echo "./`basename $0` [suffix]"
     exit 1;
 fi
 
@@ -23,6 +23,6 @@ api_file="$api/$api_prefix$1.class.php"
 
 weblib="$git/eagleeye/src/app/lib/monitor/operator"
 weblib_prefix="em_monitor_property_operator_"
-weblib_file="$weblib/$weblib_prefix$2.class.php"
+weblib_file="$weblib/$weblib_prefix$1.class.php"
 
 vim -O $api_file $weblib_file
