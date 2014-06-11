@@ -19,10 +19,10 @@ fi
 git="/home/libo/git"
 api="$git/tk/src/lib/api/action"
 api_prefix="em_httpapi_action_api_"
-api_file="$api/$api_prefix$1.class.php"
+api_file="$api/${api_prefix}${1}.class.php"
 
 weblib="$git/eagleeye/src/app/lib/monitor/operator"
 weblib_prefix="em_monitor_property_operator_"
-weblib_file="$weblib/$weblib_prefix$1.class.php"
+weblib_file="$weblib/${weblib_prefix}${1}.class.php"
 
 vim -O $api_file $weblib_file
