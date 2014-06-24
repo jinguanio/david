@@ -136,6 +136,6 @@ function performance($func)
 performance('redis_2');
 //performance('redis_3');
 
-performance('redis_21');
+//performance('redis_21');
 //performance('redis_31');
 
