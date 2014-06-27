@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 error_reporting(E_ALL);
 
@@ -15,7 +16,7 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../daemon/daemon.php';
 
 $count = 1; $url = 'localhost'; $port = 8548;
-$fork_num = 200;
+$fork_num = 10;
 $max_send_num = 50;
 $send_interval = 1;
 
@@ -28,7 +29,7 @@ function send_data()
 
     while (1) {
         if ($max_send_num < $count) {
-            //$count = 1;
+            $count = 1;
             sleep($send_interval);
             continue;
         }
@@ -64,24 +65,36 @@ function lg($msg)
 
 function help()
 {
-    echo './' . basename(__FILE__) . ' [r|k|h]' . PHP_EOL;
+    echo './' . basename(__FILE__) . ' [r $1|k|s|h]' . PHP_EOL;
     echo <<<HELP
     r      run daemon
+            $1 进程数
     k      kill daemon
     h      help
 HELP;
 }
 
-$daemon = new Daemon([
-    'func' => 'send_data',
-    'fork_num' => $fork_num,
-    ]);
+function status()
+{
+    exec("ps -ef | grep 'php r'", $out);
+    print_r(implode("\n", $out)."\n");
+}
+
+$daemon = new Daemon([ 'func' => 'send_data' ]);
 
 if (isset($argv[1])) {
     if ('r' === $argv[1]) {
+        if (isset($argv[2])) {
+            $daemon->set_option('fork_num', $argv[2]);
+        } else {
+            $daemon->set_option('fork_num', $fork_num);
+        }
+
         $daemon->fork_proc();
     } elseif ('k' === $argv[1]) {
         $daemon->kill_proc();
+    } elseif ('s' === $argv[1]) {
+        status();
     } else {
         help();
     }
