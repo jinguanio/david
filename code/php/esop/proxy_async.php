@@ -18,7 +18,7 @@ require_once __DIR__ . '/../daemon/daemon.php';
 $count = 1; $url = 'localhost'; $port = 8548;
 $fork_num = 10;
 $max_send_num = 50;
-$send_interval = 1;
+$send_interval = 5;
 
 function send_data()
 {
@@ -32,6 +32,7 @@ function send_data()
             $count = 1;
             sleep($send_interval);
             continue;
+            //exit(0);
         }
 
         $fp = @stream_socket_client("tcp://{$url}:{$port}", $errno, $errstr, 30);

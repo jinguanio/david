@@ -13,7 +13,12 @@
 
 >/tmp/serv
 >/tmp/cli
-echo "clear /tmp log succ"
+echo "clear /tmp/{serv,cli} log succ"
+
+if [ -f "/tmp/a" ]; then
+    sudo rm /tmp/a
+    echo "clear /tmp/a"
+fi
 
 sudo cp /dev/null /usr/local/esop/agent/log/phptd.log
 sudo cp /dev/null /usr/local/eyou/toolmail/log/phptd.log
