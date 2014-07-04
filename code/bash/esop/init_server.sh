@@ -11,7 +11,7 @@
 #       CREATED:  2014年03月26日 00时28分57秒 CST
 #===============================================================================
 
-git_branch="release/15710-v1.0.1"
+git_branch="master"
 path_base="/usr/local/eyou/toolmail"
 path_git_tk="/home/libo/git/tk/src"
 path_git_eagleeye="/home/libo/git/eagleeye/src"
