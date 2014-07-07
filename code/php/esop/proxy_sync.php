@@ -44,7 +44,7 @@ function send_data()
         $data = time() . "-{$rand}-{$pid}-{$count}";
         fwrite($fp, $data . "\r\n");
         lg("c: $data");
-        fgets($fp, 1024);
+        //fgets($fp, 1024);
         fclose($fp);
 
         $count++;
