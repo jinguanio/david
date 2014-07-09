@@ -100,3 +100,9 @@ else
     echo "create php.ini fail"
 fi
 
+mkdir log
+if [ $? -eq 0 ]; then
+    echo "create log succ"
+else
+    echo "create log fail"
+fi
