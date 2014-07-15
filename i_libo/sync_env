@@ -55,11 +55,10 @@ if [ ! -d "$HOME/bin" ]; then
 fi;
 cp $ENV/bin/* $HOME/bin
 
-cp $ENV/ssh/authorized_keys $HOME/.ssh/authorized_keys
 cp $ENV/ssh/id_rsa $HOME/.ssh/id_rsa
 cp $ENV/ssh/id_rsa.pub $HOME/.ssh/id_rsa.pub
 # 调整 git 权限 clone 问题
-chmod 600 $HOME/.ssh/authorized_keys $HOME/.ssh/id_rsa
+chmod 600 $HOME/.ssh/id_rsa
 
 cp $ENV/bashrc $HOME/.bashrc
 . $HOME/.bashrc
