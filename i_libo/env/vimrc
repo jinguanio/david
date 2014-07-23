@@ -3,7 +3,7 @@
 set ru
 
 "自动切换到当前目录
-set autochdir
+"set autochdir
 
 "用4个空格代替tab
 set sts=4
@@ -37,7 +37,7 @@ set aw
 "set showmatch
 
 "设置代码折叠
-set foldmethod=marker
+"set foldmethod=marker
 
 "命令显示
 set showcmd
@@ -128,7 +128,6 @@ endfunction
 "快速执行保存并且 make 文件到目标
 " ,f = fast
 function! FastRelease()
-    w
     call MakeSourceCode()
 endfunction
 :nmap ,f :call FastRelease()<CR>
