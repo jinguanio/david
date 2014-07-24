@@ -26,3 +26,5 @@
 	rebase = true
 [core]
 	ignoreCygwinFSTricks = true
+[push]
+	default = simple

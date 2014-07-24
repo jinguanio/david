@@ -114,8 +114,10 @@ let g:pydiction_menu_height = 20
 :nmap ,e :!
 
 "添加 file_put_contents 函数功能
-" ,d = debug
-:nmap ,d :call PhpDocDebug()<CR>
+":nmap ,d :call PhpDocDebug()<CR>
+
+"设置当前目录
+:nmap ,d :set autochdir<CR>
 
 " 执行sudo make xxx.php.
 function! MakeSourceCode()
@@ -128,6 +130,7 @@ endfunction
 "快速执行保存并且 make 文件到目标
 " ,f = fast
 function! FastRelease()
+    set autochdir
     call MakeSourceCode()
 endfunction
 :nmap ,f :call FastRelease()<CR>

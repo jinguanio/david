@@ -471,7 +471,7 @@ func! PhpDocDebug()
 	let commentline = line (".") - 1
     let l:indent = matchstr(getline("."), '^\ *')
     exe "norm! " . commentline . "G$"
-    exe g:pdv_cfg_BOL . "file_put_contents('/tmp/lbdebug', var_export($j, true));" . g:pdv_cfg_EOL
+    exe g:pdv_cfg_BOL . "file_put_contents('/tmp/libo', var_export($j, true));" . g:pdv_cfg_EOL
 endfunc
 
 " }}}
