@@ -60,7 +60,7 @@ void pprintcf(char *s)
 {
     char c;
 
-    while ((c = *(s++)) != '\0') {
+    while ((c = *s++) != '\0') {
         printf("%d\n", c);
         printf("%c\n", c);
         printf("%c\n", c-32);

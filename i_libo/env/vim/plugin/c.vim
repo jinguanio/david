@@ -106,7 +106,7 @@ if	s:MSWIN
 else
 	let s:C_CCompiler           = 'gcc'      " the C   compiler
 	let s:C_CplusCompiler       = 'g++'      " the C++ compiler
-	let s:C_ExeExtension        = ''         " file extension for executables (leading point required)
+	let s:C_ExeExtension        = '.out'         " file extension for executables (leading point required)
 	let s:C_ObjExtension        = '.o'       " file extension for objects (leading point required)
 	let s:C_Man                 = 'man'      " the manual program
 endif
