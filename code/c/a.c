@@ -19,10 +19,26 @@
 
 #include	<stdio.h>
 
+#define EXIT_SUCCESS 0
+#define e(msg) printf("%s\n\n",   \
+        msg);
+
+
 int
 main ( int argc, char *argv[] )
 {
-    char str[] = "i am libo";
-    printf("%s\n", str);
-    return 0;
+    int x = 1, y = 2;
+    int *addr = 0;
+
+    printf("%d\t%d\t%p\n", x, y, addr);
+
+    addr = &x;
+    *addr += 5;
+    printf("%d\t%d\t%p\n", x, y, addr);
+
+    y = *addr;
+    printf("%d\t%d\t%p\n", x, y, addr);
+
+    return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */
+
