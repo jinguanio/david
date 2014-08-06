@@ -1,2 +1,0 @@
-1、数据库结构导出
-/usr/local/eyou/toolmail/opt/mysql/bin/mysqldump --opt -d eyou_monitor -uroot  -h 127.1 -P 3308 > online.db.schema

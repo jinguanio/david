@@ -1,9 +1,0 @@
-#!/bin/bash
-/usr/local/eyou/toolmail/opt/mysql/bin/mysql -uroot -S /usr/local/eyou/toolmail/run/etm_mysql.sock -D eyou_monitor -e "
-truncate table host;
-truncate table agent_config;
-truncate table plugin;
-truncate table postlog;
-"
-
-
