@@ -1,0 +1,612 @@
+#!/bin/bash
+
+export PATH="${PATH}:/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+
+### Global Vars Def
+BASE_DIR="$(cd $(dirname $0); pwd)"
+LOG_DIR="${BASE_DIR}/logs"
+LOGFILE="${BASE_DIR}/logs/${0##*/}.log"
+
+PATH_TARBALL="${BASE_DIR}/opt/balls"
+PATH_TARBALL_PECL="${PATH_TARBALL}/pecl"
+PATH_EXTRACT="${BASE_DIR}/opt/extract"
+PATH_EXTRACT_PECL="${PATH_EXTRACT}/pecl"
+
+PATH_ESOP="/usr/local/eyou/toolmail"
+PATH_ESOP_ETC="${PATH_ESOP}/etc"
+
+PATH_INSTALL="${PATH_ESOP}/opt"
+PATH_BIN="$PATH_INSTALL/bin"
+PATH_SBIN="$PATH_INSTALL/sbin"
+PATH_LIB="$PATH_INSTALL/lib"
+PATH_LIB64="$PATH_INSTALL/lib64"
+PATH_INCLUDE="$PATH_INSTALL/include"
+PATH_ETC="$PATH_INSTALL/etc"
+PATH_LOGS="$PATH_INSTALL/logs"
+PATH_SHARE="$PATH_INSTALL/share"
+PATH_TMP="$PATH_INSTALL/tmp"
+
+PATH_PHP="$PATH_INSTALL/php"
+PATH_PHP_BIN="$PATH_PHP/bin"
+PATH_PHP_LIB="$PATH_PHP/lib"
+PATH_PHP_LIBPHP="$PATH_PHP_LIB/php"
+PATH_PHP_INCLUDE="$PATH_PHP/include/php"
+
+PATH_PHPZTS="$PATH_INSTALL/phpzts"
+PATH_PHPZTS_BIN="$PATH_PHPZTS/bin"
+PATH_PHPZTS_LIB="$PATH_PHPZTS/lib"
+PATH_PHPZTS_LIBPHP="$PATH_PHPZTS_LIB/php"
+PATH_PHPZTS_INCLUDE="$PATH_PHPZTS/include/php"
+
+
+
+[ "$1" == "clean" ] && {
+   rm -rf "${PATH_EXTRACT}"
+   exit 0
+}
+
+# Command Def
+
+CMD_UNTAR="tar -xf"
+CMD_UNTAR_BZ2="tar -jxf"
+CMD_UNTAR_GZ="tar -zxf"
+CMD_MAKE="make"
+CMD_MAKE_J="make -j 2"
+
+
+OS_BIT=$(getconf LONG_BIT 2>&-)
+[ -z "${OS_BIT}" -o ! -z "${OS_BIT//[0-9]}" ] && OS_BIT="32"
+
+
+
+# Global Func Def
+
+# - check_rc
+check_rc() {
+  if [ $? == 0 ]; then
+        echo -e " -- $(date +%F_%T)  succed!  ${*} " | tee -a $LOGFILE
+  else
+        echo -e " -- $(date +%F_%T)  failed!  ${*} " | tee -a $LOGFILE
+        exit 1
+  fi
+}
+
+
+# Build Func Def
+
+
+# -- build_cronolog
+build_cronolog() {
+  local filename="cronolog-1.6.2.tar.gz"  dirname="cronolog-1.6.2"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  CMD_CONFIG=" \
+        CFLAGS='-I$PATH_INCLUDE' \
+        CPPFLAGS='-I$PATH_INCLUDE' \
+        LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+        ./configure \
+        --prefix=$PATH_INSTALL \
+  "
+
+  if [ "$OS_BIT" == "64" ]; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+  fi
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# -- build_libiconv
+build_libiconv() {      # by php54
+  local filename="libiconv-1.14.tar.gz"  dirname="libiconv-1.14"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  CMD_CONFIG=" \
+        CFLAGS='-I$PATH_INCLUDE' \
+        CPPFLAGS='-I$PATH_INCLUDE' \
+        LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+        ./configure \
+        --prefix=$PATH_INSTALL \
+	--enable-shared \
+  "
+
+  if [ "$OS_BIT" == "64" ]; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+  fi
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# -- build_curl
+build_curl() {		# by php54
+  local filename="curl-7.19.5.tar.gz"  dirname="curl-7.19.5"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  CMD_CONFIG=" \
+        CFLAGS='-I$PATH_INCLUDE' \
+        CPPFLAGS='-I$PATH_INCLUDE' \
+        LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+        ./configure \
+        --prefix=$PATH_INSTALL \
+        --disable-ldap \
+        --disable-ldaps \
+  "
+
+  if [ "$OS_BIT" == "64" ]; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+  fi
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+
+# -- build_libevent
+build_libevent() {	# by pecl_event, php54
+  local filename="libevent-2.0.12-stable.tar.gz"  dirname="libevent-2.0.12-stable"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  CMD_CONFIG=" \
+        CFLAGS='-I$PATH_INCLUDE' \
+        CPPFLAGS='-I$PATH_INCLUDE' \
+        LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+        ./configure \
+        --prefix=$PATH_INSTALL
+  "
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# -- build_mysql
+build_mysql() {
+  if [ "$OS_BIT" == "64" ]; then
+        local filename="mysql-5.6.12-linux-glibc2.5-x86_64.tar.gz" dirname="mysql-5.6.12-linux-glibc2.5-x86_64"
+  else
+        local filename="mysql-5.6.12-linux-glibc2.5-i686.tar.gz"  dirname="mysql-5.6.12-linux-glibc2.5-i686"
+  fi
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+
+  cp -a $PATH_EXTRACT/$dirname $PATH_INSTALL/mysql
+  check_rc "copy $dirname as mysql"
+
+  if [ "$OS_BIT" == "64" ]; then
+        cd $PATH_INSTALL/mysql
+        check_rc "change into mysql"
+
+        ln -s lib lib64
+        check_rc "create lib64 link"
+  fi
+}
+
+# -- build_redis
+build_redis() {
+  local filename="redis-2.6.16.tar.gz"  dirname="redis-2.6.16"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  $CMD_MAKE
+  check_rc "make $filename"
+
+  PREFIX=$PATH_INSTALL $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# -- build_httpd
+build_httpd() {
+  local filename="httpd-2.2.25.tar.gz"  dirname="httpd-2.2.25"
+
+  rm -rf $PATH_INSTALL/modules \
+        $PATH_INCLUDE/ap_*.h \
+        $PATH_INCLUDE/apr.h \
+        $PATH_INCLUDE/apr_*.h \
+        $PATH_INCLUDE/apu.h \
+        $PATH_INCLUDE/apu_*.h \
+        $PATH_LIB/libapr* \
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  local __release_h="include/ap_release.h"
+  local __release_h_bk="include/ap_release.h.bk"
+
+  cp $__release_h $__release_h_bk
+  check_rc "copy $__release_h as $__release_h_bk"
+
+  cat $__release_h_bk | sed -e 's/#define AP_SERVER_BASEVENDOR \+"[^"]*"/#define AP_SERVER_BASEVENDOR "ESOP"/' \
+        | sed -e 's/#define AP_SERVER_BASEPROJECT \+"[^"]*"/#define AP_SERVER_BASEPROJECT "ESOP HTTP Server"/' \
+        | sed -e 's/#define AP_SERVER_BASEPRODUCT \+"[^"]*"/#define AP_SERVER_BASEPRODUCT "ESOP_007"/' \
+        > $__release_h
+  check_rc "rewrite $__release_h"
+
+  CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_INSTALL \
+    --sysconfdir=$PATH_ESOP_ETC/httpd/conf \
+    --enable-so \
+    --with-mpm=prefork \
+    --enable-modules='expires deflate logio rewrite ssl headers' \
+  "
+
+  if [ "$OS_BIT" == "64" ]; then
+        CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+  fi  
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# -- build_php54
+build_php54() {
+  local filename="php-5.4.20.tar.gz"  dirname="php-5.4.20"
+
+  rm -rf $PATH_INSTALL/php/ \
+  	 $PATH_INSTALL/modules/libphp5.so
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --prefix=$PATH_PHP \
+    --with-apxs2=$PATH_BIN/apxs
+    --with-config-file-path=$PATH_ESOP_ETC/php \
+    --with-openssl \
+    --with-zlib \
+    --with-zlib-dir \
+    --without-iconv \
+    --with-freetype-dir \
+    --with-gettext \
+    --enable-mbstring \
+    --with-curl=$PATH_INSTALL \
+    --with-iconv=$PATH_INSTALL \
+    --with-iconv-dir=$PATH_INSTALL \
+    --with-mysql=mysqlnd \
+    --with-mysqli=mysqlnd \
+    --with-pdo-mysql=mysqlnd \
+    --with-kerberos \
+    --with-gmp \
+    --enable-zip \
+    --enable-pcntl \
+    --enable-shmop \
+    --enable-bcmath \
+    --enable-soap \
+    --enable-http \
+    --enable-redis \
+    --with-http-curl-requests=$PATH_INSTALL \
+    --with-http-curl-libevent=$PATH_INSTALL \
+    --with-http-zlib-compression \
+    --with-http-magic-mime=$PATH_INSTALL \
+    --with-libevent=$PATH_INSTALL \
+  "
+    # --enable-embase \			-- build as so
+    # --enable-dio  \			-- build as so
+  # "
+
+  # May Lead to:  configure error: Please reinstall the iconv library.
+  # if [ "$OS_BIT" == "64" ]; then
+        # CMD_CONFIG="$CMD_CONFIG --with-libdir=lib64"
+  # fi
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+
+  # create etc/php
+  mkdir -p $PATH_ESOP_ETC/php
+  cp php.ini-development $PATH_ESOP_ETC/php/php.ini
+  check_rc "cp php.ini for $filename"
+
+  # link php
+  rm -f $PATH_BIN/php
+  ln -s $PATH_PHP_BIN/php $PATH_BIN/php
+  check_rc "create php link for $filename"
+}
+
+# - build_pecl_event
+build_pecl_event() {
+  local filename="pecl/event-1.9.0.tgz"  dirname="event-1.9.0"
+  local PATH_EXTRACT="${PATH_EXTRACT_PECL}"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  $PATH_PHP_BIN/phpize
+  check_rc "phpize for $filename"
+
+  CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$PATH_PHP_BIN/php-config \
+    --disable-event-sockets \
+    --with-event-core \
+    --with-event-extra \
+    --with-event-openssl \
+    --with-event-libevent-dir=$PATH_INSTALL \
+  "
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# - build_pecl_embase
+build_pecl_embase() {
+  local filename="pecl/embase-0.0.3.tgz"  dirname="embase-0.0.3"	# original embase
+  local PATH_EXTRACT="${PATH_EXTRACT_PECL}"
+
+  rm -f $PATH_INSTALL/php/lib/php/extensions/no-debug-non-zts-20100525/embase.so
+  check_rc "remove origin embase.so for $filename"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  $PATH_PHP_BIN/phpize
+  check_rc "phpize for $filename"
+
+  CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$PATH_PHP_BIN/php-config \
+  "
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# - build_pecl_dio
+build_pecl_dio() {
+  local filename="pecl/dio-0.0.7.tgz"  dirname="dio-0.0.7"
+  local PATH_EXTRACT="${PATH_EXTRACT_PECL}"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  $PATH_PHP_BIN/phpize
+  check_rc "phpize for $filename"
+
+  CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$PATH_PHP_BIN/php-config \
+  "
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# - build_pecl_redis
+build_pecl_redis() {
+  local filename="pecl/redis-2.2.4.tgz"  dirname="redis-2.2.4"
+  local PATH_EXTRACT="${PATH_EXTRACT_PECL}"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  $PATH_PHP_BIN/phpize
+  check_rc "phpize for $filename"
+
+  CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$PATH_PHP_BIN/php-config \
+  "
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# - build_pecl_http
+build_pecl_http() {
+  local filename="pecl/pecl_http-1.7.6.tgz"  dirname="pecl_http-1.7.6"
+  local PATH_EXTRACT="${PATH_EXTRACT_PECL}"
+
+  $CMD_UNTAR_GZ $PATH_TARBALL/$filename -C $PATH_EXTRACT
+  cd $PATH_EXTRACT/$dirname
+
+  $PATH_PHP_BIN/phpize
+  check_rc "phpize for $filename"
+
+  CMD_CONFIG=" \
+    CFLAGS='-I$PATH_INCLUDE' \
+    CPPFLAGS='-I$PATH_INCLUDE' \
+    LDFLAGS='-L$PATH_LIB -Wl,-R$PATH_LIB' \
+    ./configure \
+    --with-php-config=$PATH_PHP_BIN/php-config \
+  "
+
+  eval $CMD_CONFIG
+  check_rc "configure $filename"
+
+  $CMD_MAKE_J
+  check_rc "make $filename"
+
+  $CMD_MAKE install
+  check_rc "install $filename"
+}
+
+# - build_pear_install
+build_pear_install() {
+
+    rm -f ~/.pearrc
+    rm -rf /tmp/pear/
+    rm -rf $PATH_PHP/lib/php/.channels/
+    $PATH_PHP/bin/pear channel-update pear.php.net
+    $PATH_PHP/bin/pear upgrade --force Archive_Tar
+
+    local pear_install=(
+        Archive_Zip-beta
+        Net_POP3
+        Net_SMTP
+        Auth_SASL
+        Contact_Vcard_Build
+        Contact_Vcard_Parse
+        Mail_Mime
+        Mail
+	# PHPUnit_Autoload
+    )
+
+    for pear in ${pear_install[@]}
+    do
+        $PATH_PHP/bin/pear install --alldeps $pear
+    done
+
+    $PATH_PHP/bin/pear channel-discover pear.firephp.org
+    $PATH_PHP/bin/pear channel-discover pear.netpirates.net
+    $PATH_PHP/bin/pear channel-discover pear.symfony-project.com
+    $PATH_PHP/bin/pear channel-discover pear.symfony.com
+    $PATH_PHP/bin/pear channel-discover pear.netpirates.net
+    $PATH_PHP/bin/pear channel-discover components.ez.no
+    $PATH_PHP/bin/pear channel-discover pear.phpunit.de
+
+    $PATH_PHP/bin/pear install --alldeps firephp/FirePHPCore
+
+    $PATH_PHP/bin/pear config-set auto_discover 1
+    $PATH_PHP/bin/pear install pear.phpunit.de/PHPUnit
+
+    local pear_check=(
+        "Archive/Zip.php"
+        "Net/POP3.php"
+        "Net/SMTP.php"
+        "Auth/SASL.php"
+        "Contact_Vcard_Build.php"
+        "Contact_Vcard_Parse.php"
+        "Mail/mime.php"
+        "Mail/mail.php"
+        "FirePHPCore/fb.php"
+        # "PHPUnit/Autoload.php"
+    )
+
+    for pear in ${pear_check[@]}
+    do
+        ls $PATH_PHP_LIBPHP/$pear
+        check_rc "pear check exist $pear"
+    done
+}
+
+### Main Body Begin ...
+
+echo -e "\n -- $(date +%F_%T) -- BUILD START -- \n\n" >> $LOGFILE
+
+#if [ -d "${PATH_ESOP}" ]; then
+  #rm -rf "${PATH_ESOP}"
+  #check_rc "remove ${PATH_ESOP}"
+#fi
+
+#if [ -d "${PATH_EXTRACT}" ]; then
+  #rm -rf "${PATH_EXTRACT}"
+  #check_rc "remove ${PATH_EXTRACT}"
+#fi
+
+mkdir -p "${PATH_TARBALL_PECL}" "${PATH_EXTRACT_PECL}" "${LOG_DIR}"
+
+
+#build_cronolog
+#build_libiconv
+#build_curl
+#build_libevent
+#build_mysql
+#build_redis
+#build_httpd
+
+#build_php54
+#build_pecl_event
+#build_pecl_embase
+#build_pecl_dio
+#build_pecl_redis
+#build_pecl_http
+#cat << EOF >> $PATH_ESOP_ETC/php/php.ini
+#extension=event.so
+#extension=embase.so
+#extension=dio.so
+#extension=redis.so
+#extension=http.so
+#EOF
+build_pear_install
+
+[ -d $PATH_ESOP_ETC ] && rm -rf $PATH_ESOP_ETC
+
+echo -e "\n -- $(date +%F_%T) -- BUILD END -- \n\n" >> $LOGFILE

@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+
+export PATH="${PATH}:/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+
+basedir="$(cd $(dirname $0);pwd)"
+logfile="/tmp/${0##*/}.log"
+
+esop="/usr/local/eyou/toolmail/"
+destdir="/tmp"
+publish="/data/esop_codes/server-side/"
+dirname="esopserver-1.0-beta1"
+filename="esopserver-1.0-beta1.tgz"
+filesql1="/home/libo/git/tk/src/sql/db_creation_eyou_monitor.sql"
+filesql2="/home/libo/git/tk/src/sql/db_init_eyou_monitor.sql"
+basedirs=(
+  app
+  etc
+  implements
+  web
+)
+createdirs=(
+  data/mysql
+  data/redis
+  log/httpd/apache_access_log
+  log/httpd/apache_error_log
+  log/redis
+  tmp/php
+  run
+)
+
+
+# - check_rc
+check_rc() {
+    if [ $? == 0 ]; then
+        echo -e " -- $(date +%F_%T)  succed!  ${*} " | tee -a $logfile
+    else
+        echo -e " -- $(date +%F_%T)  failed!  ${*} " | tee -a $logfile
+        exit 1
+    fi
+}
+
+show_help() {
+cat << EOF
+  Usage:
+    ${0##*/} -lib {lib_source_path}:{branch}  -web {web_source_path}:{branch}
+        
+  Example:
+    ${0##*/} -lib /home/libo/git/tk/src:release/15710-v1.0.1 -web /home/libo/git/eagleeye/src:release/15710-v1.0.1
+EOF
+exit 1
+}
+
+### Main  Start
+if [ "$(id -u)" != "0" ]; then
+    echo "root privileges required"
+    exit 1
+fi
+
+if ! id eyou >/dev/null; then
+    echo "sys user eyou needed"
+    exit 1
+fi
+
+libarg=
+webarg=
+if [ "$1" == "-lib" -a "$3" == "-web" ]; then
+	libarg="$2"
+	webarg="$4"
+elif [ "$1" == "-web" -a "$3" == "-lib" ]; then
+	webarg="$2"
+	libarg="$4"
+else
+	show_help
+fi
+[ -z "${libarg}" -o -z "${webarg}" ] && show_help
+
+for i in `echo "${libarg}" "${webarg}"`
+do
+	sourcedir=$(echo -e "${i}" | awk -F: '{print $1}')
+	branch=$(   echo -e "${i}" | awk -F: '{print $2}')
+
+	if [ ! -d "${sourcedir}" ]; then
+    		echo "source dir path: ${sourcedir} not exists"
+    		exit 1
+	else
+    		cd "${sourcedir}" >/dev/null 2>&1
+    		check_rc "changing directory into ${sourcedir}"   
+	fi
+
+	sudo -u libo git checkout "${branch}" #>/dev/null 2>&1
+	check_rc "git checkout ${branch}"
+
+	sudo -u libo git fetch >/dev/null 2>&1
+	check_rc "git fetch"
+
+	sudo -u libo git pull >/dev/null 2>&1
+	check_rc "git pull"
+
+	./configure create >/dev/null 2>&1
+	check_rc "configure create"
+
+	make install >/dev/null 2>&1
+	check_rc "install codes"
+done
+
+# check basic directories
+for((i=0;i<${#basedirs[*]};i++))
+do
+    ls "${esop}/${basedirs[$i]}" >/dev/null 2>&1
+    check_rc "check path ${esop}/${basedirs[$i]}"
+done
+
+# create necessary directories
+for((i=0;i<${#createdirs[*]};i++))
+do
+if [ ! -d "${esop}/${createdirs[$i]}" ]; then
+    mkdir -p -m 755 "${esop}/${createdirs[$i]}"
+    check_rc "create ${esop}/${createdirs[$i]}"
+ 
+    chown eyou:eyou -R ${esop}/${createdirs[$i]}
+    check_rc "chown eyou for ${createdirs[$i]}"
+fi
+done
+chown eyou:eyou -R ${esop}/{data,run,log,tmp}
+check_rc "chown eyou for data,run,log,tmp"
+
+# remove old target directory
+if [ -d "/${destdir}/${dirname}" -a ! -z "${destdir}" -a ! -z "${dirname}" ]; then
+    rm -rf "/${destdir}/${dirname}"
+    check_rc "remove /${destdir}/${dirname}"
+fi
+
+# make tarball
+cp -ar  "${esop}"  "/${destdir}/${dirname}"
+check_rc "copying ${esop} to ${dirname}"
+
+cd /${destdir}/
+check_rc "changing into /${destdir}"
+
+tar -czf "${filename}" "${dirname}"
+check_rc "make tar ball on ${filename}"
+
+/bin/cp -f "${destdir}/${filename}"  "${publish}/${filename}"
+check_rc "publish ${destdir}/${filename} to ${publish}/${filename}"
+
+/bin/cp -f "${filesql1}" "${publish}/sql/${filesql1##*/}"
+check_rc "publish ${filesql1} to ${publish}/sql/${filesql1##*/}"
+
+/bin/cp -f "${filesql2}" "${publish}/sql/${filesql2##*/}"
+check_rc "publish ${filesql2} to ${publish}/sql/${filesql2##*/}"
+
+echo -en "\n\n${publish}/${filename}  ${publish}/sql/${filesql1##*/}  ${publish}/sql/${filesql2##*/} \n\n"
