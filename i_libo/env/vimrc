@@ -56,6 +56,9 @@ set autoread
 " Sets how many lines of history VIM har to remember
 set history=400
 
+" set insert mode with copy or paste
+set pastetoggle=<F11>
+
 " }}}
 
 " {{{ plugin profile 
