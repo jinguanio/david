@@ -79,8 +79,8 @@ let g:pdv_cfg_CommentHead1 = "/*"
 let g:pdv_cfg_Type = "mixed"
 let g:pdv_cfg_Author = "libo <libo@eyou.net>"
 let g:pdv_cfg_License = ""
-let g:pdv_cfg_Class = "eYou ESOP lib"
-let g:pdv_cfg_Package = "ESOP"
+let g:pdv_cfg_Class = "eYou RHEA lib"
+let g:pdv_cfg_Package = "RHEA"
 let g:pdv_cfg_Version = "$_EYOUMBR_VERSION$_$"
 let g:pdv_cfg_Copyright = "$_EYOUMBR_COPYRIGHT_$"
 
@@ -359,7 +359,7 @@ func! PhpDocClass()
         exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . g:pdv_cfg_EOL
     endif
     
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@package    ESOP"  . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@package    RHEA"  . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@subpackage Esop_Core"  . g:pdv_cfg_EOL
 
 	" Close the comment block.
