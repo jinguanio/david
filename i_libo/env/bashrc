@@ -19,10 +19,6 @@ alias idf="git diff"
 alias ist="git status"
 alias ibr="git branch -a"
 alias ici="git commit"
-alias iall="git commit -a -m 'tmp'"
-
-alias devphp="/usr/local/eyou/devmail/opt/bin/php"
-alias toolphp="/usr/local/eyou/toolmail/opt/bin/php"
 
 alias svi="sudo vim"
 alias vi="vim"

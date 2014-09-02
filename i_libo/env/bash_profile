@@ -6,12 +6,10 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # User specific environment and startup programs
-EYOU="/usr/local/eyou/mail"
-EYOU_SBIN="$EYOU/app/sbin"
-EYOU_OPT="$EYOU/opt"
-EYOU_OPT_BIN="$EYOU_OPT/bin"
+LIBO="/home/libo/my/git/david/i_libo"
+TOOL="${LIBO}/env/tool"
 
-PATH=$EYOU_SBIN:$EYOU_OPT_BIN:$HOME/bin:$HOME/my/tool/bash:$HOME/my/tool/php:$HOME/my/git/i_libo:$PATH:/usr/sbin
+PATH=$HOME/bin:$TOOL/bash:$TOOL/php:$LIBO:$PATH:/usr/sbin
 export PATH
 unset USERNAME
 
