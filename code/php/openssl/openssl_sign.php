@@ -1,4 +1,5 @@
 <?php
+// 通过私钥建立数据签名(signature)
 //data you want to sign
 $data = 'my data';
 
@@ -16,9 +17,18 @@ $public_key_pem = $details['key'];
 openssl_sign($data, $signature, $private_key_pem, OPENSSL_ALGO_SHA256);
 
 //save for later
-file_put_contents('private_key.pem', $private_key_pem);
-file_put_contents('public_key.pem', $public_key_pem);
-file_put_contents('signature.dat', $signature);
+$base = 'keys/openssl_sign-';
+file_put_contents($base . 'private_key.pem', $private_key_pem);
+file_put_contents($base . 'public_key.pem', $public_key_pem);
+file_put_contents($base . 'signature.dat', $signature);
+//var_dump('priv_key: '. base64_encode($private_key_pem), 'pub_key: '. base64_encode($public_key_pem), 'sign: '. base64_encode($signature));
+
+// 检查私钥经过 json_encode 后是否会有异常
+// 换行会被转化为 "\n"
+//$k = [
+//    'priv' => $private_key_pem,
+//    ];
+//var_dump(json_encode($k));
 
 //verify signature
 $r = openssl_verify($data, $signature, $public_key_pem, "sha256WithRSAEncryption");
