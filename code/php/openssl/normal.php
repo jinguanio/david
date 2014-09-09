@@ -44,6 +44,8 @@ function t2()
 
     // Get private key
     openssl_pkey_export($res, $privkey, 'libo', $config);
+    var_dump($privkey);
+    exit;
 
     // Get public key
     $publickey = openssl_pkey_get_details($res);
@@ -100,8 +102,8 @@ function t3()
 //t1();
 
 // 私钥添加密码后进行加密解密
-//t2();
+t2();
 
 // 验证不同私钥解密过程是否相同
-t3();
+//t3();
 

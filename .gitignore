@@ -1,5 +1,6 @@
 # 临时文件
 *.swp
+*.swo
 .netrwhist
 
 # 忽略 c 语言编译文件
