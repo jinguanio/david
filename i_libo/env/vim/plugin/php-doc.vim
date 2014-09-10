@@ -278,7 +278,7 @@ func! PhpDocFunc()
         exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . g:pdv_cfg_EOL
     endif
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@return " . g:pdv_cfg_ReturnVal . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@throws Exception" . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@throws em_exception" . g:pdv_cfg_EOL
 
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
