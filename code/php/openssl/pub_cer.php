@@ -49,5 +49,5 @@ echo "\nCrypt text:\n" . base64_encode($crypttext) . "\n";
 openssl_private_decrypt($crypttext, $decrypted, $priv_key);
 echo "\nDecrypted text:\n$decrypted\n\n";
 
-//print_r(openssl_x509_parse($certout));
+print_r(openssl_x509_parse($certout));
 
