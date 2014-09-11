@@ -1,4 +1,5 @@
 <?php
+// 简单公私钥加密解密
 function t1() 
 {
     $config = array(
@@ -41,16 +42,14 @@ function t2()
 
     // Create the keypair
     $res = openssl_pkey_new($config);
+    var_dump($res);
 
     // Get private key
     openssl_pkey_export($res, $privkey, 'libo', $config);
-    var_dump($privkey);
-    exit;
 
     // Get public key
     $publickey = openssl_pkey_get_details($res);
     $publickey = $publickey["key"];
-    //exit;
 
     echo "Private Key:\n$privkey\n\nPublic Key:\n$publickey\n\n";
 
@@ -62,7 +61,8 @@ function t2()
 
     echo "Crypt text:\n" . base64_encode($crypttext) . "\n";
 
-    $priv = openssl_pkey_get_private ($privkey, "libo");
+    $priv = openssl_pkey_get_private($privkey, "libo");
+    var_dump($priv);
     if (!$priv) {
         echo "\nGet private key fail!\n";
         exit(1);

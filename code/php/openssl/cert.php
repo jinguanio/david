@@ -1,4 +1,5 @@
 <?php
+// 利用 x590 证书文件加密，pfx 文件解密
 function _var($mixed, $is_dump = false)
 {
     if ($is_dump) {

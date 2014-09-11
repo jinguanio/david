@@ -1,4 +1,5 @@
 <?php
+// 利用 pfx 证书加密解密
 function _var($mixed, $is_dump = false)
 {
     if ($is_dump) {

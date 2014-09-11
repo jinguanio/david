@@ -1,4 +1,5 @@
 <?php
+// 建立 .cer/.pfx 证书文件
 function _var($mixed, $is_dump = false)
 {
     if ($is_dump) {
@@ -27,8 +28,12 @@ $config = array(
 );
 
 $privkey = openssl_pkey_new($config);
+var_dump($privkey);
 $csr = openssl_csr_new($dn, $privkey);
+var_dump($csr);
 $sscert = openssl_csr_sign($csr, null, $privkey, 365);
+var_dump($sscert);
+exit;
 
 
 $path = __DIR__ . '/keys';

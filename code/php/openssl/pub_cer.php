@@ -1,4 +1,5 @@
 <?php
+// 利用 x509 证书加密
 $dn = array(
     "countryName" => "CN",
     "stateOrProvinceName" => "Beijing",
@@ -24,7 +25,6 @@ $privkey = openssl_pkey_new($config);
 $csr = openssl_csr_new($dn, $privkey);
 $sscert = openssl_csr_sign($csr, null, $privkey, 365);
 
-openssl_csr_export($csr, $csrout) and var_dump($csrout);
 openssl_x509_export($sscert, $certout) and var_dump($certout);
 openssl_pkey_export($privkey, $pkeyout, "mypassword", $config) and var_dump($pkeyout);
 
