@@ -42,8 +42,8 @@ openssl_csr_export($csr, $csrout);
 //exit;
 
 // ********** 签署证书 **********
-//$cert = openssl_csr_sign($csr, null, $priv, 365);
-//$cert = openssl_csr_sign($csrout, null, $priv, 365);
+//$cert = openssl_csr_sign($csr, null, $priv, 365); // right
+//$cert = openssl_csr_sign($csrout, null, $priv, 365); // right
 // CA 签证书
 //$cert = openssl_csr_sign($csr, $ca_certout, $ca_pfx, 365); // wrong
 //$cert = openssl_csr_sign($csr, $ca_pubout, $ca_privout, 365); // wrong
@@ -64,7 +64,9 @@ echo "Clear txt: \n$cleartext\n";
 
 // ************ 公私钥 ***************
 $pub_key = $certout; // right
+//$pub_key = $cert; // right
 //$pub_key = openssl_pkey_get_public($certout); // right OpenSSL key
+//$pub_key = openssl_pkey_get_public($cert); // right OpenSSL key
 //$pub_key = openssl_pkey_get_details($priv)['key']; // right public key
 //$pub_key = $csrout; // wrong
 
