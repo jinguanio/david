@@ -1,0 +1,30 @@
+#!/bin/sh
+
+base="/root/tmp/php"
+
+./configure	 \
+--prefix=$base	 \
+--enable-fpm	 \
+--with-fpm-user=eyou	 \
+--with-fpm-group=eyou	 \
+--with-config-file-path=$base/etc \
+--with-openssl	 \
+--with-freetype-dir	 \
+--with-gettext	 \
+--enable-mbstring	 \
+--with-zlib=/usr/local/rhea/opt	 \
+--with-curl=/usr/local/rhea/opt	 \
+--with-iconv-dir=/usr/local/rhea/opt	 \
+--with-mysql=mysqlnd	 \
+--with-mysqli=mysqlnd	 \
+--with-pdo-mysql=mysqlnd	 \
+--with-kerberos	 \
+--with-gmp	 \
+--enable-zip	 \
+--enable-pcntl	 \
+--enable-shmop	 \
+--enable-bcmath	 \
+--enable-soap	 \
+--with-libdir=lib64	\
+--enable-yaf    \
+--enable-yaf-debug
