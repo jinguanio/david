@@ -1,0 +1,11 @@
+#!/bin/sh
+rdate -s time.nist.gov
+hwclock --systohc
+echo "+Ok, sync time/date succ!"
+echo 
+
+echo -n "system-date: "
+date 
+
+echo -n "hardware-date: "
+hwclock
