@@ -1,5 +1,5 @@
 <?php
-class DependencyAndDataProviderComboTest extends PHPUnit_Framework_TestCase
+class CommonTest extends PHPUnit_Framework_TestCase
 {
     public function provider()
     {
@@ -40,3 +40,4 @@ class DependencyAndDataProviderComboTest extends PHPUnit_Framework_TestCase
         }
     }
 }
+
