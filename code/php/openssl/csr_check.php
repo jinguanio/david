@@ -77,12 +77,12 @@ function check_cert($cert)
     $cainfo = __DIR__ . '/ca/ca_cert.cer';
 
     $purpose = [
-        //X509_PURPOSE_SSL_CLIENT,
-        //X509_PURPOSE_SSL_SERVER,
-        //X509_PURPOSE_NS_SSL_SERVER,
-        //X509_PURPOSE_SMIME_SIGN,
-        //X509_PURPOSE_SMIME_ENCRYPT,
-        //X509_PURPOSE_CRL_SIGN,
+        X509_PURPOSE_SSL_CLIENT,
+        X509_PURPOSE_SSL_SERVER,
+        X509_PURPOSE_NS_SSL_SERVER,
+        X509_PURPOSE_SMIME_SIGN,
+        X509_PURPOSE_SMIME_ENCRYPT,
+        X509_PURPOSE_CRL_SIGN,
         X509_PURPOSE_ANY,
         ];
 
