@@ -8,7 +8,7 @@ $file_x509 = $path . 'x509.crt';
 $file_pkcs12 = $path . 'pkcs12.pfx';
 $file_contents = $path . 'content';
 
-$pass = 'mypassword';
+$pass = null;
 $plain = 'hello libo';
 $root_expire_time = 2;
 $expire_time = 3;
