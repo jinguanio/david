@@ -1,0 +1,2 @@
+%_topdir /usr/src/redhat
+%debug_package %{nil}

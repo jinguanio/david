@@ -1,0 +1,16 @@
+rpm 打包过程
+1、通过 /home/libo/git/rhea/build/build_install 更新目标文件
+2、生成 rhea-1.0.tar.gz 压缩包
+3、拷贝压缩包到 /usr/src/redhat/SOURCES
+4、拷贝 spec 文件到 /usr/src/redhat/SPECS
+5、执行 sudo /usr/bin/rpmbuild -bb SPECS/rhea.spec
+6、安装 rpm 包，sudo rpm -ivh RPMS/noarch/rhea-1.0-rhel.noarch.rpm --nodeps
+
+常用命令
+sudo rhea stop
+
+sudo rm -fr {BUILD,RPMS}/*
+sudo rpm -e rhea
+
+sudo /usr/bin/rpmbuild -bb /usr/src/redhat/SPECS/rhea.spec
+sudo rpm -ivh /usr/src/redhat/RPMS/noarch/rhea-1.0-rhel.noarch.rpm --nodeps
