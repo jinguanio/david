@@ -44,9 +44,16 @@ rm -rf $RPM_BUILD_ROOT
 %post
 # post section
 chown -R eyou:eyou %{prefix}/{log,run,etc,data,tmp} 
+ln -sf %{prefix}/sbin/rhea /usr/bin/rhea
+ln -sf %{prefix}/sbin/rhea /etc/init.d/rhea
+chkconfig rhea on
 
 %preun
 # preun section
+chkconfig rhea off
 
 %postun
 # postun section
+rm -fr /usr/bin/rhea
+rm -fr /etc/init.d/rhea
+rm -fr %{prefix}
