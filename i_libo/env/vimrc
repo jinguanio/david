@@ -67,9 +67,9 @@ set pastetoggle=<F11>
 " 按 ctrl+/ 给代码加注释
 " The php doc plugin  
 " source ~/.vim/php-doc.vim  
-inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i
-nnoremap <C-P> :call PhpDocSingle()<CR>
-vnoremap <C-P> :call PhpDocRange()<CR> 
+"inoremap <C-I> <ESC>:call PhpDocSingle()<CR>i
+nnoremap <C-I> :call PhpDocSingle()<CR>
+vnoremap <C-I> :call PhpDocRange()<CR> 
 
 " PHP syntax check
 " F5 进行语法检查

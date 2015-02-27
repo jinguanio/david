@@ -4,7 +4,7 @@
 
 Summary: Rhea System Module
 Name: rhea
-Version: 1.0
+Version: 1.1
 Release: rhel
 License: Commercial
 Source: %{name}-%{version}.tar.gz
@@ -17,6 +17,7 @@ Prefix: /usr/local/rhea
 
 %description
 Rhea System Module
+add password logic
 
 %prep
 # prep section
