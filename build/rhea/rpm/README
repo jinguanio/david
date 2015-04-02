@@ -14,4 +14,4 @@ sudo rm -fr /usr/src/redhat/{BUILD,RPMS}/*
 sudo rpm -e rhea
 
 sudo /usr/bin/rpmbuild -bb /usr/src/redhat/SPECS/rhea.spec
-sudo rpm -ivh /usr/src/redhat/RPMS/noarch/rhea-1.1-rhel.noarch.rpm --nodeps
+sudo rpm -ivh /usr/src/redhat/RPMS/noarch/rhea-1.1-rhel.noarch.rpm
