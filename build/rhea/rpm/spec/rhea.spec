@@ -14,6 +14,7 @@ BuildArch: noarch
 Packager: eYou Elephant Team
 Buildroot: %{_tmppath}/%{name}-%{version}-root
 Prefix: /usr/local/rhea
+AutoReq: 0
 
 %description
 Rhea System Module
