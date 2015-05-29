@@ -1,5 +1,7 @@
 <?php
-// 先比较最小，逐渐后移指针
+#
+# 冒泡排序
+#
 function bubble_sort($arr) {
     $n = count($arr);
     for($i=0;$i<$n-1;$i++){

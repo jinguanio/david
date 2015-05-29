@@ -1,4 +1,7 @@
 <?php
+#
+# 合并排序算法
+#
 class MergeSort2
 {
     private function _merge($arr1, $arr2)
@@ -29,7 +32,6 @@ class MergeSort2
 }
 
 $arr = [1,43,54,62,21,66,32,78,36,76,39];
-
 $ms2 = new MergeSort2;
 print_r($ms2->msort($arr));
 

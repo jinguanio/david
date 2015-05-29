@@ -1,6 +1,7 @@
 <?php
-$arr = [1,43,54,62,21,66,32,78,36,76,39];
-
+#
+# 插入排序算法
+#
 function insert($arr)
 {
     $len = count($arr);
@@ -19,5 +20,6 @@ function insert($arr)
     return $arr;
 }
 
+$arr = [1,43,54,62,21,66,32,78,36,76,39];
 print_r(insert($arr));
 

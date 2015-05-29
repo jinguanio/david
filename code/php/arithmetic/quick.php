@@ -1,6 +1,7 @@
 <?php
-$arr = [1,43,54,62,21,66,32,78,36,76,39];
-
+#
+# 快速排序算法
+#
 function quick($arr)
 {
     $n = count($arr);
@@ -54,5 +55,6 @@ function quick_sort($arr) {
     return array_merge($left_array, array($base_num), $right_array);
 }
 
+$arr = [1,43,54,62,21,66,32,78,36,76,39];
 //print_r(quick_sort($arr));
 print_r(quick($arr));

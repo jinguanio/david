@@ -1,6 +1,7 @@
 <?php
-$arr = [1,43,54,62,21,66,32,78,36,76,39];
-
+#
+# 希尔排序算法
+#
 function shell($arr)
 {
     $n = count($arr);
@@ -33,5 +34,6 @@ function swap(&$arr, $i, $j)
     $arr[$j] = $tmp;
 }
 
+$arr = [1,43,54,62,21,66,32,78,36,76,39];
 print_r(shell($arr));
 

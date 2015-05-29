@@ -1,6 +1,7 @@
 <?php
-$arr = [1,43,54,62,21,66,32,78,36,76,39];
-
+#
+# 快速排序算法
+#
 function kuaisu($arr)
 {
     $len = count($arr);
@@ -23,5 +24,6 @@ function kuaisu($arr)
     return array_merge($left, [$base], $right);
 }
 
+$arr = [1,43,54,62,21,66,32,78,36,76,39];
 print_r(kuaisu($arr));
 

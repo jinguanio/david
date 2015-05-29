@@ -1,6 +1,7 @@
 <?php
-$arr = [1,43,54,62,21,66,32,78,36,76,39];
-
+#
+# 选择排序算法
+#
 function xuanze($arr)
 {
     $len = count($arr);
@@ -22,5 +23,6 @@ function xuanze($arr)
     return $arr;
 }
 
+$arr = [1,43,54,62,21,66,32,78,36,76,39];
 print_r(xuanze($arr));
 

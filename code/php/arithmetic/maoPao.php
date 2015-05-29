@@ -1,6 +1,7 @@
 <?php
-$arr = [1,43,54,62,21,66,32,78,36,76,39];
-
+#
+# 冒泡排序算法二
+#
 function get_pao($arr)
 {
     $len = count($arr);
@@ -17,4 +18,5 @@ function get_pao($arr)
     return $arr;
 }
 
+$arr = [1,43,54,62,21,66,32,78,36,76,39];
 print_r(get_pao($arr));

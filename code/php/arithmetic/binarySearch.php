@@ -1,4 +1,7 @@
 <?php
+#
+# 二分法查找
+#
 function bin_search($arr,$low,$high,$value) {
     if($low>$high) {
         return false;
