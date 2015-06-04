@@ -24,8 +24,7 @@ alias svi="sudo vim"
 alias vi="vim"
 alias vd="vimdiff -O"
 
-alias mysql="/usr/local/eyou/mail/opt/mysql/bin/mysql -uroot -S /usr/local/eyou/mail/run/em_mysql.sock"
-alias mysql_idx="/usr/local/eyou/mail/opt/mysql/bin/mysql -uroot -D eyou_mail_index -S /usr/local/eyou/mail/run/em_mysql_index.sock"
+alias imysql="/usr/local/rhea/opt/mysql/bin/mysql -uroot -S /usr/local/rhea/run/mysql.sock"
 
 lang="/usr/local/eyou/devmail/web/lang"
 
