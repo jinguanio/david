@@ -1,6 +1,0 @@
-define command{
-	命令的名称
-	*command_name 	
-	命令行，支持可变参数定义，用宏 $ARGn 替代， 当调用的时候用!分隔多个参数
-	*command_line 	
-}

@@ -1,1 +1,0 @@
-/home/hzx/code/i_haozhongxiu/tools/.vim
