@@ -10,7 +10,7 @@ while ($n > 0) {
     $rem = $m % $n;
     $m = $n;
     $n = $rem;
-    #echo $n, "\n";
+    echo $n, "\n";
 }
 
 echo 'result: ', $m, "\n";
